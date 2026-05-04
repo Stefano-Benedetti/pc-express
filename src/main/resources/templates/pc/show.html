@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <a href="/pc/catalog">Torna al catalogo</a>
+    <h1 th:text="${pc.nome}">nome pc</h1>
+    <div th:text="|CPU: ${pc.cpu}|">CPU</div>
+    <div th:text="|GPU: ${pc.gpu}|">GPU</div>
+    <div th:text="|RAM: ${pc.ram}|">RAM</div>
+    <div th:text="|Scheda Madre: ${pc.schedaMadre}|">Scheda Madre</div>
+    <div th:text="|ROM: ${pc.rom}|">ROM</div>
+    <div th:text="|Case: ${pc.casePC}|">Case</div>
+    <div th:text="|Alimentatore: ${pc.alimentatore}|">Alimentatore</div>
+    <div th:text="|Sistema Operativo: ${pc.sistemaOperativo}|">Sistema Operativo</div>
+    <div th:text="|Dissipatore: ${pc.dissipatore}|">Dissipatore</div>
+    <div th:text="|Ventole: ${pc.ventole}|">Ventole</div>
+    <div th:text="|Codice Prodotto: ${pc.codice}|">0000</div>
+</body>
+</html>

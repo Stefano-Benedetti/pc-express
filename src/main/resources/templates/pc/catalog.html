@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Autocentro Ermejo</title>
+</head>
+<body>
+    <a href="/">Torna alla home</a>
+    <h1>Catalogo PC</h1>
+    <div th:if="${pcs.isEmpty()}">Non ci sono computer nel sistema.</div>
+    <ul>
+        <li th:each="pc : ${pcs}">
+            <a th:href="|/pcs/${pc.id}|"
+               th:text="|${pc.nome}|">nome</a>
+        </li>
+    </ul>
+</body>
+</html>
