@@ -26,7 +26,7 @@ public class PC {
 
     private String rom;
 
-    private String casePC;
+    private String casePc;
 
     private String alimentatore;
 
@@ -35,6 +35,32 @@ public class PC {
     private String dissipatore;
 
     private String ventole;
+
+    @Column(nullable = false)
+    private Float prezzo;
+
+    private Integer disponibilita;
+
+    public PC(){
+
+    }
+
+    public PC(Long codice, String nome, String cpu, String gpu, String ram, String schedaMadre, String rom, String casePc, String alimentatore, String sistemaOperativo, String dissipatore, String ventole, Float prezzo, Integer disponibilita) {
+        this.codice = codice;
+        this.nome = nome;
+        this.cpu = cpu;
+        this.gpu = gpu;
+        this.ram = ram;
+        this.schedaMadre = schedaMadre;
+        this.rom = rom;
+        this.casePc = casePc;
+        this.alimentatore = alimentatore;
+        this.sistemaOperativo = sistemaOperativo;
+        this.dissipatore = dissipatore;
+        this.ventole = ventole;
+        this.prezzo = prezzo;
+        this.disponibilita = disponibilita;
+    }
 
     public Long getId() {
         return id;
@@ -100,12 +126,12 @@ public class PC {
         this.rom = rom;
     }
 
-    public String getCasePC() {
-        return casePC;
+    public String getCasePc() {
+        return casePc;
     }
 
-    public void setCasePC(String casePC) {
-        this.casePC = casePC;
+    public void setCasePc(String casePC) {
+        this.casePc = casePC;
     }
 
     public String getAlimentatore() {
@@ -138,6 +164,22 @@ public class PC {
 
     public void setVentole(String ventole) {
         this.ventole = ventole;
+    }
+
+    public Float getPrezzo() {
+        return prezzo;
+    }
+
+    public void setPrezzo(Float prezzo) {
+        this.prezzo = prezzo;
+    }
+
+    public Integer getDisponibilita() {
+        return disponibilita;
+    }
+
+    public void setDisponibilita(Integer disponibilita) {
+        this.disponibilita = disponibilita;
     }
 
     @Override
