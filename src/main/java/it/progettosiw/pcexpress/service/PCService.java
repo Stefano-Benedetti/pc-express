@@ -25,5 +25,8 @@ public class PCService {
         return (List<PC>) pcRepository.findAll();
     }
 
+    public void save(PC pc){
+        pcRepository.save(pc);
+    }
 
 }

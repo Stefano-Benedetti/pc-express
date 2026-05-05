@@ -5,12 +5,17 @@
     <title>PC Express</title>
 </head>
 <body>
-    <a href="/">Torna alla home</a>
+    <p>
+        <a href="/">Torna alla home</a>
+    </p>
+    <p>
+        <a href="/pc/newpc_form">Aggiungi nuovo pc</a>
+    </p>
     <h1>Catalogo PC</h1>
     <div th:if="${pcs.isEmpty()}">Non ci sono computer nel sistema.</div>
     <ul>
         <li th:each="pc : ${pcs}">
-            <a th:href="|/pcs/${pc.id}|"
+            <a th:href="|/pc/${pc.id}|"
                th:text="|${pc.nome}|">nome</a>
         </li>
     </ul>

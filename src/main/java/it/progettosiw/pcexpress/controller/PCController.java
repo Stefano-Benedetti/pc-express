@@ -1,11 +1,14 @@
 package it.progettosiw.pcexpress.controller;
 
+import it.progettosiw.pcexpress.model.PC;
 import it.progettosiw.pcexpress.service.PCService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class PCController {
@@ -23,10 +26,22 @@ public class PCController {
         return "pc/catalog";
     }
 
-    @GetMapping("/pcs/{id}")
+    @GetMapping("/pc/{id}")
     public String show(@PathVariable("id") Long id, Model model){
         model.addAttribute("pc", this.pcService.getPCById(id));
         return "pc/show";
+    }
+
+    @GetMapping("/pc/newpc_form")
+    public String newPcForm(Model model){
+        model.addAttribute("pc", new PC());
+        return "pc/newpc_form";
+    }
+    @PostMapping("/pc/newpc")
+    public String newpc(@ModelAttribute("pc") PC pc, Model model){
+        this.pcService.save(pc);
+        model.addAttribute("pc", pc);
+        return "redirect:/pc/"+pc.getId().toString();
     }
 
 }
