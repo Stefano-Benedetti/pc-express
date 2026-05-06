@@ -15,3 +15,4 @@ INSERT INTO pc (id, codice, nome, cpu, gpu, ram, scheda_madre, rom, case_pc, ali
 INSERT INTO pc (id, codice, nome, cpu, gpu, ram, scheda_madre, rom, case_pc, alimentatore, sistema_operativo, dissipatore, ventole, prezzo, disponibilita) VALUES (nextval('pc_seq'),100008, 'Linux Dev PC 1', 'Intel Core i5-13600K', 'AMD Radeon RX 7600', '32GB DDR5', 'MSI PRO Z690-A', '1TB NVMe SSD', 'Phanteks Eclipse P400A', 'Corsair RM650', 'Ubuntu 24.04 LTS', 'DeepCool AK620', '3x 120mm',500,50);
 
 INSERT INTO pc (id, codice, nome, cpu, gpu, ram, scheda_madre, rom, case_pc, alimentatore, sistema_operativo, dissipatore, ventole, prezzo, disponibilita) VALUES (nextval('pc_seq'),100009, 'HTPC 1', 'AMD Ryzen 5 8600G', 'Radeon 760M (iGPU)', '16GB DDR5', 'ASUS B650M-A', '1TB NVMe SSD', 'SilverStone GD09', 'Corsair CX550M', 'Windows 11 Home', 'Low-profile cooler', '2x 120mm',69.69,69);
+
