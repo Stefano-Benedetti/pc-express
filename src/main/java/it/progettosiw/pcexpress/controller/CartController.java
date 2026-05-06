@@ -18,7 +18,7 @@ public class CartController {
 
     @GetMapping("/user/cart")
     public String showCart(Model model){
-        model.addAttribute("cart", this.cartService.getCartByUserId());
+        model.addAttribute("cart", this.cartService.getAllCartItems());
         return "/user/cart.html";
     }
 

@@ -1,7 +1,6 @@
 package it.progettosiw.pcexpress.service;
 
 import it.progettosiw.pcexpress.model.CartItem;
-import it.progettosiw.pcexpress.model.PC;
 import it.progettosiw.pcexpress.repository.CartRepository;
 import org.springframework.stereotype.Service;
 
