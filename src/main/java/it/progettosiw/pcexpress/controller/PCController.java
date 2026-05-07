@@ -32,12 +32,12 @@ public class PCController {
         return "pc/show";
     }
 
-    @GetMapping("/pc/newpc_form")
+    @GetMapping("/admin/pc/newpc_form")
     public String newPcForm(Model model){
         model.addAttribute("pc", new PC());
-        return "pc/newpc_form";
+        return "admin/pc/newpc_form";
     }
-    @PostMapping("/pc/newpc")
+    @PostMapping("/admin/pc/newpc_form")
     public String newpc(@ModelAttribute("pc") PC pc, Model model){
         this.pcService.save(pc);
         model.addAttribute("pc", pc);

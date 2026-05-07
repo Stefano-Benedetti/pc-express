@@ -16,3 +16,6 @@ INSERT INTO pc (id, codice, nome, cpu, gpu, ram, scheda_madre, rom, case_pc, ali
 
 INSERT INTO pc (id, codice, nome, cpu, gpu, ram, scheda_madre, rom, case_pc, alimentatore, sistema_operativo, dissipatore, ventole, prezzo, disponibilita) VALUES (nextval('pc_seq'),100009, 'HTPC 1', 'AMD Ryzen 5 8600G', 'Radeon 760M (iGPU)', '16GB DDR5', 'ASUS B650M-A', '1TB NVMe SSD', 'SilverStone GD09', 'Corsair CX550M', 'Windows 11 Home', 'Low-profile cooler', '2x 120mm',69.69,69);
 
+INSERT INTO users (id, first_name, last_name, email, date_of_birth, phone_number) VALUES (nextval('users_seq'), 'Zio', 'Pera', 'ziopera@lol.com', '1984-12-21', '3332221111');
+
+INSERT INTO credentials (id, username, password, role) VALUES (nextval('credentials_seq'), 'ziopera', '$2a$12$.SQC2tN77hdeh/k3TSV2KeSlsddUPCo/JTP4YvAEXh3MyG.WbVNSW', 'ADMIN')

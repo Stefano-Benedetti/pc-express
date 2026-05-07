@@ -1,13 +1,12 @@
 package it.progettosiw.pcexpress.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -18,17 +17,14 @@ public class User {
 
     private String lastName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
-
-    @Column(nullable = false)
-    private String password;
 
     private LocalDate dateOfBirth;
 
     private String phoneNumber;
 
-    @Column(nullable = false)
+    @OneToOne(cascade = CascadeType.ALL)
     private Cart cart;
 
     public User(){
@@ -38,8 +34,6 @@ public class User {
     public User(String firstName, String lastName, String email, String password, LocalDate dateOfBirth, String phoneNumber, Cart cart) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
-        this.password = password;
         this.dateOfBirth = dateOfBirth;
         this.phoneNumber = phoneNumber;
         this.cart = cart;
@@ -75,14 +69,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public LocalDate getDateOfBirth() {

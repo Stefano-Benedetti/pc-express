@@ -1,12 +1,10 @@
 package it.progettosiw.pcexpress.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
+@Entity
 public class CartItem {
 
     @Id
@@ -16,10 +14,10 @@ public class CartItem {
     @Column(nullable = false)
     private Integer quantity;
 
-    @Column(nullable = false)
+    @ManyToOne
     private Cart cart;
 
-    @Column(nullable = false)
+    @ManyToOne
     private PC pc;
 
     public CartItem() {

@@ -1,12 +1,11 @@
 package it.progettosiw.pcexpress.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
 
 import java.util.List;
 import java.util.Objects;
 
+@Entity
 public class Cart {
 
     @Id
@@ -15,9 +14,8 @@ public class Cart {
 
     private Float totalPrice;
 
+    @OneToMany
     private List<CartItem> cartItems;
-
-    private User user;
 
     public Cart(){
 
@@ -26,7 +24,6 @@ public class Cart {
     public Cart(Float totalPrice, List<CartItem> cartItems, User user) {
         this.totalPrice = totalPrice;
         this.cartItems = cartItems;
-        this.user = user;
     }
 
     public Float getTotalPrice() {
@@ -51,14 +48,6 @@ public class Cart {
 
     public void setCartItems(List<CartItem> cartItems) {
         this.cartItems = cartItems;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     @Override
