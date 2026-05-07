@@ -18,4 +18,4 @@ INSERT INTO pc (id, codice, nome, cpu, gpu, ram, scheda_madre, rom, case_pc, ali
 
 INSERT INTO users (id, first_name, last_name, email, date_of_birth, phone_number) VALUES (nextval('users_seq'), 'Zio', 'Pera', 'ziopera@lol.com', '1984-12-21', '3332221111');
 
-INSERT INTO credentials (id, username, password, role) VALUES (nextval('credentials_seq'), 'ziopera', '$2a$12$.SQC2tN77hdeh/k3TSV2KeSlsddUPCo/JTP4YvAEXh3MyG.WbVNSW', 'ADMIN')
+INSERT INTO credentials (id, user_id, username, password, role) VALUES (nextval('credentials_seq'), 1,'ziopera', '$2a$12$.SQC2tN77hdeh/k3TSV2KeSlsddUPCo/JTP4YvAEXh3MyG.WbVNSW', 'ADMIN')
