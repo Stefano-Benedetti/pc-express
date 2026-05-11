@@ -5,13 +5,15 @@
     <title>PC Express</title>
 </head>
 <body>
-  <h1>Carrello</h1>
-  <div th:if="${cart.getCartItems().isEmpty()}">Non ci sono computer nel carrello.</div>
-  <ul>
-    <li th:each="cartItem : ${cart.getCartItems()}">
-      <a th:href="|/pc/${cartItem.getPc().getId()}|"
-         th:text="|${cartItem.getPc().getNome()}|">nome</a>
-    </li>
-  </ul>
+    <h1>Carrello</h1>
+    <div th:if="${cart.getCartItems().isEmpty()}">Non ci sono computer nel carrello.</div>
+    <ul>
+        <li th:each="cartItem : ${cart.getCartItems()}">
+            <a th:href="|/pc/${cartItem.getPc().getId()}|"
+               th:text="|${cartItem.getPc().getNome()}|">nome</a>
+            <div th:text="| x${cartItem.getQuantity()}|">xx</div>
+        </li>
+    </ul>
+    <h2 th:text="|Totale: ${cart.getTotalPrice()} euro|">Prezzo Totale</h2>
 </body>
 </html>

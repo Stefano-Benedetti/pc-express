@@ -19,5 +19,13 @@
     <div th:text="|Dissipatore: ${pc.dissipatore}|">Dissipatore</div>
     <div th:text="|Ventole: ${pc.ventole}|">Ventole</div>
     <div th:text="|Codice Prodotto: ${pc.codice}|">0000</div>
+
+    <form th:action="@{/user/cart/add}" method="post">
+        <input type="hidden" name="pcId" th:value="${pc.id}"/>
+        <label>Quantità:</label>
+        <input type="number" name="quantity" min="1" value="1"/>
+        <button type="submit">Aggiungi al carrello</button>
+    </form>
+
 </body>
 </html>

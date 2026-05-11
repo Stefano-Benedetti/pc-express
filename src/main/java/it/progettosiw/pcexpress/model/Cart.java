@@ -14,7 +14,7 @@ public class Cart {
 
     private Float totalPrice;
 
-    @OneToMany
+    @OneToMany(mappedBy = "cart", cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private List<CartItem> cartItems;
 
     public Cart(){

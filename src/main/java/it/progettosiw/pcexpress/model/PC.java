@@ -39,6 +39,7 @@ public class PC {
     @Column(nullable = false)
     private Float prezzo;
 
+    @Column(nullable = false)
     private Integer disponibilita;
 
     public PC(){

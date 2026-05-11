@@ -3,6 +3,8 @@ di riparazione/manutenzione di PC.
 
 Ci sono tre tipi di utente: utente non loggato, utente loggato, amministratore
 
+Il catalogo dei PC mostra anche i PC non più disponibili, ma di default il filtro cerca solo i PC disponibili.
+
 
 UTENTE NON LOGGATO: può accedere al catalogo dei PC in vendita, può vedere ogni singolo PC in vendita,
 calendario giorni di appuntamento disponibili, può fare registrazione o login
@@ -57,7 +59,8 @@ quindi conferma l'inserimento. Il Sistema mostra la pagina del PC appena aggiunt
 
 UC11 - ADMIN RIMUOVE UN PC DAL CATALOGO DEI PC IN VENDITA
 L'Admin effettua il login, apre il catalogo dei PC in vendita, poi apre la pagina del PC che vuole rimuovere dalla vendita e ne 
-seleziona la rimozione. Il Sistema chiede la conferma, quindi rimuove il PC dai PC in vendita e mostra il catalogo dei PC in vendita.
+seleziona la rimozione. Il Sistema verifica che il PC da rimuovere non sia mai stato venduto né sia in nessun carrello,
+chiede la conferma, quindi rimuove il PC dai PC in vendita e mostra il catalogo dei PC in vendita.
 
 UC12 - ADMIN MODIFICA UN PC DEL CATALOGO DEI PC IN VENDITA
 L'Admin effettua il login, apre il catalogo dei PC in vendita, poi apre la pagina del PC che vuole modificare (solo per correggere
