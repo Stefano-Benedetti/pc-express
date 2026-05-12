@@ -6,7 +6,7 @@
 </head>
 <body>
   <h1>Aggiungi un PC</h1>
-  <form th:action="@{/pc/newpc}" method="POST" th:object="${pc}">
+  <form th:action="@{/admin/pc/newpc_form}" method="POST" th:object="${pc}">
 <!--    <div th:if="${#fields.hasGlobalErrors()}">-->
 <!--      <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>-->
 <!--    </div>-->
@@ -24,9 +24,6 @@
       <label>Codice prodotto:</label> <span><input type="text" th:field="${pc.codice}" /></span>
     </div>
     <div>
-      <label>Sistema Operativo:</label> <span><input type="text" th:field="${pc.sistemaOperativo}" /></span>
-    </div>
-    <div>
       <label>CPU:</label> <span><input type="text" th:field="${pc.cpu}" /></span>
     </div>
     <div>
@@ -39,19 +36,7 @@
       <label>ROM:</label> <span><input type="text" th:field="${pc.rom}" /></span>
     </div>
     <div>
-      <label>Scheda Madre:</label> <span><input type="text" th:field="${pc.schedaMadre}" /></span>
-    </div>
-    <div>
       <label>Case:</label> <span><input type="text" th:field="${pc.casePc}" /></span>
-    </div>
-    <div>
-      <label>Alimentatore:</label> <span><input type="text" th:field="${pc.alimentatore}" /></span>
-    </div>
-    <div>
-      <label>Dissipatore:</label> <span><input type="text" th:field="${pc.dissipatore}" /></span>
-    </div>
-    <div>
-      <label>Ventole:</label> <span><input type="text" th:field="${pc.ventole}" /></span>
     </div>
     <div>
       <span><button type="submit">Conferma</button></span>

@@ -12,26 +12,16 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Float totalPrice;
-
-    @OneToMany(mappedBy = "cart", cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.ALL})
+    @JoinColumn(name="cart_id")
     private List<CartItem> cartItems;
 
     public Cart(){
 
     }
 
-    public Cart(Float totalPrice, List<CartItem> cartItems, User user) {
-        this.totalPrice = totalPrice;
+    public Cart(List<CartItem> cartItems, User user) {
         this.cartItems = cartItems;
-    }
-
-    public Float getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(Float totalPrice) {
-        this.totalPrice = totalPrice;
     }
 
     public Long getId() {
@@ -48,6 +38,14 @@ public class Cart {
 
     public void setCartItems(List<CartItem> cartItems) {
         this.cartItems = cartItems;
+    }
+
+    public Float calcTotPrice(){
+        Float total_price = 0F;
+        for(CartItem ci : this.cartItems){
+            total_price += ci.getPc().getPrezzo() * ci.getQuantity();
+        }
+        return total_price;
     }
 
     @Override

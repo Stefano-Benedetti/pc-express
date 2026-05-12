@@ -22,19 +22,9 @@ public class PC {
 
     private String ram;
 
-    private String schedaMadre;
-
     private String rom;
 
     private String casePc;
-
-    private String alimentatore;
-
-    private String sistemaOperativo;
-
-    private String dissipatore;
-
-    private String ventole;
 
     @Column(nullable = false)
     private Float prezzo;
@@ -46,19 +36,14 @@ public class PC {
 
     }
 
-    public PC(Long codice, String nome, String cpu, String gpu, String ram, String schedaMadre, String rom, String casePc, String alimentatore, String sistemaOperativo, String dissipatore, String ventole, Float prezzo, Integer disponibilita) {
+    public PC(Long codice, String nome, String cpu, String gpu, String ram, String rom, String casePc, Float prezzo, Integer disponibilita) {
         this.codice = codice;
         this.nome = nome;
         this.cpu = cpu;
         this.gpu = gpu;
         this.ram = ram;
-        this.schedaMadre = schedaMadre;
         this.rom = rom;
         this.casePc = casePc;
-        this.alimentatore = alimentatore;
-        this.sistemaOperativo = sistemaOperativo;
-        this.dissipatore = dissipatore;
-        this.ventole = ventole;
         this.prezzo = prezzo;
         this.disponibilita = disponibilita;
     }
@@ -111,14 +96,6 @@ public class PC {
         this.ram = ram;
     }
 
-    public String getSchedaMadre() {
-        return schedaMadre;
-    }
-
-    public void setSchedaMadre(String schedaMadre) {
-        this.schedaMadre = schedaMadre;
-    }
-
     public String getRom() {
         return rom;
     }
@@ -133,38 +110,6 @@ public class PC {
 
     public void setCasePc(String casePC) {
         this.casePc = casePC;
-    }
-
-    public String getAlimentatore() {
-        return alimentatore;
-    }
-
-    public void setAlimentatore(String alimentatore) {
-        this.alimentatore = alimentatore;
-    }
-
-    public String getSistemaOperativo() {
-        return sistemaOperativo;
-    }
-
-    public void setSistemaOperativo(String sistemaOperativo) {
-        this.sistemaOperativo = sistemaOperativo;
-    }
-
-    public String getDissipatore() {
-        return dissipatore;
-    }
-
-    public void setDissipatore(String dissipatore) {
-        this.dissipatore = dissipatore;
-    }
-
-    public String getVentole() {
-        return ventole;
-    }
-
-    public void setVentole(String ventole) {
-        this.ventole = ventole;
     }
 
     public Float getPrezzo() {

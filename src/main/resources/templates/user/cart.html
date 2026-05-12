@@ -11,9 +11,31 @@
         <li th:each="cartItem : ${cart.getCartItems()}">
             <a th:href="|/pc/${cartItem.getPc().getId()}|"
                th:text="|${cartItem.getPc().getNome()}|">nome</a>
-            <div th:text="| x${cartItem.getQuantity()}|">xx</div>
+            <div th:text="|${cartItem.getPc().getPrezzo()} euro x ${cartItem.getQuantity()}|">prezzo x quantità</div>
+
+            <div>
+                <!-- +1 -->
+                <form th:action="@{/user/cart/add}" method="post" style="display:inline;">
+                    <input type="hidden" name="pcId" th:value="${cartItem.getPc().getId()}"/>
+                    <input type="hidden" name="quantity" value="1"/>
+                    <button type="submit">+</button>
+                </form>
+
+                <!-- -1 (decrementa o rimuove se arriva a 0) -->
+                <form th:action="@{/user/cart/remove_one}" method="post" style="display:inline;">
+                    <input type="hidden" name="pcId" th:value="${cartItem.getPc().getId()}"/>
+                    <button type="submit">-</button>
+                </form>
+
+                <!-- rimuove tutti i pc uguali -->
+                <form th:action="@{/user/cart/remove_cart_item}" method="post" style="display:inline;">
+                    <input type="hidden" name="pcId" th:value="${cartItem.getPc().getId()}"/>
+                    <button type="submit">Rimuovi</button>
+                </form>
+            </div>
+
         </li>
     </ul>
-    <h2 th:text="|Totale: ${cart.getTotalPrice()} euro|">Prezzo Totale</h2>
+    <h2 th:text="|Totale: ${cart.calcTotPrice()} euro|">Prezzo Totale</h2>
 </body>
 </html>

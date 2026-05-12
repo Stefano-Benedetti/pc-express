@@ -27,8 +27,7 @@ public class User {
 
     private String phoneNumber;
 
-    // Strategia fetch da testare
-    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private Cart cart;
 
     public User(){

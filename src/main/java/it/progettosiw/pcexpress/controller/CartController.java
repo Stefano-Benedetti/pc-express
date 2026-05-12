@@ -26,26 +26,27 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    // getFirstCart DA SOSTITUIRE CON getCartById
     @GetMapping("/user/cart")
     public String showCart(Model model){
         model.addAttribute("cart", this.cartService.getFirstCart());
         return "/user/cart.html";
     }
 
-    // getFirstCart DA SOSTITUIRE CON getCartById
     @PostMapping("/user/cart/add")
     public String addToCart(@RequestParam Long pcId, @RequestParam Integer quantity) {
-        PC pc = pcService.getPCById(pcId);
+        cartService.addToCurrentUserCart(pcId, quantity);
+        return "redirect:/user/cart";
+    }
 
-        CartItem cartItem = new CartItem();
-        cartItem.setPc(pc);
-        cartItem.setQuantity(quantity);
+    @PostMapping("/user/cart/remove_cart_item")
+    public String removeCartItemFromCart(@RequestParam Long pcId) {
+        cartService.removeCartItemFromCurrentUserCart(pcId);
+        return "redirect:/user/cart";
+    }
 
-        Cart cart = cartService.getFirstCart();
-        cartItem.setCart(cart);
-
-        cartService.save(cartItem);
+    @PostMapping("/user/cart/remove_one")
+    public String removeOneFromCart(@RequestParam Long pcId) {
+        cartService.removeOneFromCurrentUserCart(pcId);
         return "redirect:/user/cart";
     }
 

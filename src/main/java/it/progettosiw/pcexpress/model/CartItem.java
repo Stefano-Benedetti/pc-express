@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"cart_id","pc_id"}))
 public class CartItem {
 
     @Id
@@ -15,17 +16,13 @@ public class CartItem {
     private Integer quantity;
 
     @ManyToOne
-    private Cart cart;
-
-    @ManyToOne
     private PC pc;
 
     public CartItem() {
     }
 
-    public CartItem(Integer quantity, Cart cart, PC pc) {
+    public CartItem(Integer quantity, PC pc) {
         this.quantity = quantity;
-        this.cart = cart;
         this.pc = pc;
     }
 
@@ -43,14 +40,6 @@ public class CartItem {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
-
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
     }
 
     public PC getPc() {
