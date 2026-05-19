@@ -3,6 +3,7 @@ package it.progettosiw.pcexpress.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -27,8 +28,12 @@ public class User {
 
     private String phoneNumber;
 
-    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    //da testare la strategia di fetch
+    @OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
     private Cart cart;
+
+    @OneToMany(mappedBy = "user")
+    private List<Sale> purchases;
 
     public User(){
 

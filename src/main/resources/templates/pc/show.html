@@ -22,6 +22,13 @@
         <button type="submit">Aggiungi al carrello</button>
     </form>
 
+    <form th:action="@{/sale/makeNewSale}" method="post">
+        <input type="hidden" name="pcId" th:value="${pc.id}"/>
+        <label>Quantità:</label>
+        <input type="number" name="quantity" min="1" value="1"/>
+        <button type="submit">ACQUISTA</button>
+    </form>
+
     <a th:href="|/admin/pc/${pc.id}/modify|">Modifica PC</a>
     <a th:href="|/admin/pc/${pc.id}/clone|">Clona</a>
 
