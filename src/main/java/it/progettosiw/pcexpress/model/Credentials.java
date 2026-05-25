@@ -10,14 +10,24 @@ public class Credentials {
     public static final String DEFAULT_ROLE = "DEFAULT";
     public static final String ADMIN_ROLE = "ADMIN";
 
+    public Credentials() {
+    }
+
+    public Credentials(String email, String password, User user) {
+        this.email = email;
+        this.password = password;
+        this.user = user;
+        this.role = DEFAULT_ROLE;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String username;
+    private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String password;
 
     private String role;
@@ -33,12 +43,12 @@ public class Credentials {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String username) {
+        this.email = username;
     }
 
     public String getPassword() {

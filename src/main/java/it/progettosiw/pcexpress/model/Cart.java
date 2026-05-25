@@ -20,7 +20,7 @@ public class Cart {
 
     }
 
-    public Cart(List<CartItem> cartItems, User user) {
+    public Cart(List<CartItem> cartItems) {
         this.cartItems = cartItems;
     }
 

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>PC Express</title>
+</head>
+<body>
+<div>
+  <h2>Registrazione</h2>
+
+  <form th:action="@{/register}" method="post" th:object="${user}">
+    <div>
+      <label>Nome:</label> <span><input type="text" th:field="${user.firstName}" required></span>
+    </div>
+    <div>
+      <label>Cognome:</label> <span><input type="text" th:field="${user.lastName}" required></span>
+    </div>
+    <div>
+      <label>Email:</label> <span><input type="email" th:field="${user.email}" required></span>
+    </div>
+    <div>
+      <label>Data di nascita:</label> <span><input type="date" th:field="${user.dateOfBirth}" required></span>
+    </div>
+    <div>
+      <label>Telefono:</label> <span><input type="text" th:field="${user.phoneNumber}"></span>
+    </div>
+
+    <div>
+      <label>Password:</label> <span><input type="text" name="password" required></span>
+    </div>
+
+    <button type="submit">Conferma</button>
+
+  </form>
+</div>
+</body>
+</html>

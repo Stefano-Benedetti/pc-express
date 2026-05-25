@@ -18,5 +18,5 @@ INSERT INTO cart (id) VALUES (nextval('cart_seq'));
 INSERT INTO cart_item(id, quantity, cart_id, pc_id) VALUES (nextval('cart_item_seq'), 1, 1, 1);
 INSERT INTO cart_item(id, quantity, cart_id, pc_id) VALUES (nextval('cart_item_seq'), 2, 1, 51);
 
-INSERT INTO users (id, first_name, last_name, email, date_of_birth, phone_number, cart_id) VALUES (nextval('users_seq'), 'Zio', 'Pera', 'ziopera@lol.com', '1984-12-21', '3332221111',1);
-INSERT INTO credentials (id, user_id, username, password, role) VALUES (nextval('credentials_seq'), 1,'ziopera', '$2a$12$.SQC2tN77hdeh/k3TSV2KeSlsddUPCo/JTP4YvAEXh3MyG.WbVNSW', 'ADMIN');
+INSERT INTO users (id, first_name, last_name, email, date_of_birth, phone_number, cart_id) VALUES (nextval('users_seq'), 'Zio', 'Pera', 'ziopera@lol.com','1984-12-21', '3332221111',1);
+INSERT INTO credentials (id, user_id, email, password, role) VALUES (nextval('credentials_seq'), 1,'ziopera@lol.com', '$2a$10$MjIkVqydKqyXAeHvk8sPre/qxZqceexRN7NP/ngQrJ5Qguz3xHluS', 'ADMIN');  --la password è 12345

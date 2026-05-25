@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>PC Express</title>
+</head>
+<body>
+    <div>
+      <h2>Login</h2>
+
+      <form th:action="@{/login}" method="post">
+        <div>
+          <label for="username">Email</label>
+          <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  required>
+        </div>
+
+        <div>
+          <label for="password">Password</label>
+          <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  required>
+        </div>
+
+        <button type="submit">Conferma</button>
+
+      </form>
+    </div>
+</body>
+</html>
