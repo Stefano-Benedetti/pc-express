@@ -1,11 +1,17 @@
 package it.progettosiw.pcexpress.model;
 
+import it.progettosiw.pcexpress.service.CartService;
 import jakarta.persistence.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
 @Entity
 public class PC {
+
+    @Transient //per escluderlo dal mapping JPA
+    private static final Logger logger = LoggerFactory.getLogger(CartService.class);
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -46,6 +52,12 @@ public class PC {
         this.casePc = casePc;
         this.prezzo = prezzo;
         this.disponibilita = disponibilita;
+    }
+
+    public void reduceAvailability(Integer quantity){
+        if(this.disponibilita<quantity)
+            logger.error("Quantità maggiore della disponibilità nel pc: "+ getNome()+", "+getId());
+        this.disponibilita -= quantity;
     }
 
     public Long getId() {

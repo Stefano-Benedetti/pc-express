@@ -18,17 +18,18 @@ public class SaleService {
 
     private static final Logger logger = LoggerFactory.getLogger(CartService.class);
 
-
+    private CartService cartService;
     private UserService userService;
     private SaleRepository saleRepository;
     private SoldItemRepository soldItemRepository;
     private PCRepository pcRepository;
 
-    public SaleService(SaleRepository saleRepository, SoldItemRepository soldItemRepository, PCRepository pcRepository, UserService userService) {
+    public SaleService(SaleRepository saleRepository, SoldItemRepository soldItemRepository, PCRepository pcRepository, UserService userService, CartService cartService) {
         this.saleRepository = saleRepository;
         this.soldItemRepository = soldItemRepository;
-        this.pcRepository=pcRepository;
+        this.pcRepository = pcRepository;
         this.userService = userService;
+        this.cartService = cartService;
     }
 
     public Sale getSaleById(Long sale_id){
@@ -38,6 +39,10 @@ public class SaleService {
             return null;
         }
         return optSale.get();
+    }
+
+    public List<Sale> getCurrentUserPurchases(){
+        return userService.getCurrentUser().getPurchases();
     }
 
     public SoldItem createSoldItem(Long pc_id, Integer quantity){
@@ -51,20 +56,44 @@ public class SaleService {
         return new SoldItem(quantity, pc.getPrezzo(), pc);
     }
 
-    //è chiamato quando si acquista dal carrello
-    public void createSale(Cart cart){
 
-    }
     //è chaiamto quando si acquista dalla pagina di un pc
     public Sale createSaleFromPC(Long pc_id, Integer quantity){
         SoldItem soldItem = createSoldItem(pc_id, quantity);
         Float totalSoldItemPrice = soldItem.getPaidMoney()*quantity;
+
+        soldItem.getPc().reduceAvailability(quantity);
 
         List<SoldItem> soldItems = new ArrayList<>();
         soldItems.add(soldItem);
 
         Sale sale = new Sale(LocalDateTime.now(), totalSoldItemPrice, soldItems, userService.getCurrentUser());
         saleRepository.save(sale);
+        return sale;
+    }
+
+    //è chiamato quando si acquista dal carrello
+    public Sale createSaleFromCart(){
+        User currentUser = userService.getCurrentUser();
+        Cart currentCart = currentUser.getCart();
+
+        List<SoldItem> soldItems = new ArrayList<>();
+        Float totalSoldItemPrice = 0F;
+
+        for(CartItem cartItem : currentCart.getCartItems()){
+            Integer quantity = cartItem.getQuantity();
+            PC pc = cartItem.getPc();
+            pc.reduceAvailability(quantity);
+
+            SoldItem soldItem = new SoldItem(quantity, pc.getPrezzo(), pc);
+
+            totalSoldItemPrice += soldItem.getPaidMoney()*quantity;
+            soldItems.add(soldItem);
+        }
+
+        Sale sale = new Sale(LocalDateTime.now(), totalSoldItemPrice, soldItems, currentUser);
+        saleRepository.save(sale);
+        cartService.emptyCurrentUserCart();
         return sale;
     }
 

@@ -14,9 +14,12 @@ INSERT INTO pc (id, codice, nome, cpu, gpu, ram, rom, case_pc, prezzo, disponibi
 INSERT INTO pc (id, codice, nome, cpu, gpu, ram, rom, case_pc, prezzo, disponibilita) VALUES (nextval('pc_seq'),100023, 'Leone PC', 'AMD Ryzen 7 5700G', 'RTX 3050', '16GB DDR4', '1TB NVMe SSD', 'Cougar MX330', 699.00, 16);
 INSERT INTO pc (id, codice, nome, cpu, gpu, ram, rom, case_pc, prezzo, disponibilita) VALUES (nextval('pc_seq'),100009, 'Pollo PC', 'AMD Ryzen 5 8600G', 'Radeon 760M (iGPU)', '16GB DDR5',  '1TB NVMe SSD', 'SilverStone GD09',69.69,69);
 
-INSERT INTO cart (id) VALUES (nextval('cart_seq'));
+INSERT INTO cart (id) VALUES (1);
 INSERT INTO cart_item(id, quantity, cart_id, pc_id) VALUES (nextval('cart_item_seq'), 1, 1, 1);
 INSERT INTO cart_item(id, quantity, cart_id, pc_id) VALUES (nextval('cart_item_seq'), 2, 1, 51);
+INSERT INTO cart (id) VALUES (2);
 
-INSERT INTO users (id, first_name, last_name, email, date_of_birth, phone_number, cart_id) VALUES (nextval('users_seq'), 'Zio', 'Pera', 'ziopera@lol.com','1984-12-21', '3332221111',1);
+INSERT INTO users (id, first_name, last_name, email, date_of_birth, phone_number, cart_id) VALUES (1, 'Zio', 'Pera', 'ziopera@lol.com','1984-12-21', '3332221111',1);
 INSERT INTO credentials (id, user_id, email, password, role) VALUES (nextval('credentials_seq'), 1,'ziopera@lol.com', '$2a$10$MjIkVqydKqyXAeHvk8sPre/qxZqceexRN7NP/ngQrJ5Qguz3xHluS', 'ADMIN');  --la password è 12345
+INSERT INTO users (id, first_name, last_name, email, date_of_birth, phone_number, cart_id) VALUES (2, 'ciccio', 'gamer', 'a@a.com','2000-12-12', '3332221111',2);
+INSERT INTO credentials (id, user_id, email, password, role) VALUES (nextval('credentials_seq'), 2,'a@a.com', '$2a$10$MjIkVqydKqyXAeHvk8sPre/qxZqceexRN7NP/ngQrJ5Qguz3xHluS', 'DEFAULT');  --la password è 12345

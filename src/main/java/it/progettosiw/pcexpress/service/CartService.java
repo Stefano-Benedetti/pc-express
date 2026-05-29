@@ -46,6 +46,12 @@ public class CartService {
         return null;
     }
 
+    public void emptyCurrentUserCart(){
+        Cart cart = getCurrentUserCart();
+        cart.getCartItems().clear();
+        cartRepository.save(cart);
+    }
+
 
     public void addToCurrentUserCart(Long pc_id, Integer quantity){
         Cart cart = getCurrentUserCart();

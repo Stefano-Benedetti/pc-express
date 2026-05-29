@@ -103,6 +103,14 @@ public class User {
         this.cart = cart;
     }
 
+    public List<Sale> getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(List<Sale> purchases) {
+        this.purchases = purchases;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

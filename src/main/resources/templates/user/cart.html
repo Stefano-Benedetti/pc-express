@@ -39,6 +39,10 @@
 
         </li>
     </ul>
+
     <h2 th:text="|Totale: ${cart.calcTotPrice()} euro|">Prezzo Totale</h2>
+    <form th:action="@{/sale/cart/makeNewSale}" method="post">
+        <button type="submit">ACQUISTA</button>
+    </form>
 </body>
 </html>

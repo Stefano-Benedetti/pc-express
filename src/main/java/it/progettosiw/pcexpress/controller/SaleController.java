@@ -21,9 +21,15 @@ public class SaleController {
         this.saleService = saleService;
     }
 
-    @PostMapping("/sale/makeNewSale")
+    @PostMapping("/sale/single_item/makeNewSale")
     public String createSaleForSingleItem(@RequestParam Long pcId, @RequestParam Integer quantity, Model model){
         Sale sale = saleService.createSaleFromPC(pcId, quantity);
+        return "redirect:/sale/single_sale/"+sale.getId().toString();
+    }
+
+    @PostMapping("/sale/cart/makeNewSale")
+    public String createSaleForCart(Model model){
+        Sale sale = saleService.createSaleFromCart();
         return "redirect:/sale/single_sale/"+sale.getId().toString();
     }
 
@@ -31,6 +37,12 @@ public class SaleController {
     public String showForSingleSale(@PathVariable("sale_id") Long sale_id, Model model){
         model.addAttribute("sale", saleService.getSaleById(sale_id));
         return "/sale/single_sale";
+    }
+
+    @GetMapping("/sale/user_sales")
+    public String showForSingleSale(Model model){
+        model.addAttribute("purchases", saleService.getCurrentUserPurchases());
+        return "/sale/user_sales";
     }
 }
 

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PC express</title>
+</head>
+<body>
+  <p>
+    <a href="/">Torna alla home</a>
+  </p>
+  <h1>Acquisti effettuati</h1>
+  <div th:if="${purchases.isEmpty()}">Non hai ancora effettuato acquisti.</div>
+  <ul>
+    <li th:each="purchase : ${purchases}">
+      <a th:href="|/sale/single_sale/${purchase.id}|"
+         th:text="|Acquisto del ${purchase.dateOfSale}|">Acquisto</a>
+      <div th:text="|Prezzo pagato: ${purchase.paidMoney}|"></div>
+    </li>
+  </ul>
+
+</body>
+</html>
