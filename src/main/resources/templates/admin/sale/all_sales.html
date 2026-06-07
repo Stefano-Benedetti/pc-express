@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>PC Express</title>
+</head>
+<body>
+    <p>
+        <a href="/">Torna alla home</a>
+    </p>
+    <h1>Vendite effettuate</h1>
+    <div th:if="${sales.isEmpty()}">Non sono state effettuate vendite.</div>
+    <ul>
+        <li th:each="sale : ${sales}">
+            <a th:href="|/sale/single_sale/${sale.id}|"
+               th:text="|Acquisto del ${sale.dateOfSale}|">Acquisto</a>
+            <div th:text="|Prezzo pagato: ${sale.paidMoney}|"></div>
+        </li>
+    </ul>
+
+</body>
+</html>

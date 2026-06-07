@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <title>PC Express</title>
@@ -7,7 +7,7 @@
 <body>
     <h1>PC Express: i computer peggiori del mondo!</h1>
     <p>
-        <a href="/admin/">Amministrazione</a>
+        <a href="/admin/sale/all_sales">Vendite</a>
     </p>
     <p>
         <a href="/pc/catalog">Catalogo PC</a>
@@ -19,8 +19,16 @@
         <a href="/sale/user_sales">Acquisti</a>
     </p>
     <p>
+        <a href="/user/personal_area">Area Personale</a>
+    </p>
+    <p>
         <a href="/register">Registrati</a>
         <a href="/login">Accedi</a>
+    </p>
+    <p>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Logout</button>
+        </form>
     </p>
 </body>
 </html>

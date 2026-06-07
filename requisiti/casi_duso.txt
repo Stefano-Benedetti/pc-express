@@ -57,11 +57,6 @@ UC10 - ADMIN AGGIUNGE UN PC AL CATALOGO DEI PC IN VENDITA
 L'Admin effettua il login, poi apre il form di inserimento di un nuovo PC e ne inserisce le informazioni (e l'immagine?), 
 quindi conferma l'inserimento. Il Sistema mostra la pagina del PC appena aggiunto.
 
-UC11 - ADMIN RIMUOVE UN PC DAL CATALOGO DEI PC IN VENDITA
-L'Admin effettua il login, apre il catalogo dei PC in vendita, poi apre la pagina del PC che vuole rimuovere dalla vendita e ne 
-seleziona la rimozione. Il Sistema verifica che il PC da rimuovere non sia mai stato venduto né sia in nessun carrello,
-chiede la conferma, quindi rimuove il PC dai PC in vendita e mostra il catalogo dei PC in vendita.
-
 UC12 - ADMIN MODIFICA UN PC DEL CATALOGO DEI PC IN VENDITA
 L'Admin effettua il login, apre il catalogo dei PC in vendita, poi apre la pagina del PC che vuole modificare (solo per correggere
 errori di battitura, prezzo o disponibilità) e seleziona "modifica". Il Sistema mostra il form per modificare il PC.

@@ -1,2 +1,13 @@
 Da testare strategia di fetch User->Cart.
 Sale->Sold PC usa LAZY LOAD perché i PC venduti saranno mostrati come dettagli della vendita solo su richiesta.
+
+prossime cose da fare:
+- modificare la pagina di un singolo acquisto/vendita in modo che l'admin possa vedere chi è l'utente acquirente
+- aggiungere possibilità di modificare email o password (con una email di conferma?)
+- provare a creare e implementare customUserDetails
+
+
+- rendere le funzioni transazionali
+- fare la validazione
+- gestione eccezioni
+- front-end

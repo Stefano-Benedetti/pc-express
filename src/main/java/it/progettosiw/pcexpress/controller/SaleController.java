@@ -35,14 +35,20 @@ public class SaleController {
 
     @GetMapping("/sale/single_sale/{sale_id}")
     public String showForSingleSale(@PathVariable("sale_id") Long sale_id, Model model){
-        model.addAttribute("sale", saleService.getSaleById(sale_id));
+        model.addAttribute("sale", saleService.getSaleOfCurrentUserById(sale_id));
         return "/sale/single_sale";
     }
 
     @GetMapping("/sale/user_sales")
-    public String showForSingleSale(Model model){
+    public String showUserSales(Model model){
         model.addAttribute("purchases", saleService.getCurrentUserPurchases());
         return "/sale/user_sales";
+    }
+
+    @GetMapping("/admin/sale/all_sales")
+    public String showAllSales(Model model){
+        model.addAttribute("sales", saleService.getAllSales());
+        return "/admin/sale/all_sales";
     }
 }
 

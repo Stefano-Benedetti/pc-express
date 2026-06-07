@@ -23,10 +23,4 @@ public class HomeController {
         return "index.html";
     }
 
-    @GetMapping("/admin/")
-    public String getAdminHome(Model model){
-        return "/admin/index.html";
-    }
-
-
 }

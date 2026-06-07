@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>PC Express</title>
+</head>
+<body>
+  <h1>Modifica Account</h1>
+  <form th:action="@{/user/modify_user_info}" method="POST" th:object="${user}">
+    <div>
+      <label>Nome:</label> <span><input type="text" th:field="${user.firstName}" /></span>
+    </div>
+    <div>
+      <label>Cognome:</label> <span><input type="text" th:field="${user.lastName}" /></span>
+    </div>
+    <div th:text="|Email: ${user.email}|">Email</div>
+    <div>
+      <label>Data di nascita:</label> <span><input type="date" id="dateOfBirth" name="dateOfBirth" th:value="${user.dateOfBirth}" /></span>
+    </div>
+    <div>
+      <label>Numero di telefono:</label> <span><input type="text" th:field="${user.phoneNumber}" /></span>
+    </div>
+
+    <div>
+      <span><button type="submit">Conferma</button></span>
+    </div>
+  </form>
+
+</body>
+</html>

@@ -34,6 +34,25 @@ public class UserController {
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") User user, @RequestParam String password, Model model){
         userService.register(user, password);
-        return "/";
+        return "/index.html";
+    }
+
+    @GetMapping("/user/personal_area")
+    public String getPersonalArea(Model model){
+        model.addAttribute("user", userService.getCurrentUser());
+        return "/user/personal_area.html";
+    }
+
+    @GetMapping("/user/modify_user_info_form")
+    public String getModifyUserInfoForm(Model model){
+        model.addAttribute("user", userService.getCurrentUser());
+        return "/user/modify_user_info_form.html";
+    }
+
+    @PostMapping("/user/modify_user_info")
+    public String modifyUserInfo(@ModelAttribute("user") User user ,Model model){
+        System.out.println(user.getDateOfBirth());
+        userService.updateCurrentUserInfo(user.getFirstName(), user.getLastName(), user.getDateOfBirth(), user.getPhoneNumber());
+        return "redirect:/user/personal_area";
     }
 }

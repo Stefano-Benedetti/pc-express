@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <title>PC Express</title>
 </head>
 <body>
     <p><a href="/">Torna alla home</a></p>
+    <div th:if="$"
     <p><a href="/sale/user_sales">Torna agli acquisti effettuati</a></p>
     <h1>Acquisto</h1>
-    <h2 th:text="|Data: ${sale.getDateOfSale()}|">data</h2>
+    <h2 th:text="|Data: ${sale.getDateOfSale()}|">Data</h2>
     <h2 th:text="|Totale: ${sale.getPaidMoney()} euro|">Prezzo Totale</h2>
+    <h2 th:text="|Data: ${sale.getDateOfSale()}|">Acquirente</h2>
     <ul>
         <li th:each="soldItem : ${sale.getSoldItems()}">
             Articolo acquistato: <a th:href="|/pc/${soldItem.getPc().getId()}|"

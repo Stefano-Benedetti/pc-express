@@ -41,6 +41,19 @@ public class SaleService {
         return optSale.get();
     }
 
+    public Sale getSaleOfCurrentUserById(Long saleId){
+        Long userId = userService.getCurrentUser().getId();
+        Sale sale = saleRepository.findById(saleId).get();
+        if(sale.getUser().getId().equals(userId))
+            return sale;
+        return null;//exception
+    }
+
+    public List<Sale> getAllSales(){
+        List<Sale> sales = (List<Sale>) saleRepository.findAllByOrderByDateOfSaleDesc();
+        return sales;
+    }
+
     public List<Sale> getCurrentUserPurchases(){
         return userService.getCurrentUser().getPurchases();
     }

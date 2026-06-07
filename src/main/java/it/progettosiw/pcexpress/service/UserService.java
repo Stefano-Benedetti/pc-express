@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -27,6 +28,15 @@ public class UserService {
     public UserService(UserRepository userRepository, CredentialsRepository credentialsRepository){
         this.userRepository = userRepository;
         this.credentialsRepository = credentialsRepository;
+    }
+
+    public void updateCurrentUserInfo(String firstName, String lastName, LocalDate dateOfBirth, String phoneNumber){
+        User user = getCurrentUser();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setDateOfBirth(dateOfBirth);
+        user.setPhoneNumber(phoneNumber);
+        userRepository.save(user);
     }
 
     public void register(User user, String password){

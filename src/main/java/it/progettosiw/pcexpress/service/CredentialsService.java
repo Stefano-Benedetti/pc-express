@@ -6,8 +6,14 @@ import it.progettosiw.pcexpress.repository.CredentialsRepository;
 public class CredentialsService {
 
     private CredentialsRepository credentialsRepository;
+    private UserService userService;
 
-    public CredentialsService(CredentialsRepository credentialsRepository) {
+    public CredentialsService(CredentialsRepository credentialsRepository, UserService userService) {
         this.credentialsRepository = credentialsRepository;
+        this.userService = userService;
     }
+
+    /*public getCurrentUserRole(){
+        Long userId = userService.getCurrentUser().getId();
+    }*/
 }
