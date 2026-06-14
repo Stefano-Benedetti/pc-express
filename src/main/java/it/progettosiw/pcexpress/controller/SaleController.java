@@ -1,8 +1,8 @@
 package it.progettosiw.pcexpress.controller;
 
 import it.progettosiw.pcexpress.model.Sale;
-import it.progettosiw.pcexpress.service.PCService;
 import it.progettosiw.pcexpress.service.SaleService;
+import it.progettosiw.pcexpress.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +16,8 @@ public class SaleController {
 
     @Autowired
     private SaleService saleService;
+    @Autowired
+    private UserService userService;
 
     public SaleController(SaleService saleService) {
         this.saleService = saleService;
@@ -35,7 +37,12 @@ public class SaleController {
 
     @GetMapping("/sale/single_sale/{sale_id}")
     public String showForSingleSale(@PathVariable("sale_id") Long sale_id, Model model){
-        model.addAttribute("sale", saleService.getSaleOfCurrentUserById(sale_id));
+        Sale sale = saleService.getSaleById(sale_id);
+        if(!saleService.isCurrentUserBuyerOfSale(sale)){
+            //errore
+            return null;
+        }
+        model.addAttribute("sale", sale);
         return "/sale/single_sale";
     }
 
@@ -49,6 +56,12 @@ public class SaleController {
     public String showAllSales(Model model){
         model.addAttribute("sales", saleService.getAllSales());
         return "/admin/sale/all_sales";
+    }
+
+    @GetMapping("/admin/sale/{sale_id}")
+    public String showSingeUserSale(@PathVariable("sale_id") Long sale_id, Model model){
+        model.addAttribute("sale", saleService.getSaleById(sale_id));
+        return "/admin/sale/single_sale";
     }
 }
 

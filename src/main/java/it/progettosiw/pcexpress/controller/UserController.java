@@ -5,10 +5,7 @@ import it.progettosiw.pcexpress.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UserController {
@@ -51,8 +48,19 @@ public class UserController {
 
     @PostMapping("/user/modify_user_info")
     public String modifyUserInfo(@ModelAttribute("user") User user ,Model model){
-        System.out.println(user.getDateOfBirth());
         userService.updateCurrentUserInfo(user.getFirstName(), user.getLastName(), user.getDateOfBirth(), user.getPhoneNumber());
         return "redirect:/user/personal_area";
+    }
+
+    @GetMapping("/admin/users/{user_id}")
+    public String getUserInfo(@PathVariable("user_id") Long user_id , Model model){
+        model.addAttribute("user", userService.getUserById(user_id));
+        return "/admin/users/user_info";
+    }
+
+    @GetMapping("/admin/users/all_users")
+    public String getUserInfo(Model model){
+        model.addAttribute("users", userService.getAllUsers());
+        return "/admin/users/all_users";
     }
 }

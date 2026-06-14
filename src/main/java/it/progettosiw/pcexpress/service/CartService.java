@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +36,7 @@ public class CartService {
         this.userService = userService;
     }
 
+    @Transactional(readOnly = true)
     public Cart getCurrentUserCart () {
         User user = userService.getCurrentUser();
 
@@ -46,13 +48,14 @@ public class CartService {
         return null;
     }
 
+    @Transactional
     public void emptyCurrentUserCart(){
         Cart cart = getCurrentUserCart();
         cart.getCartItems().clear();
         cartRepository.save(cart);
     }
 
-
+    @Transactional
     public void addToCurrentUserCart(Long pc_id, Integer quantity){
         Cart cart = getCurrentUserCart();
 
@@ -83,6 +86,7 @@ public class CartService {
         logger.info("Aggiunto al carrello il seguente pc: {}", cartItem.getPc().getId());
     }
 
+    @Transactional
     public void removeCartItemFromCurrentUserCart(Long pc_id){
         Cart cart = getCurrentUserCart();
 
@@ -98,6 +102,7 @@ public class CartService {
         cartRepository.save(cart);
     }
 
+    @Transactional
     public void removeOneFromCurrentUserCart(Long pc_id){
         Cart cart = getCurrentUserCart();
         Optional<CartItem> cartItemOptional = cartItemRepository.findCartItemByCartIdAndPcId(cart.getId(),pc_id);

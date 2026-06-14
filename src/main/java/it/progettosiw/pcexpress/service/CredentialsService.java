@@ -13,7 +13,4 @@ public class CredentialsService {
         this.userService = userService;
     }
 
-    /*public getCurrentUserRole(){
-        Long userId = userService.getCurrentUser().getId();
-    }*/
 }

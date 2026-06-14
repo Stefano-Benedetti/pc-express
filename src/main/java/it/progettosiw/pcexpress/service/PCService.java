@@ -2,9 +2,12 @@ package it.progettosiw.pcexpress.service;
 
 import it.progettosiw.pcexpress.model.CartItem;
 import it.progettosiw.pcexpress.model.PC;
+import it.progettosiw.pcexpress.model.User;
 import it.progettosiw.pcexpress.repository.CartItemRepository;
 import it.progettosiw.pcexpress.repository.PCRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,20 +23,24 @@ public class PCService {
         this.cartItemRepository = cartItemRepository;
     }
 
+    @Transactional(readOnly = true)
     public PC getPCById(Long id) {
         if (pcRepository.findById(id).isPresent())
             return pcRepository.findById(id).get();
         return null;
     }
 
+    @Transactional(readOnly = true)
     public List<PC> getAllPCs () {
         return (List<PC>) pcRepository.findAll();
     }
 
+    @Transactional
     public void save(PC pc){
         pcRepository.save(pc);
     }
 
+    @Transactional
     public void update(Long pcId, String nome, Float prezzo, Integer disponibilita){
         Optional<PC> optPC = pcRepository.findById(pcId);
         if(optPC.isPresent()){
@@ -46,6 +53,7 @@ public class PCService {
         // else ERRORE
     }
 
+    @Transactional
     public Long cloneWithChanges(PC pc, Boolean toZero){
         if(pcRepository.existsByCodice(pc.getCodice())){
             //ERRORE
@@ -62,6 +70,7 @@ public class PCService {
         }
     }
 
+    @Transactional
     public void toZeroAvailability(PC pc){
         Optional<PC> optPC = pcRepository.findById(pc.getId());
         if(optPC.isPresent()){

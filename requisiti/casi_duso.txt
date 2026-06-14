@@ -70,8 +70,14 @@ UC14 - ADMIN AGGIUNGE UN APPUNTAMENTO PER CONTO DI UN UTENTE
 L'Admin effettua il login, apre il calendario degli appuntamenti prenotati dagli utenti, quindi seleziona "aggiungi".
 Il Sistema mostra date e orari disponibili e l'Admin seleziona quella che preferisce. Il Sistema registra l'appuntamento.
 
-UC15 - ADMIN GUARDA LO STORICO DELLE VENDITE
+UC15 - ADMIN GUARDA LO STORICO DELLE VENDITE E CERCA CON I FILTRI PER DATA E EMAIL UTENTE
 L'Admin effettua il login, poi visualizza lo storico delle vendite.
+
+UC16 - ADMIN GUARDA I DETTAGLI DI UN UTENTE
+L'Admin effettua il login, poi visualizza i dettagli di un utente.
+
+UC17 - ADMIN GUARDA GLI UTENTI E RICERCA PER NOME, COGNOME O EMAIL
+L'Admin effettua il login, poi cerca utente tramite nome, cognome o email.
 
 CLASSI:
 Utente - Email, Password, Nome, Cognome, Data Di Nascita, Telefono

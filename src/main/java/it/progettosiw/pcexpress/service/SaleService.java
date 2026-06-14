@@ -41,12 +41,11 @@ public class SaleService {
         return optSale.get();
     }
 
-    public Sale getSaleOfCurrentUserById(Long saleId){
-        Long userId = userService.getCurrentUser().getId();
-        Sale sale = saleRepository.findById(saleId).get();
-        if(sale.getUser().getId().equals(userId))
-            return sale;
-        return null;//exception
+    public Boolean isCurrentUserBuyerOfSale(Sale sale){
+        User user = userService.getCurrentUser();
+        if(sale.getUser().equals(user))
+            return true;
+        return false;
     }
 
     public List<Sale> getAllSales(){
@@ -70,7 +69,7 @@ public class SaleService {
     }
 
 
-    //è chaiamto quando si acquista dalla pagina di un pc
+    //è chaiamato quando si acquista dalla pagina di un pc
     public Sale createSaleFromPC(Long pc_id, Integer quantity){
         SoldItem soldItem = createSoldItem(pc_id, quantity);
         Float totalSoldItemPrice = soldItem.getPaidMoney()*quantity;

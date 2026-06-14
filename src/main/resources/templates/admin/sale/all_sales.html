@@ -12,7 +12,7 @@
     <div th:if="${sales.isEmpty()}">Non sono state effettuate vendite.</div>
     <ul>
         <li th:each="sale : ${sales}">
-            <a th:href="|/sale/single_sale/${sale.id}|"
+            <a th:href="|/admin/sale/${sale.id}|"
                th:text="|Acquisto del ${sale.dateOfSale}|">Acquisto</a>
             <div th:text="|Prezzo pagato: ${sale.paidMoney}|"></div>
         </li>

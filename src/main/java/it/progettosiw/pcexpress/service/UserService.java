@@ -2,6 +2,7 @@ package it.progettosiw.pcexpress.service;
 
 import it.progettosiw.pcexpress.model.Cart;
 import it.progettosiw.pcexpress.model.Credentials;
+import it.progettosiw.pcexpress.model.Sale;
 import it.progettosiw.pcexpress.model.User;
 import it.progettosiw.pcexpress.repository.CredentialsRepository;
 import it.progettosiw.pcexpress.repository.UserRepository;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,6 +30,20 @@ public class UserService {
     public UserService(UserRepository userRepository, CredentialsRepository credentialsRepository){
         this.userRepository = userRepository;
         this.credentialsRepository = credentialsRepository;
+    }
+
+    public User getUserById(Long user_id){
+        Optional<User> optUser = userRepository.findById(user_id);
+        if(!optUser.isPresent()){
+            logger.error("utente non trovato");
+            return null;
+        }
+        return optUser.get();
+    }
+
+    public List<User> getAllUsers(){
+        List<User> users = (List<User>) userRepository.findAll();
+        return users;
     }
 
     public void updateCurrentUserInfo(String firstName, String lastName, LocalDate dateOfBirth, String phoneNumber){
@@ -51,13 +67,17 @@ public class UserService {
         credentialsRepository.save(credentials);
     }
 
-    public User getCurrentUser(){
+    public UserDetails getCurrentUserDetails(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication==null || (authentication instanceof AnonymousAuthenticationToken)) {
             logger.error("utente non loggato");
             return null;
         }
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return (UserDetails) authentication.getPrincipal();
+    }
+
+    public User getCurrentUser(){
+        UserDetails userDetails = getCurrentUserDetails();
 
         Optional<User> optUser = userRepository.findByEmail(userDetails.getUsername());
         if(!optUser.isPresent()){
@@ -65,6 +85,11 @@ public class UserService {
             return null;
         }
         return optUser.get();
+    }
+
+    public String getCurrentUserRole(){
+        UserDetails userDetails = getCurrentUserDetails();
+        return userDetails.getAuthorities().iterator().next().toString();
     }
 
 }

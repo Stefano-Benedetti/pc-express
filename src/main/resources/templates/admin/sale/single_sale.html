@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>PC Express</title>
+</head>
+<body>
+  <p><a href="/">Torna alla home</a></p>
+  <p><a href="/sale/user_sales">Torna alle vendite effettuate</a></p>
+  <h1>Vendita</h1>
+  <h2 th:text="|Data: ${sale.getDateOfSale()}|">Data</h2>
+  <h2 th:text="|Totale: ${sale.getPaidMoney()} euro|">Prezzo Totale</h2>
+  <h2>Acquirente: <a th:href="|/admin/users/${sale.getUser().getId()}|"
+         th:text="|${sale.getUser().getEmail()}|">Acquirente</a></h2>
+  <ul>
+    <li th:each="soldItem : ${sale.getSoldItems()}">
+      Articolo acquistato: <a th:href="|/pc/${soldItem.getPc().getId()}|"
+                              th:text="|${soldItem.getPc().getNome()}|">nome</a>
+      <div th:text="|Prezzo di acquisto: ${soldItem.getPaidMoney()} euro|">prezzo</div>
+      <div th:text="|Quantità: ${soldItem.getQuantity()}|">quantità</div>
+    </li>
+  </ul>
+</body>
+</html>

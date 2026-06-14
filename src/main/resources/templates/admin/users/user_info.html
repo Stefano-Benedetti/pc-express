@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>PC Express</title>
+</head>
+<body>
+  <p>
+    <a href="/">Torna alla home</a>
+  </p>
+  <h1>Info Utente</h1>
+  <p>
+    <div th:text="|Nome: ${user.firstName}|">Nome</div>
+    <div th:text="|Cognome: ${user.lastName}|">Cognome</div>
+    <div th:text="|Email: ${user.email}|">Email</div>
+    <div th:text="|Data di nascita: ${user.dateOfBirth}|">Data di nascita</div>
+    <div th:text="|Numero di telefono: ${user.phoneNumber}|">Numero di telefono</div>
+  </p>
+
+</body>
+</html>
