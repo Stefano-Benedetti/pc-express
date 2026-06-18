@@ -1,6 +1,7 @@
 package it.progettosiw.pcexpress.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
+    @Email(message = "Inserisci un indirizzo email valido")
     @Column(nullable = false, unique = true)
     private String email;
 

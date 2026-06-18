@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -32,6 +33,7 @@ public class UserService {
         this.credentialsRepository = credentialsRepository;
     }
 
+    @Transactional(readOnly = true)
     public User getUserById(Long user_id){
         Optional<User> optUser = userRepository.findById(user_id);
         if(!optUser.isPresent()){
@@ -41,11 +43,13 @@ public class UserService {
         return optUser.get();
     }
 
+    @Transactional(readOnly = true)
     public List<User> getAllUsers(){
         List<User> users = (List<User>) userRepository.findAll();
         return users;
     }
 
+    @Transactional
     public void updateCurrentUserInfo(String firstName, String lastName, LocalDate dateOfBirth, String phoneNumber){
         User user = getCurrentUser();
         user.setFirstName(firstName);
@@ -55,6 +59,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional  //non serve serializable perchè l'unicità della email è protetta già dal db
     public void register(User user, String password){
         user.setCart(new Cart());
         userRepository.save(user);
@@ -67,6 +72,7 @@ public class UserService {
         credentialsRepository.save(credentials);
     }
 
+
     public UserDetails getCurrentUserDetails(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication==null || (authentication instanceof AnonymousAuthenticationToken)) {
@@ -76,6 +82,7 @@ public class UserService {
         return (UserDetails) authentication.getPrincipal();
     }
 
+    @Transactional(readOnly = true)
     public User getCurrentUser(){
         UserDetails userDetails = getCurrentUserDetails();
 

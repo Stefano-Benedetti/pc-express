@@ -1,6 +1,10 @@
 package it.progettosiw.pcexpress.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,14 +17,20 @@ public class Sale {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
     private LocalDateTime dateOfSale;
 
+    @NotNull
+    @DecimalMin(value="0.00")
     private Float paidMoney;
 
+    @Valid
+    @NotEmpty
     @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name="sale_id")
     private List<SoldItem> soldItems;
 
+    @NotNull
     @ManyToOne
     private User user;
 

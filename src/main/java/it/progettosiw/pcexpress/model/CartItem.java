@@ -1,6 +1,8 @@
 package it.progettosiw.pcexpress.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Objects;
 
@@ -12,9 +14,12 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
+    @Min(value=1, message="non è possibile avere meno di 1 elemento nel carrello")
     @Column(nullable = false)
     private Integer quantity;
 
+    @NotNull
     @ManyToOne
     private PC pc;
 

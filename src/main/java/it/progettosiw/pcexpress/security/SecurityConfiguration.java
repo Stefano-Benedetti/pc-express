@@ -1,5 +1,6 @@
 package it.progettosiw.pcexpress.security;
 
+import it.progettosiw.pcexpress.model.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import javax.sql.DataSource;
 
-import static it.progettosiw.pcexpress.model.Credentials.ADMIN_ROLE;
+//import static it.progettosiw.pcexpress.model.Credentials.ADMIN_ROLE;
 
 @Configuration
 @EnableWebSecurity
@@ -45,8 +46,10 @@ public class SecurityConfiguration {
             authorize.requestMatchers(HttpMethod.GET, "/", "/index", "/register", "/login", "/css/**", "/images/**",
                     "/favicon.ico","/pc/catalog","/pc/{id}").permitAll();
             authorize.requestMatchers(HttpMethod.POST, "/register", "/login").permitAll();
-            authorize.requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(ADMIN_ROLE);
-            authorize.requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(ADMIN_ROLE);
+            authorize.requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(Role.ADMIN.name());
+            authorize.requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(Role.ADMIN.name());
+            /*authorize.requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(ADMIN_ROLE);
+            authorize.requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(ADMIN_ROLE);*/
             authorize.anyRequest().authenticated();
         });
 

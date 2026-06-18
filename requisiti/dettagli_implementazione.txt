@@ -3,12 +3,19 @@ Sale->Sold PC usa LAZY LOAD perché i PC venduti saranno mostrati come dettagli 
 
 prossime cose da fare:
 
+- fare la validation di soldItem e User
+
+
 - aggiungere limite di visualizzazione negli elenchi (vendite, pc) con pulsante "carica di più"
 
 - aggiungere filtri e ricerca per pc
 - aggiungere ricerca per nome, cognome o email per utente
 - aggiungere ricerca per data e email utente per le vendite
 
+- rifattorizzare i metodi per creare una vedita dal pc e per creare una vendita dal cart
+
+
+- usare tipo BigDecimal per i soldi
 
 
 
@@ -27,11 +34,12 @@ front-end:
 
 validazione:
 - mettere che non si può acquistare il carrello vuoto
+
+eccezioni:
 - un nuovo pc creato non deve avere lo stesso codice prodotto di un pc già esistente
 - comprare solo se è disponibile
 
 
-- rendere le funzioni transazionali
 - fare la validazione
 - gestione eccezioni
 - front-end

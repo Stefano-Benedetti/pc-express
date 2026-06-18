@@ -7,6 +7,8 @@ import it.progettosiw.pcexpress.repository.SoldItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ public class SaleService {
         this.cartService = cartService;
     }
 
+    @Transactional(readOnly = true)
     public Sale getSaleById(Long sale_id){
         Optional<Sale> optSale = saleRepository.findById(sale_id);
         if(!optSale.isPresent()){
@@ -48,15 +51,18 @@ public class SaleService {
         return false;
     }
 
+    @Transactional(readOnly = true)
     public List<Sale> getAllSales(){
         List<Sale> sales = (List<Sale>) saleRepository.findAllByOrderByDateOfSaleDesc();
         return sales;
     }
 
+    @Transactional(readOnly = true) //perchè fa una query per prendere gli acquisti (sono lazy per l'utente)
     public List<Sale> getCurrentUserPurchases(){
         return userService.getCurrentUser().getPurchases();
     }
 
+    @Transactional(readOnly = true)
     public SoldItem createSoldItem(Long pc_id, Integer quantity){
         Optional<PC> optPC = pcRepository.findById(pc_id);
         if(!optPC.isPresent()){
@@ -68,8 +74,8 @@ public class SaleService {
         return new SoldItem(quantity, pc.getPrezzo(), pc);
     }
 
-
     //è chaiamato quando si acquista dalla pagina di un pc
+    @Transactional(isolation = Isolation.SERIALIZABLE)  //necessario a causa della riduzione della disponibilità
     public Sale createSaleFromPC(Long pc_id, Integer quantity){
         SoldItem soldItem = createSoldItem(pc_id, quantity);
         Float totalSoldItemPrice = soldItem.getPaidMoney()*quantity;
@@ -85,6 +91,7 @@ public class SaleService {
     }
 
     //è chiamato quando si acquista dal carrello
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public Sale createSaleFromCart(){
         User currentUser = userService.getCurrentUser();
         Cart currentCart = currentUser.getCart();

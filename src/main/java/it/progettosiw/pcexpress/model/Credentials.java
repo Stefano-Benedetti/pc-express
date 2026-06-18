@@ -1,14 +1,18 @@
 package it.progettosiw.pcexpress.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
 
 @Entity
 public class Credentials {
 
-    public static final String DEFAULT_ROLE = "DEFAULT";
-    public static final String ADMIN_ROLE = "ADMIN";
+    /*public static final String DEFAULT_ROLE = "DEFAULT";
+    public static final String ADMIN_ROLE = "ADMIN";*/
 
     public Credentials() {
     }
@@ -17,21 +21,29 @@ public class Credentials {
         this.email = email;
         this.password = password;
         this.user = user;
-        this.role = DEFAULT_ROLE;
+        this.role = Role.DEFAULT;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
+    @Email(message="Inserisci un indirizzo email valido")
     @Column(nullable = false, unique = true)
     private String email;
 
+    @NotBlank
+    @Size(min=6, message="La password deve essere di almeno 6 caratteri")
     @Column(nullable = false)
     private String password;
 
-    private String role;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
+    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
@@ -59,11 +71,11 @@ public class Credentials {
         this.password = password;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

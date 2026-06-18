@@ -2,6 +2,10 @@ package it.progettosiw.pcexpress.model;
 
 import it.progettosiw.pcexpress.service.CartService;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,24 +21,35 @@ public class PC {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
     @Column(nullable = false, unique = true)
     private Long codice;
 
+    @NotBlank
     private String nome;
 
+    @NotBlank
     private String cpu;
 
+    @NotBlank
     private String gpu;
 
+    @NotBlank
     private String ram;
 
+    @NotBlank
     private String rom;
 
+    @NotBlank
     private String casePc;
 
+    @NotNull
+    @DecimalMin(value="0.00", message="Il prezzo deve essere almeno 0.00")
     @Column(nullable = false)
     private Float prezzo;
 
+    @NotNull
+    @Min(value=0, message="La disponibilità deve essere almeno 0")
     @Column(nullable = false)
     private Integer disponibilita;
 

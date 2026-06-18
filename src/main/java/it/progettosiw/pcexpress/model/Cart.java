@@ -1,6 +1,7 @@
 package it.progettosiw.pcexpress.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,6 +13,7 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Valid
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinColumn(name="cart_id")
     private List<CartItem> cartItems;
