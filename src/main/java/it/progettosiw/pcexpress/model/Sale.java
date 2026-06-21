@@ -17,20 +17,16 @@ public class Sale {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
+    @Column(nullable = false)
     private LocalDateTime dateOfSale;
 
-    @NotNull
-    @DecimalMin(value="0.00")
+    @Column(nullable = false)
     private Float paidMoney;
 
-    @Valid
-    @NotEmpty
     @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name="sale_id")
     private List<SoldItem> soldItems;
 
-    @NotNull
     @ManyToOne
     private User user;
 

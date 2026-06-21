@@ -14,13 +14,12 @@ public class SoldItem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Min(value=1)
+    @Column(nullable = false)
     private Integer quantity;
 
-    @DecimalMin(value="0.00")
+    @Column(nullable = false)
     private Float paidMoney;
-
-    @NotNull
+    
     @ManyToOne(cascade = CascadeType.MERGE) //quando un pc è venduto va aggiornata la disponibilità
     private PC pc;
 

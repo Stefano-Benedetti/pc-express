@@ -54,7 +54,7 @@ public class User {
     @NotBlank
     @Size(min=6, message="La password deve essere di almeno 6 caratteri")
     @Transient
-    private String password;    //è qui per essere validata nella registrazione
+    private String password;    //è qui per essere validata nella registraziones
 
 
     public User(){

@@ -14,12 +14,9 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @Min(value=1, message="non è possibile avere meno di 1 elemento")
     @Column(nullable = false)
     private Integer quantity;
 
-    @NotNull
     @ManyToOne
     private PC pc;
 

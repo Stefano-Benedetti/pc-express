@@ -10,23 +10,35 @@
 
   <form th:action="@{/register}" method="post" th:object="${user}">
     <div>
-      <label>Nome:</label> <span><input type="text" th:field="${user.firstName}"></span>
+      <label>Nome:</label>
+      <span><input type="text" th:field="${user.firstName}"></span>
+      <span th:if="${#fields.hasErrors('firstName')}" th:errors="${user.firstName}"></span>
     </div>
     <div>
-      <label>Cognome:</label> <span><input type="text" th:field="${user.lastName}"></span>
+      <label>Cognome:</label>
+      <span><input type="text" th:field="${user.lastName}"></span>
+      <span th:if="${#fields.hasErrors('lastName')}" th:errors="${user.lastName}"></span>
     </div>
     <div>
-      <label>Email:</label> <span><input type="email" th:field="${user.email}"></span>
+      <label>Email:</label>
+      <span><input type="text" th:field="${user.email}"></span>
+      <span th:if="${#fields.hasErrors('email')}" th:errors="${user.email}"></span>
     </div>
     <div>
-      <label>Data di nascita:</label> <span><input type="date" th:field="${user.dateOfBirth}"></span>
+      <label>Data di nascita:</label>
+      <span><input type="date" th:field="${user.dateOfBirth}"></span>
+      <span th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="${user.dateOfBirth}"></span>
     </div>
     <div>
-      <label>Telefono:</label> <span><input type="text" th:field="${user.phoneNumber}"></span>
+      <label>Telefono:</label>
+      <span><input type="text" th:field="${user.phoneNumber}"></span>
+      <span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="${user.phoneNumber}"></span>
     </div>
 
     <div>
-      <label>Password:</label> <span><input type="text" th:field="${user.password}"></span>
+      <label>Password:</label>
+      <span><input type="text" th:field="${user.password}"></span>
+      <span th:if="${#fields.hasErrors('password')}" th:errors="${user.password}"></span>
     </div>
 
     <button type="submit">Conferma</button>

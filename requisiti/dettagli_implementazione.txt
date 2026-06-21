@@ -3,8 +3,13 @@ Sale->Sold PC usa LAZY LOAD perché i PC venduti saranno mostrati come dettagli 
 
 prossime cose da fare:
 
-- fare validazione nei controller di User
-- mostrare messaggi di errore nei form (errori riscontrati dai controller)
+- aggiungere classe passwordValidator, togliere la password dalla classe User, validare la password nel Post della registrazione
+
+- mostrare messaggi di errore nei form (creazione pc, modifica pc, clonazione pc)
+- sostituire alcuni messaggi di errore
+
+- quando aggiorno la pagina (per errore oppure apposta) del form modifica pc tutti i campi diventano null (perchè a quel form non viene passato l'oggetto pc)
+
 - creare pagine per errori 404, 500
 - gestire eccezioni nel service
 

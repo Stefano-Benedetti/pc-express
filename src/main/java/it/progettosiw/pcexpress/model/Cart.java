@@ -13,7 +13,6 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Valid
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name="cart_id")
     private List<CartItem> cartItems;
