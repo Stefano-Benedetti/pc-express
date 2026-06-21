@@ -1,6 +1,9 @@
 package it.progettosiw.pcexpress.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -11,10 +14,13 @@ public class SoldItem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Min(value=0)
     private Integer quantity;
 
+    @DecimalMin(value="0.00")
     private Float paidMoney;
 
+    @NotNull
     @ManyToOne(cascade = CascadeType.MERGE) //quando un pc è venduto va aggiornata la disponibilità
     private PC pc;
 

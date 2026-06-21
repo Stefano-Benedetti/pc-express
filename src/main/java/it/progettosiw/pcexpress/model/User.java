@@ -1,7 +1,7 @@
 package it.progettosiw.pcexpress.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -16,23 +16,32 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
+    @Pattern(regexp = "^[\\p{L}' ]+$", message = "Sono ammesse solo lettere, spazi e apostrofi")
     @Column(nullable = false)
     private String firstName;
 
+    @NotBlank
+    @Pattern(regexp = "^[\\p{L}' ]+$", message = "Sono ammesse solo lettere, spazi e apostrofi")
     @Column(nullable = false)
     private String lastName;
 
+    @NotBlank
     @Email(message = "Inserisci un indirizzo email valido")
     @Column(nullable = false, unique = true)
     private String email;
 
+    @NotNull
+    @Past
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(nullable = false)
     private LocalDate dateOfBirth;
 
+    @Pattern(regexp = "(^$)|(^\\\\+?[0-9]{8,15}$)", message = "Numero di telefono non valido")   //contiene dalle 8 alle 15 cifre
     private String phoneNumber;
 
     //da testare la strategia di fetch
+    @NotNull
     @OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
     private Cart cart;
 
@@ -43,12 +52,13 @@ public class User {
 
     }
 
-    public User(String firstName, String lastName, String email, String password, LocalDate dateOfBirth, String phoneNumber, Cart cart) {
+    public User(String firstName, String lastName, String email, String password, LocalDate dateOfBirth, String phoneNumber, Cart cart, List<Sale> purchases) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.phoneNumber = phoneNumber;
         this.cart = cart;
+        this.purchases = purchases;
     }
 
     public Long getId() {
