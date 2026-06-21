@@ -21,7 +21,7 @@ public class PC {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-    @NotBlank
+    @NotNull
     @Column(nullable = false, unique = true)
     private Long codice;
 

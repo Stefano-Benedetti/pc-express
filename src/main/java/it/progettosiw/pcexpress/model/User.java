@@ -37,7 +37,7 @@ public class User {
     @Column(nullable = false)
     private LocalDate dateOfBirth;
 
-    @Pattern(regexp = "(^$)|(^\\\\+?[0-9]{8,15}$)", message = "Numero di telefono non valido")   //contiene dalle 8 alle 15 cifre
+    @Pattern(regexp = "^$|^\\+?[0-9]{6,15}$", message = "Numero di telefono non valido")   //contiene dalle 8 alle 15 cifre
     private String phoneNumber;
 
     //da testare la strategia di fetch
