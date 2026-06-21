@@ -24,13 +24,13 @@ public class SaleController {
     }
 
     @PostMapping("/sale/single_item/makeNewSale")
-    public String createSaleForSingleItem(@RequestParam Long pcId, @RequestParam Integer quantity, Model model){
+    public String createSaleFromCatalog(@RequestParam Long pcId, @RequestParam Integer quantity, Model model){
         Sale sale = saleService.createSaleFromPC(pcId, quantity);
         return "redirect:/sale/single_sale/"+sale.getId().toString();
     }
 
     @PostMapping("/sale/cart/makeNewSale")
-    public String createSaleForCart(Model model){
+    public String createSaleFromCart(Model model){
         Sale sale = saleService.createSaleFromCart();
         return "redirect:/sale/single_sale/"+sale.getId().toString();
     }
@@ -39,7 +39,7 @@ public class SaleController {
     public String showForSingleSale(@PathVariable("sale_id") Long sale_id, Model model){
         Sale sale = saleService.getSaleById(sale_id);
         if(!saleService.isCurrentUserBuyerOfSale(sale)){
-            //errore
+            //errore: non esiste nessun acquisto con questo id per l'utente autenticato
             return null;
         }
         model.addAttribute("sale", sale);

@@ -34,7 +34,6 @@ public class Credentials {
     private String email;
 
     @NotBlank
-    @Size(min=6, message="La password deve essere di almeno 6 caratteri")
     @Column(nullable = false)
     private String password;
 

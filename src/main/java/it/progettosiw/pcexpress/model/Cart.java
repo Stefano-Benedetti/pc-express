@@ -14,7 +14,7 @@ public class Cart {
     private Long id;
 
     @Valid
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name="cart_id")
     private List<CartItem> cartItems;
 

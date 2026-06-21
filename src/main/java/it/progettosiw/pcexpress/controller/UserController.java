@@ -1,10 +1,14 @@
 package it.progettosiw.pcexpress.controller;
 
+import it.progettosiw.pcexpress.model.Credentials;
 import it.progettosiw.pcexpress.model.User;
 import it.progettosiw.pcexpress.service.UserService;
+import it.progettosiw.pcexpress.validation.AgeValidator;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -13,8 +17,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    private AgeValidator ageValidator;
+
     public UserController(UserService userService) {
         this.userService = userService;
+        ageValidator = new AgeValidator();
     }
 
     @GetMapping("/login")
@@ -29,8 +36,13 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") User user, @RequestParam String password, Model model){
-        userService.register(user, password);
+    public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult bUser, Model model){
+        this.ageValidator.validate(user, bUser);
+        if (bUser.hasErrors()) {
+            System.out.println(bUser.getAllErrors().toString());
+            return "/register.html";
+        }
+        userService.register(user);
         return "/index.html";
     }
 
@@ -47,7 +59,10 @@ public class UserController {
     }
 
     @PostMapping("/user/modify_user_info")
-    public String modifyUserInfo(@ModelAttribute("user") User user ,Model model){
+    public String modifyUserInfo(@Valid @ModelAttribute("user") User user, BindingResult b,Model model){
+        this.ageValidator.validate(user, b);
+        if (b.hasErrors())
+            return "/user/modify_user_info_form.html";
         userService.updateCurrentUserInfo(user.getFirstName(), user.getLastName(), user.getDateOfBirth(), user.getPhoneNumber());
         return "redirect:/user/personal_area";
     }

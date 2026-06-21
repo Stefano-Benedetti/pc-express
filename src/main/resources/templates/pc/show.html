@@ -18,14 +18,14 @@
     <form th:action="@{/user/cart/add}" method="post">
         <input type="hidden" name="pcId" th:value="${pc.id}"/>
         <label>Quantità:</label>
-        <input type="number" name="quantity" min="1" value="1"/>
+        <input type="number" name="quantity" value="1"/>
         <button type="submit">Aggiungi al carrello</button>
     </form>
 
     <form th:action="@{/sale/single_item/makeNewSale}" method="post">
         <input type="hidden" name="pcId" th:value="${pc.id}"/>
         <label>Quantità:</label>
-        <input type="number" name="quantity" min="1" value="1"/>
+        <input type="number" name="quantity" value="1"/>
         <button type="submit">ACQUISTA</button>
     </form>
 

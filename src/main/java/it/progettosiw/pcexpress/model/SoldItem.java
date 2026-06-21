@@ -14,7 +14,7 @@ public class SoldItem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Min(value=0)
+    @Min(value=1)
     private Integer quantity;
 
     @DecimalMin(value="0.00")

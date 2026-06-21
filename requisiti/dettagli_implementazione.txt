@@ -3,7 +3,10 @@ Sale->Sold PC usa LAZY LOAD perché i PC venduti saranno mostrati come dettagli 
 
 prossime cose da fare:
 
-- fare la validation di soldItem e User
+- fare validazione nei controller di User
+- mostrare messaggi di errore nei form (errori riscontrati dai controller)
+- creare pagine per errori 404, 500
+- gestire eccezioni nel service
 
 
 - aggiungere limite di visualizzazione negli elenchi (vendite, pc) con pulsante "carica di più"
@@ -33,11 +36,14 @@ front-end:
 - nascondere in tutte le pagine le opzioni a cui può accedere solo l'admin
 
 validazione:
-- mettere che non si può acquistare il carrello vuoto
 
 eccezioni:
-- un nuovo pc creato non deve avere lo stesso codice prodotto di un pc già esistente
-- comprare solo se è disponibile
+- un nuovo pc creato/clonato non deve avere lo stesso codice prodotto di un pc già esistente
+- non si può acquistare il carrello vuoto
+- non si può acquistare un pc non disponibile
+- non si può acquistare un pc mettendo quantità<1
+- non si può aggiungere un pc al carrello mettendo quantità<1
+- non deve registrare l'utente se l'email inserita è già usata
 
 
 - fare la validazione

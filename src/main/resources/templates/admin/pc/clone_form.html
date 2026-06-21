@@ -41,7 +41,7 @@
     </div>
     <input type="hidden" th:field="${pc.id}"/>
     <div>
-        <label>porta a zero la disponibilità di questo pc:</label> <span><input type="checkbox" name="toZero" /></span>
+        <label>porta a zero la disponibilità di questo pc:</label> <span><input type="checkbox" name="toZero" th:checked="${toZero}"/></span>
     </div>
     <div>
         <span><button type="submit">Conferma</button></span>

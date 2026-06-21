@@ -15,7 +15,7 @@ public class CartItem {
     private Long id;
 
     @NotNull
-    @Min(value=1, message="non è possibile avere meno di 1 elemento nel carrello")
+    @Min(value=1, message="non è possibile avere meno di 1 elemento")
     @Column(nullable = false)
     private Integer quantity;
 

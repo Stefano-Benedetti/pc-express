@@ -2,9 +2,11 @@ package it.progettosiw.pcexpress.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.hibernate.engine.internal.Nullability;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -37,28 +39,35 @@ public class User {
     @Column(nullable = false)
     private LocalDate dateOfBirth;
 
-    @Pattern(regexp = "^$|^\\+?[0-9]{6,15}$", message = "Numero di telefono non valido")   //contiene dalle 8 alle 15 cifre
+    @Pattern(regexp = "^$|^\\+?[0-9]{6,15}$", message = "Numero di telefono non valido")   //contiene dalle 6 alle 15 cifre
     private String phoneNumber;
 
     //da testare la strategia di fetch
-    @NotNull
     @OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false)
     private Cart cart;
 
     @OneToMany(mappedBy = "user")
     private List<Sale> purchases;
 
+
+    @NotBlank
+    @Size(min=6, message="La password deve essere di almeno 6 caratteri")
+    @Transient
+    private String password;    //è qui per essere validata nella registrazione
+
+
     public User(){
 
     }
 
-    public User(String firstName, String lastName, String email, String password, LocalDate dateOfBirth, String phoneNumber, Cart cart, List<Sale> purchases) {
+    public User(String firstName, String lastName, String email, String password, LocalDate dateOfBirth, String phoneNumber, Cart cart) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.phoneNumber = phoneNumber;
         this.cart = cart;
-        this.purchases = purchases;
+        this.purchases = new ArrayList<Sale>();
     }
 
     public Long getId() {
@@ -123,6 +132,14 @@ public class User {
 
     public void setPurchases(List<Sale> purchases) {
         this.purchases = purchases;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

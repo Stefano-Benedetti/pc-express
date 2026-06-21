@@ -17,6 +17,13 @@ ADMIN: quello che può fare l'utente non loggato, può visionare i suoi dati
 (tra cui nome, cognome, data di nascita, email), aggiungere, rimuovere e modificare PC in vendita, può visualizzare l'elenco degli appuntamenti prenotati dagli utenti, visualizzare i dati di un utente, modificare il calendario dei giorni di appuntamento disponibili, annullare un appuntamento, può visualizzare l'elenco delle vendite
 
 
+Implementare almeno 6 casi d’uso:  
+• almeno uno che richieda operazioni di inserimento dei dati di una entità 		(ADMIN AGGIUNGE UN PC AL CATALOGO, UTENTE FA UN ACQUISTO)
+• almeno uno che richieda aggiornamento (update) dei dati di una entità 		(ADMIN MODIFICA UN PC DEL CATALOGO)
+• almeno uno che richieda cancellazione di una (o più) entità entità 			(UTENTE RIMUOVE PC DAL CARRELLO)
+• almeno due che richiedano operazioni di lettura dei dati di una o più entità  (UTENTE GUARDA ELENCO ACQUISTI EFFETTUATI IN PASSATO, ADMIN GUARDA I DETTAGLI DI UN UTENTE)
+NB: autenticazione e registrazione dell'utente non sono considerati casi d'uso.
+
 UC1 - LOGIN UTENTE
 L'Utente NON loggato apre il form di autenticazione, inserisce email e password. Il Sistema verifica la correttezza dei dati e 
 autentica l'Utente (oppure mostra un errore). Quindi mostra la homepage dell'Utente loggato.
@@ -26,6 +33,11 @@ L'Utente NON loggato apre il form di registrazione, inserisce nome, cognome, dat
 password e conferma password. Il Sistema verifica la correttezza dei dati e poi lo registra, quindi 
 mostra le info del nuovo Utente, o un errore.
 
+UC3 - LOGIN ADMIN
+L'Utente NON loggato apre il form di autenticazione, inserisce email e password e il Sistema lo autentica come admin. 
+Il Sistema mostra la homepage.
+
+
 UC3 - UTENTE AGGIUNGE PC AL CARRELLO
 L'Utente effettua il login, poi visualizza un PC e l'aggiunge al carrello. 
 Il Sistema mostra all'Utente che il PC è stato aggiunto al carrello.
@@ -34,24 +46,12 @@ UC4 - UTENTE RIMUOVE PC DAL CARRELLO
 L'Utente effettua il login, poi visualizza un PC e lo rimuove dal carrello.
 Il Sistema mostra all'Utente che il PC è stato rimosso dal carrello.
 
-UC5 - UTENTE ACQUISTA DAL CARRELLO
-L'Utente effettua il login, poi visualizza il carrello, seleziona "acquista" ed esegue il pagamento (?). 
-Il Sistema mostra una conferma di acquisto.
-
-UC6 - UTENTE EFFETTUA UN NUOVO APPUNTAMENTO
-L'Utente effettua il login, poi seleziona "prenota un appuntamento". Il Sistema mostra date e orari disponibili e l'Utente 
-seleziona quella che preferisce. Il Sistema registra l'appuntamento.
-
-UC7 - UTENTE ANNULLA UN APPUNTAMENTO
-L'Utente effettua il login, poi visualizza l'elenco di appuntamenti prenotati e ne rimuove uno. Il Sistema chiede conferma, quindi 
-cancella l'appuntamento.
+UC5 - UTENTE FA UN ACQUISTO
+L'Utente effettua il login, poi (*) visualizza il carrello, seleziona "acquista" ed esegue il pagamento
+a) visualizza il catalogo, sceglie un pc, seleziona "acquista" ed esegue il pagamento
 
 UC8 - UTENTE GUARDA ELENCO ACQUISTI EFFETTUATI IN PASSATO
 L'Utente effettua il login, poi visualizza l'elenco degli acquisti effettuati in passato.
-
-UC9 - LOGIN ADMIN
-L'Utente NON loggato apre il form di autenticazione, inserisce email e password e il Sistema lo autentica come admin. 
-Il Sistema mostra la homepage.
 
 UC10 - ADMIN AGGIUNGE UN PC AL CATALOGO DEI PC IN VENDITA
 L'Admin effettua il login, poi apre il form di inserimento di un nuovo PC e ne inserisce le informazioni (e l'immagine?), 
@@ -62,14 +62,6 @@ L'Admin effettua il login, apre il catalogo dei PC in vendita, poi apre la pagin
 errori di battitura, prezzo o disponibilità) e seleziona "modifica". Il Sistema mostra il form per modificare il PC.
 L'Admin effettua le modifiche e conferma. Il Sistema mostra la pagina del PC modificato.
 
-UC13 - ADMIN ANNULLA UN APPUNTAMENTO PER CONTO DI UN UTENTE
-L'Admin effettua il login, apre il calendario degli appuntamenti prenotati dagli utenti, quindi apre un appuntamento e seleziona "annulla".
-Il Sistema chiede conferma, quindi rimuove l'appuntamento e mostra il calendario degli appuntamenti prenotati dagli utenti.
-
-UC14 - ADMIN AGGIUNGE UN APPUNTAMENTO PER CONTO DI UN UTENTE
-L'Admin effettua il login, apre il calendario degli appuntamenti prenotati dagli utenti, quindi seleziona "aggiungi".
-Il Sistema mostra date e orari disponibili e l'Admin seleziona quella che preferisce. Il Sistema registra l'appuntamento.
-
 UC15 - ADMIN GUARDA LO STORICO DELLE VENDITE E CERCA CON I FILTRI PER DATA E EMAIL UTENTE
 L'Admin effettua il login, poi visualizza lo storico delle vendite.
 
@@ -78,6 +70,24 @@ L'Admin effettua il login, poi visualizza i dettagli di un utente.
 
 UC17 - ADMIN GUARDA GLI UTENTI E RICERCA PER NOME, COGNOME O EMAIL
 L'Admin effettua il login, poi cerca utente tramite nome, cognome o email.
+
+
+UC6 - UTENTE EFFETTUA UN NUOVO APPUNTAMENTO
+L'Utente effettua il login, poi seleziona "prenota un appuntamento". Il Sistema mostra date e orari disponibili e l'Utente 
+seleziona quella che preferisce. Il Sistema registra l'appuntamento.
+
+UC7 - UTENTE ANNULLA UN APPUNTAMENTO
+L'Utente effettua il login, poi visualizza l'elenco di appuntamenti prenotati e ne rimuove uno. Il Sistema chiede conferma, quindi 
+cancella l'appuntamento.
+
+UC13 - ADMIN ANNULLA UN APPUNTAMENTO PER CONTO DI UN UTENTE
+L'Admin effettua il login, apre il calendario degli appuntamenti prenotati dagli utenti, quindi apre un appuntamento e seleziona "annulla".
+Il Sistema chiede conferma, quindi rimuove l'appuntamento e mostra il calendario degli appuntamenti prenotati dagli utenti.
+
+UC14 - ADMIN AGGIUNGE UN APPUNTAMENTO PER CONTO DI UN UTENTE
+L'Admin effettua il login, apre il calendario degli appuntamenti prenotati dagli utenti, quindi seleziona "aggiungi".
+Il Sistema mostra date e orari disponibili e l'Admin seleziona quella che preferisce. Il Sistema registra l'appuntamento.
+
 
 CLASSI:
 Utente - Email, Password, Nome, Cognome, Data Di Nascita, Telefono

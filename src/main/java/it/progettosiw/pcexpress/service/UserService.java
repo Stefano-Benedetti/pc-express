@@ -60,13 +60,15 @@ public class UserService {
     }
 
     @Transactional  //non serve serializable perchè l'unicità della email è protetta già dal db
-    public void register(User user, String password){
+    public void register(User user){
         user.setCart(new Cart());
         userRepository.save(user);
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        String encrypted_ps = encoder.encode(password);
+        String encrypted_ps = encoder.encode(user.getPassword());
+        user.setPassword(null);
+
         Credentials credentials = new Credentials(user.getEmail(), encrypted_ps, user);
 
         credentialsRepository.save(credentials);

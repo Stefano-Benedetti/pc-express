@@ -2,10 +2,12 @@ package it.progettosiw.pcexpress.controller;
 
 import it.progettosiw.pcexpress.model.PC;
 import it.progettosiw.pcexpress.service.PCService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -36,7 +38,9 @@ public class PCController {
         return "admin/pc/newpc_form";
     }
     @PostMapping("/admin/pc/newpc_form")
-    public String newPc(@ModelAttribute("pc") PC pc, Model model){
+    public String newPc(@Valid @ModelAttribute("pc") PC pc, BindingResult b, Model model){
+        if(b.hasErrors())
+            return "admin/pc/newpc_form";
         this.pcService.save(pc);
         return "redirect:/pc/"+pc.getId().toString();
     }
@@ -47,7 +51,9 @@ public class PCController {
         return "/admin/pc/modify_form";
     }
     @PostMapping("/admin/pc/modify")
-    public String modifyPc(@ModelAttribute("pc") PC pc, Model model){
+    public String modifyPc(@Valid @ModelAttribute("pc") PC pc, BindingResult b, Model model){
+        if(b.hasErrors())
+            return "/admin/pc/modify_form";
         this.pcService.update(pc.getId(), pc.getNome(), pc.getPrezzo(),pc.getDisponibilita());
         return "redirect:/pc/"+pc.getId().toString();
     }
@@ -58,7 +64,11 @@ public class PCController {
         return "/admin/pc/clone_form";
     }
     @PostMapping("/admin/pc/clone")
-    public String clonePc(@ModelAttribute("pc") PC pc, @RequestParam(defaultValue="false") boolean toZero, Model model){
+    public String clonePc(@Valid @ModelAttribute("pc") PC pc, BindingResult b, @RequestParam(defaultValue="false") boolean toZero, Model model){
+        if(b.hasErrors()) {
+            model.addAttribute("toZero", toZero);
+            return "/admin/pc/clone_form";
+        }
         Long newPcId = this.pcService.cloneWithChanges(pc, toZero);
         return "redirect:/pc/"+newPcId.toString();
     }

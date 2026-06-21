@@ -85,7 +85,12 @@ public class SaleService {
         List<SoldItem> soldItems = new ArrayList<>();
         soldItems.add(soldItem);
 
-        Sale sale = new Sale(LocalDateTime.now(), totalSoldItemPrice, soldItems, userService.getCurrentUser());
+        User currentUser = userService.getCurrentUser();
+
+        Sale sale = new Sale(LocalDateTime.now(), totalSoldItemPrice, soldItems, currentUser);
+
+        currentUser.getPurchases().add(sale);  //serve a mantenere aggiornato lo user in locale
+
         saleRepository.save(sale);
         return sale;
     }
@@ -111,6 +116,9 @@ public class SaleService {
         }
 
         Sale sale = new Sale(LocalDateTime.now(), totalSoldItemPrice, soldItems, currentUser);
+
+        currentUser.getPurchases().add(sale);  //serve a mantenere aggiornato lo user in locale
+
         saleRepository.save(sale);
         cartService.emptyCurrentUserCart();
         return sale;
