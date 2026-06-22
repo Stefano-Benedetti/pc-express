@@ -12,31 +12,39 @@
 <!--    </div>-->
     <div>
       <label>Nome:</label> <span><input type="text" th:field="${pc.nome}" /></span>
-<!--      <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>-->
+      <span th:if="${#fields.hasErrors('nome')}" th:errors="${pc.nome}"></span>
     </div>
     <div>
       <label>Prezzo:</label> <span><input type="text" th:field="${pc.prezzo}" /></span>
+        <span th:if="${#fields.hasErrors('prezzo')}" th:errors="${pc.prezzo}"></span>
     </div>
     <div>
       <label>Disponibilità:</label> <span><input type="text" th:field="${pc.disponibilita}" /></span>
+        <span th:if="${#fields.hasErrors('disponibilita')}" th:errors="${pc.disponibilita}"></span>
     </div>
     <div>
       <label>Codice prodotto:</label> <span><input type="text" th:field="${pc.codice}" /></span>
+        <span th:if="${#fields.hasErrors('codice')}" th:errors="${pc.codice}"></span>
     </div>
     <div>
       <label>CPU:</label> <span><input type="text" th:field="${pc.cpu}" /></span>
+        <span th:if="${#fields.hasErrors('cpu')}" th:errors="${pc.cpu}"></span>
     </div>
     <div>
       <label>GPU:</label> <span><input type="text" th:field="${pc.gpu}" /></span>
+        <span th:if="${#fields.hasErrors('gpu')}" th:errors="${pc.gpu}"></span>
     </div>
     <div>
       <label>RAM:</label> <span><input type="text" th:field="${pc.ram}" /></span>
+        <span th:if="${#fields.hasErrors('ram')}" th:errors="${pc.ram}"></span>
     </div>
     <div>
       <label>ROM:</label> <span><input type="text" th:field="${pc.rom}" /></span>
+        <span th:if="${#fields.hasErrors('rom')}" th:errors="${pc.rom}"></span>
     </div>
     <div>
       <label>Case:</label> <span><input type="text" th:field="${pc.casePc}" /></span>
+        <span th:if="${#fields.hasErrors('casePc')}" th:errors="${pc.casePc}"></span>
     </div>
     <div>
       <span><button type="submit">Conferma</button></span>

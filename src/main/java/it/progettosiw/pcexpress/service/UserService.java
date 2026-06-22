@@ -1,5 +1,6 @@
 package it.progettosiw.pcexpress.service;
 
+import it.progettosiw.pcexpress.dto.RegistrationForm;
 import it.progettosiw.pcexpress.model.Cart;
 import it.progettosiw.pcexpress.model.Credentials;
 import it.progettosiw.pcexpress.model.Sale;
@@ -60,14 +61,14 @@ public class UserService {
     }
 
     @Transactional  //non serve serializable perchè l'unicità della email è protetta già dal db
-    public void register(User user){
-        user.setCart(new Cart());
+    public void register(RegistrationForm form){
+        User user = new User(form);
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        String encrypted_ps = encoder.encode(user.getPassword());
+        String encrypted_ps = encoder.encode(form.getPassword());
 
-        Credentials credentials = new Credentials(user.getEmail(), encrypted_ps, user);
+        Credentials credentials = new Credentials(form.getEmail(), encrypted_ps, user);
 
         credentialsRepository.save(credentials);
     }

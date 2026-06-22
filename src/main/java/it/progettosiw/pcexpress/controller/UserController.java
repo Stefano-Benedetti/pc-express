@@ -1,6 +1,6 @@
 package it.progettosiw.pcexpress.controller;
 
-import it.progettosiw.pcexpress.model.Credentials;
+import it.progettosiw.pcexpress.dto.RegistrationForm;
 import it.progettosiw.pcexpress.model.User;
 import it.progettosiw.pcexpress.service.UserService;
 import it.progettosiw.pcexpress.validation.AgeValidator;
@@ -31,18 +31,17 @@ public class UserController {
 
     @GetMapping("/register")
     public String getRegisterForm(Model model){
-        model.addAttribute("user", new User());
+        model.addAttribute("form", new RegistrationForm());
         return "/register.html";
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult bUser, Model model){
-        this.ageValidator.validate(user, bUser);
-        if (bUser.hasErrors()) {
-            System.out.println(bUser.getAllErrors().toString());
+    public String registerUser(@Valid @ModelAttribute("form") RegistrationForm form, BindingResult b, Model model){
+        this.ageValidator.validate(form, b);
+        if (b.hasErrors()) {
             return "/register.html";
         }
-        userService.register(user);
+        userService.register(form);
         return "/index.html";
     }
 
@@ -59,7 +58,7 @@ public class UserController {
     }
 
     @PostMapping("/user/modify_user_info")
-    public String modifyUserInfo(@Valid @ModelAttribute("user") User user, BindingResult b,Model model){
+    public String modifyUserInfo(@Valid @ModelAttribute("user") User user, BindingResult b, Model model){
         this.ageValidator.validate(user, b);
         if (b.hasErrors())
             return "/user/modify_user_info_form.html";

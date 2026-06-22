@@ -9,16 +9,19 @@
   <form th:action="@{/user/modify_user_info}" method="POST" th:object="${user}">
     <div>
       <label>Nome:</label> <span><input type="text" th:field="${user.firstName}" /></span>
+      <span th:if="${#fields.hasErrors('firstName')}" th:errors="${user.firstName}"></span>
     </div>
     <div>
       <label>Cognome:</label> <span><input type="text" th:field="${user.lastName}" /></span>
+      <span th:if="${#fields.hasErrors('lastName')}" th:errors="${user.lastName}"></span>
     </div>
-    <div th:text="|Email: ${user.email}|">Email</div>
     <div>
       <label>Data di nascita:</label> <span><input type="date" id="dateOfBirth" name="dateOfBirth" th:value="${user.dateOfBirth}" /></span>
+      <span th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="${user.dateOfBirth}"></span>
     </div>
     <div>
       <label>Numero di telefono:</label> <span><input type="text" th:field="${user.phoneNumber}" /></span>
+      <span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="${user.phoneNumber}"></span>
     </div>
 
     <div>

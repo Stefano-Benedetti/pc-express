@@ -52,8 +52,10 @@ public class PCController {
     }
     @PostMapping("/admin/pc/modify")
     public String modifyPc(@Valid @ModelAttribute("pc") PC pc, BindingResult b, Model model){
-        if(b.hasErrors())
+        if(b.hasErrors()) {
+            System.out.println(b.getAllErrors().toString());//////////////////////////
             return "/admin/pc/modify_form";
+        }
         this.pcService.update(pc.getId(), pc.getNome(), pc.getPrezzo(),pc.getDisponibilita());
         return "redirect:/pc/"+pc.getId().toString();
     }

@@ -2,13 +2,14 @@ Da testare strategia di fetch User->Cart.
 Sale->Sold PC usa LAZY LOAD perché i PC venduti saranno mostrati come dettagli della vendita solo su richiesta.
 
 prossime cose da fare:
+- creare DTO per modifyPC
+- clonePC ha l'id null dopo che sbagli a inserire un campo
 
-- aggiungere classe passwordValidator, togliere la password dalla classe User, validare la password nel Post della registrazione
-
-- mostrare messaggi di errore nei form (creazione pc, modifica pc, clonazione pc)
 - sostituire alcuni messaggi di errore
 
 - quando aggiorno la pagina (per errore oppure apposta) del form modifica pc tutti i campi diventano null (perchè a quel form non viene passato l'oggetto pc)
+
+- capire come gestire il prezzo (tipo, come viene mostrato)
 
 - creare pagine per errori 404, 500
 - gestire eccezioni nel service

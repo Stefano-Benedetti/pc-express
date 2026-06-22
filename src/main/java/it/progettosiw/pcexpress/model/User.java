@@ -1,5 +1,6 @@
 package it.progettosiw.pcexpress.model;
 
+import it.progettosiw.pcexpress.dto.RegistrationForm;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.hibernate.engine.internal.Nullability;
@@ -28,8 +29,6 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
-    @NotBlank
-    @Email(message = "Inserisci un indirizzo email valido")
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -50,13 +49,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Sale> purchases;
 
-
-    @NotBlank
-    @Size(min=6, message="La password deve essere di almeno 6 caratteri")
-    @Transient
-    private String password;    //è qui per essere validata nella registraziones
-
-
     public User(){
 
     }
@@ -64,9 +56,20 @@ public class User {
     public User(String firstName, String lastName, String email, String password, LocalDate dateOfBirth, String phoneNumber, Cart cart) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
         this.dateOfBirth = dateOfBirth;
         this.phoneNumber = phoneNumber;
         this.cart = cart;
+        this.purchases = new ArrayList<Sale>();
+    }
+
+    public User(RegistrationForm form){
+        this.firstName = form.getFirstName();
+        this.lastName = form.getLastName();
+        this.email = form.getEmail();
+        this.dateOfBirth = form.getDateOfBirth();
+        this.phoneNumber = form.getPhoneNumber();
+        this.cart = new Cart();
         this.purchases = new ArrayList<Sale>();
     }
 
@@ -134,13 +137,6 @@ public class User {
         this.purchases = purchases;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     @Override
     public boolean equals(Object o) {

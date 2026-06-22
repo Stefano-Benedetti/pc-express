@@ -8,27 +8,19 @@
     <h1>Modifica il PC selezionato</h1>
 
     <form th:action="@{/admin/pc/modify}" method="POST" th:object="${pc}">
-        <!--    <div th:if="${#fields.hasGlobalErrors()}">-->
-        <!--      <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>-->
-        <!--    </div>-->
         <div>
             <label>Nome:</label> <span><input type="text" th:field="${pc.nome}"/></span>
-            <!--      <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>-->
+            <span th:if="${#fields.hasErrors('nome')}" th:errors="${pc.nome}"></span>
         </div>
         <div>
             <label>Prezzo:</label> <span><input type="text" th:field="${pc.prezzo}" /></span>
+            <span th:if="${#fields.hasErrors('prezzo')}" th:errors="${pc.prezzo}"></span>
         </div>
         <div>
             <label>Disponibilità:</label> <span><input type="text" th:field="${pc.disponibilita}" /></span>
+            <span th:if="${#fields.hasErrors('disponibilita')}" th:errors="${pc.disponibilita}"></span>
         </div>
         <input type="hidden" name="pcId" th:field="${pc.id}"/>
-
-        <div th:text="|CPU: ${pc.cpu}|">CPU</div>
-        <div th:text="|GPU: ${pc.gpu}|">GPU</div>
-        <div th:text="|RAM: ${pc.ram}|">RAM</div>
-        <div th:text="|ROM: ${pc.rom}|">ROM</div>
-        <div th:text="|Case: ${pc.casePc}|">Case</div>
-        <div th:text="|Codice Prodotto: ${pc.codice}|">0000</div>
 
         <div>
             <span><button type="submit">Conferma</button></span>
