@@ -1,6 +1,8 @@
 package it.progettosiw.pcexpress.service;
 
+import it.progettosiw.pcexpress.exceptions.NonPositiveQuantityException;
 import it.progettosiw.pcexpress.model.*;
+import it.progettosiw.pcexpress.exceptions.EmptyCartDuringSaleCreationException;
 import it.progettosiw.pcexpress.repository.PCRepository;
 import it.progettosiw.pcexpress.repository.SaleRepository;
 import it.progettosiw.pcexpress.repository.SoldItemRepository;
@@ -63,7 +65,9 @@ public class SaleService {
     }
 
     @Transactional(readOnly = true)
-    public SoldItem createSoldItem(Long pc_id, Integer quantity){
+    public SoldItem createSoldItem(Long pc_id, Integer quantity) throws NonPositiveQuantityException{
+        if (quantity<1)
+            throw new NonPositiveQuantityException();
         Optional<PC> optPC = pcRepository.findById(pc_id);
         if(!optPC.isPresent()){
             logger.error("pc non trovatoooooo durante sale");
@@ -76,7 +80,7 @@ public class SaleService {
 
     //è chaiamato quando si acquista dalla pagina di un pc
     @Transactional(isolation = Isolation.SERIALIZABLE)  //necessario a causa della riduzione della disponibilità
-    public Sale createSaleFromPC(Long pc_id, Integer quantity){
+    public Sale createSaleFromPC(Long pc_id, Integer quantity) throws NonPositiveQuantityException{
         SoldItem soldItem = createSoldItem(pc_id, quantity);
         Float totalSoldItemPrice = soldItem.getPaidMoney()*quantity;
 
@@ -97,15 +101,23 @@ public class SaleService {
 
     //è chiamato quando si acquista dal carrello
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public Sale createSaleFromCart(){
+    public Sale createSaleFromCart() throws NonPositiveQuantityException, EmptyCartDuringSaleCreationException{
         User currentUser = userService.getCurrentUser();
         Cart currentCart = currentUser.getCart();
+
+        if (currentCart.getCartItems().isEmpty()){
+            throw new EmptyCartDuringSaleCreationException();
+        }
 
         List<SoldItem> soldItems = new ArrayList<>();
         Float totalSoldItemPrice = 0F;
 
         for(CartItem cartItem : currentCart.getCartItems()){
             Integer quantity = cartItem.getQuantity();
+
+            if (quantity<1)
+                throw new NonPositiveQuantityException();
+
             PC pc = cartItem.getPc();
             pc.reduceAvailability(quantity);
 

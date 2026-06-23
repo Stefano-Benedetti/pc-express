@@ -2,16 +2,15 @@ Da testare strategia di fetch User->Cart.
 Sale->Sold PC usa LAZY LOAD perché i PC venduti saranno mostrati come dettagli della vendita solo su richiesta.
 
 prossime cose da fare:
-- clonePC ha l'id null dopo che sbagli a inserire un campo
+
+- gestire eccezioni nel service
+
 
 - sostituire alcuni messaggi di errore
 
-- quando aggiorno la pagina (per errore oppure apposta) del form modifica pc tutti i campi diventano null (perchè a quel form non viene passato l'oggetto pc)
-
 - capire come gestire il prezzo (tipo, come viene mostrato)
+- usare tipo BigDecimal per i soldi
 
-- creare pagine per errori 404, 500
-- gestire eccezioni nel service
 
 
 - aggiungere limite di visualizzazione negli elenchi (vendite, pc) con pulsante "carica di più"
@@ -23,18 +22,19 @@ prossime cose da fare:
 - rifattorizzare i metodi per creare una vedita dal pc e per creare una vendita dal cart
 
 
-- usare tipo BigDecimal per i soldi
+
 
 
 
 
 - inserire immagini del pc
 
+- form di conferma acquisto
+
+
 
 - provare a creare e implementare customUserDetails
 - aggiungere possibilità di modificare email o password (con una email di conferma?)
-- form di conferma acquisto
-
 
 
 front-end:
@@ -43,14 +43,11 @@ front-end:
 validazione:
 
 eccezioni:
-- un nuovo pc creato/clonato non deve avere lo stesso codice prodotto di un pc già esistente
-- non si può acquistare il carrello vuoto
-- non si può acquistare un pc non disponibile
-- non si può acquistare un pc mettendo quantità<1
 - non si può aggiungere un pc al carrello mettendo quantità<1
 - non deve registrare l'utente se l'email inserita è già usata
+- non si può acquistare un pc non disponibile
 
 
-- fare la validazione
+
 - gestione eccezioni
 - front-end

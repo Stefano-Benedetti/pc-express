@@ -1,11 +1,11 @@
 package it.progettosiw.pcexpress.controller;
 
 import it.progettosiw.pcexpress.dto.ModifyPCForm;
+import it.progettosiw.pcexpress.exceptions.PCWithThisCodeAlreadyExistsException;
 import it.progettosiw.pcexpress.model.PC;
 import it.progettosiw.pcexpress.service.PCService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,8 +42,14 @@ public class PCController {
     public String newPc(@Valid @ModelAttribute("pc") PC pc, BindingResult b, Model model){
         if(b.hasErrors())
             return "admin/pc/newpc_form";
-        this.pcService.save(pc);
-        return "redirect:/pc/"+pc.getId().toString();
+        try{
+            this.pcService.save(pc);
+            return "redirect:/pc/"+pc.getId().toString();
+        }catch (PCWithThisCodeAlreadyExistsException e){
+            b.reject("PC.duplicate");
+            return "admin/pc/newpc_form";
+        }
+
     }
 
     @GetMapping("/admin/pc/{id}/modify")
@@ -74,8 +80,15 @@ public class PCController {
             model.addAttribute("toZero", toZero);
             return "/admin/pc/clone_form";
         }
-        Long newPcId = this.pcService.cloneWithChanges(pc, toZero);
-        return "redirect:/pc/"+newPcId.toString();
+        try{
+            Long newPcId = this.pcService.cloneWithChanges(pc, toZero);
+            return "redirect:/pc/"+newPcId.toString();
+        } catch (PCWithThisCodeAlreadyExistsException e) {
+            b.reject("PC.duplicate");
+            model.addAttribute("toZero", toZero);
+            return "/admin/pc/clone_form";
+        }
+
     }
 
 }

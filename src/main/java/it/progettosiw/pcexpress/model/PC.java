@@ -70,6 +70,18 @@ public class PC {
         this.disponibilita = disponibilita;
     }
 
+    public PC(PC pc) {
+        this.codice = pc.getCodice();
+        this.nome = pc.getNome();
+        this.cpu = pc.getCpu();
+        this.gpu = pc.getGpu();
+        this.ram = pc.getRam();
+        this.rom = pc.getRom();
+        this.casePc = pc.getCasePc();
+        this.prezzo = pc.getPrezzo();
+        this.disponibilita = pc.getDisponibilita();
+    }
+
     public void reduceAvailability(Integer quantity){
         if(this.disponibilita<quantity)
             logger.error("Quantità maggiore della disponibilità nel pc: "+ getNome()+", "+getId());

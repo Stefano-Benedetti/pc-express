@@ -8,9 +8,9 @@
 <h1>Clona il PC selezionato</h1>
 
 <form th:action="@{/admin/pc/clone}" method="POST" th:object="${pc}">
-    <!--    <div th:if="${#fields.hasGlobalErrors()}">-->
-    <!--      <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>-->
-    <!--    </div>-->
+    <div th:if="${#fields.hasGlobalErrors()}">
+      <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
+    </div>
     <div>
         <label>Nome:</label> <span><input type="text" th:field="${pc.nome}"/></span>
         <span th:if="${#fields.hasErrors('nome')}" th:errors="${pc.nome}"></span>
