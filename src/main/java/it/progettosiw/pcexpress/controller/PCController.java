@@ -1,5 +1,6 @@
 package it.progettosiw.pcexpress.controller;
 
+import it.progettosiw.pcexpress.dto.ModifyPCForm;
 import it.progettosiw.pcexpress.model.PC;
 import it.progettosiw.pcexpress.service.PCService;
 import jakarta.validation.Valid;
@@ -47,17 +48,19 @@ public class PCController {
 
     @GetMapping("/admin/pc/{id}/modify")
     public String modifyForm(@PathVariable("id") Long id, Model model){
-        model.addAttribute("pc", this.pcService.getPCById(id));
+        PC pc = this.pcService.getPCById(id);
+        ModifyPCForm form = new ModifyPCForm(id, pc.getNome(), pc.getPrezzo(), pc.getDisponibilita());
+        model.addAttribute("pc", form);
         return "/admin/pc/modify_form";
     }
     @PostMapping("/admin/pc/modify")
-    public String modifyPc(@Valid @ModelAttribute("pc") PC pc, BindingResult b, Model model){
+    public String modifyPc(@Valid @ModelAttribute("pc") ModifyPCForm form, BindingResult b, Model model){
         if(b.hasErrors()) {
-            System.out.println(b.getAllErrors().toString());//////////////////////////
+            model.addAttribute("pc", form);
             return "/admin/pc/modify_form";
         }
-        this.pcService.update(pc.getId(), pc.getNome(), pc.getPrezzo(),pc.getDisponibilita());
-        return "redirect:/pc/"+pc.getId().toString();
+        this.pcService.update(form.getId(), form.getNome(), form.getPrezzo(), form.getDisponibilita());
+        return "redirect:/pc/"+form.getId().toString();
     }
 
     @GetMapping("/admin/pc/{id}/clone")

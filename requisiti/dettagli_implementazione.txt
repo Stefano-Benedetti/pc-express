@@ -2,7 +2,6 @@ Da testare strategia di fetch User->Cart.
 Sale->Sold PC usa LAZY LOAD perché i PC venduti saranno mostrati come dettagli della vendita solo su richiesta.
 
 prossime cose da fare:
-- creare DTO per modifyPC
 - clonePC ha l'id null dopo che sbagli a inserire un campo
 
 - sostituire alcuni messaggi di errore
