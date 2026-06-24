@@ -3,6 +3,8 @@ Sale->Sold PC usa LAZY LOAD perché i PC venduti saranno mostrati come dettagli 
 
 prossime cose da fare:
 
+- quando guardo una vendita effettuata dall'account admin, se clicco "torna alle vendite effettutate" mi porta sulla pagina degli acquisti e non quella delle vendite
+
 - gestire eccezioni nel service
 
 
@@ -23,6 +25,8 @@ prossime cose da fare:
 
 
 
+- capire se un utente non loggato può fare il logout
+- capire se un utente loggato può fare il login o una registrazione (senza prima fare il logout)
 
 
 
