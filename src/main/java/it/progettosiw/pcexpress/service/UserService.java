@@ -1,6 +1,7 @@
 package it.progettosiw.pcexpress.service;
 
 import it.progettosiw.pcexpress.dto.RegistrationForm;
+import it.progettosiw.pcexpress.exceptions.EmailAlreadyExistsException;
 import it.progettosiw.pcexpress.model.Cart;
 import it.progettosiw.pcexpress.model.Credentials;
 import it.progettosiw.pcexpress.model.Sale;
@@ -62,6 +63,8 @@ public class UserService {
 
     @Transactional  //non serve serializable perchè l'unicità della email è protetta già dal db
     public void register(RegistrationForm form){
+        if (userRepository.existsByEmail(form.getEmail()))
+            throw new EmailAlreadyExistsException();
         User user = new User(form);
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();

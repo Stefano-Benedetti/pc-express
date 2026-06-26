@@ -43,13 +43,13 @@ prossime cose da fare:
 
 front-end:
 - nascondere in tutte le pagine le opzioni a cui può accedere solo l'admin
+- nascondere il pulsante acquista nel pc singolo se è selezionata una quantità maggiore della disponibilità
+- nascondere il pulsante acquista nel carrello se c'è uno (o più) elementi che hanno la quantità maggiore della disponibilità
 
 validazione:
 
 eccezioni:
-- non si può aggiungere un pc al carrello mettendo quantità<1
-- non deve registrare l'utente se l'email inserita è già usata
-- non si può acquistare un pc non disponibile
+- tutte le eccezioni lanciate da un elemento cercato e non trovato
 
 
 

@@ -1,6 +1,7 @@
 package it.progettosiw.pcexpress.controller;
 
 import it.progettosiw.pcexpress.dto.RegistrationForm;
+import it.progettosiw.pcexpress.exceptions.EmailAlreadyExistsException;
 import it.progettosiw.pcexpress.model.User;
 import it.progettosiw.pcexpress.service.UserService;
 import it.progettosiw.pcexpress.validation.AgeValidator;
@@ -41,7 +42,12 @@ public class UserController {
         if (b.hasErrors()) {
             return "/register.html";
         }
-        userService.register(form);
+        try {
+            userService.register(form);
+        } catch (EmailAlreadyExistsException e){
+            b.reject("Email.duplicate");
+            return "/register.html";
+        }
         return "/index.html";
     }
 

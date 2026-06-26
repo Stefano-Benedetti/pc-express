@@ -52,6 +52,10 @@ public class CartItem {
         this.pc = pc;
     }
 
+    public void incrementQuantity(int x){
+        this.quantity+=x;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

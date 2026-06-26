@@ -1,5 +1,7 @@
 package it.progettosiw.pcexpress.service;
 
+import it.progettosiw.pcexpress.exceptions.CartNotFoundException;
+import it.progettosiw.pcexpress.exceptions.NonPositiveQuantityException;
 import it.progettosiw.pcexpress.model.Cart;
 import it.progettosiw.pcexpress.model.CartItem;
 import it.progettosiw.pcexpress.model.PC;
@@ -39,13 +41,9 @@ public class CartService {
     @Transactional(readOnly = true)
     public Cart getCurrentUserCart () {
         User user = userService.getCurrentUser();
-
-        Optional<Cart> optCart = cartRepository.findById(user.getCart().getId());
-        if (optCart.isPresent()) {
-            Cart cart = optCart.get();
-            return cart;
-        }
-        return null;
+        Long cartid = user.getCart().getId();
+        return cartRepository.findById(cartid)
+                .orElseThrow(() -> new CartNotFoundException(cartid));
     }
 
     @Transactional
@@ -57,6 +55,8 @@ public class CartService {
 
     @Transactional
     public void addToCurrentUserCart(Long pc_id, Integer quantity){
+        if (quantity<1)
+            throw new NonPositiveQuantityException();
         Cart cart = getCurrentUserCart();
 
         Optional<CartItem> cartItemOptional = cartItemRepository.findCartItemByCartIdAndPcId(cart.getId(),pc_id);
@@ -64,9 +64,7 @@ public class CartService {
 
         if(cartItemOptional.isPresent()){
             cartItem = cartItemOptional.get();
-            Integer temp = cartItem.getQuantity();
-            temp+=quantity;
-            cartItem.setQuantity(temp);
+            cartItem.incrementQuantity(quantity);
             cartItemRepository.save(cartItem);
             logger.info("Aggiornata quantità nel carrello del seguente pc: {}", cartItem.getPc().getId());
             return;

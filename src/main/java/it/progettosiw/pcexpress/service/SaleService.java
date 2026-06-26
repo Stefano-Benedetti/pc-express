@@ -1,6 +1,7 @@
 package it.progettosiw.pcexpress.service;
 
 import it.progettosiw.pcexpress.exceptions.NonPositiveQuantityException;
+import it.progettosiw.pcexpress.exceptions.TooLowAvailabilityException;
 import it.progettosiw.pcexpress.model.*;
 import it.progettosiw.pcexpress.exceptions.EmptyCartDuringSaleCreationException;
 import it.progettosiw.pcexpress.repository.PCRepository;
@@ -206,8 +207,7 @@ public class SaleService {
 
 
 
-    @Transactional(readOnly = true)
-    public SoldItem createSoldItem(Long pc_id, Integer quantity) throws NonPositiveQuantityException{
+    private SoldItem createSoldItem(Long pc_id, Integer quantity) throws NonPositiveQuantityException, TooLowAvailabilityException{
         if (quantity<1)
             throw new NonPositiveQuantityException();
         Optional<PC> optPC = pcRepository.findById(pc_id);
@@ -216,19 +216,22 @@ public class SaleService {
             return null;
         }
         PC pc = optPC.get();
+        if (pc.getDisponibilita()<quantity)
+            throw new TooLowAvailabilityException();
 
         return new SoldItem(quantity, pc.getPrezzo(), pc);
     }
 
-    private SoldItem createSoldItem(CartItem cartItem) throws NonPositiveQuantityException {
+    private SoldItem createSoldItem(CartItem cartItem) throws NonPositiveQuantityException, TooLowAvailabilityException {
         Integer quantity = cartItem.getQuantity();
         if (quantity < 1)
             throw new NonPositiveQuantityException();
+        if (cartItem.getPc().getDisponibilita()<quantity)
+            throw new TooLowAvailabilityException();
         return new SoldItem(quantity, cartItem.getPc().getPrezzo(), cartItem.getPc());
     }
 
-    @Transactional(isolation = Isolation.SERIALIZABLE)  //necessario a causa della riduzione della disponibilità
-    public Sale createAndSaveSale(User user, List<SoldItem> soldItems){
+    private Sale createAndSaveSale(User user, List<SoldItem> soldItems){
         Float totalPrice = 0F;
         for (SoldItem item : soldItems){
             Integer quantity = item.getQuantity();
@@ -242,15 +245,16 @@ public class SaleService {
     }
 
     //è chaiamato quando si acquista dalla pagina di un pc
-    public Sale createSaleFromPC(Long pc_id, Integer quantity) throws NonPositiveQuantityException{
+    @Transactional (isolation = Isolation.SERIALIZABLE)
+    public Sale createSaleFromPC(Long pc_id, Integer quantity) throws NonPositiveQuantityException, TooLowAvailabilityException{
         User currentUser = userService.getCurrentUser();
         SoldItem soldItem = createSoldItem(pc_id, quantity);
         return createAndSaveSale(currentUser, List.of(soldItem));
     }
 
     //è chiamato quando si acquista dal carrello
-    @Transactional //come gestisco il fatto che il carrello viene svuotato??????????
-    public Sale createSaleFromCart() throws NonPositiveQuantityException, EmptyCartDuringSaleCreationException{
+    @Transactional (isolation = Isolation.SERIALIZABLE)//come gestisco il fatto che il carrello viene svuotato??????????
+    public Sale createSaleFromCart() throws NonPositiveQuantityException, TooLowAvailabilityException, EmptyCartDuringSaleCreationException{
         User currentUser = userService.getCurrentUser();
         Cart currentCart = currentUser.getCart();
         if (currentCart.getCartItems().isEmpty()){

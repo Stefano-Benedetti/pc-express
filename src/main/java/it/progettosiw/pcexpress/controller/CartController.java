@@ -28,7 +28,10 @@ public class CartController {
 
     @GetMapping("/user/cart")
     public String showCart(Model model){
-        model.addAttribute("cart", this.cartService.getCurrentUserCart());
+        Cart cart = this.cartService.getCurrentUserCart();
+        model.addAttribute("cart", cart);
+        if(cart.existsElementWithTooLowAvailability())
+            model.addAttribute("availabilityWarning", "ATTENZIONE: uno o più elementi del carrello non è disponibile nella quantità richiesta.");
         return "/user/cart.html";
     }
 

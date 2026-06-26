@@ -1,5 +1,7 @@
 package it.progettosiw.pcexpress.service;
 
+import it.progettosiw.pcexpress.exceptions.CartNotFoundException;
+import it.progettosiw.pcexpress.exceptions.PCDoesNotExistsException;
 import it.progettosiw.pcexpress.exceptions.PCWithThisCodeAlreadyExistsException;
 import it.progettosiw.pcexpress.exceptions.PCNotFoundException;
 import it.progettosiw.pcexpress.model.PC;
@@ -24,9 +26,11 @@ public class PCService {
 
     @Transactional(readOnly = true)
     public PC getPCById(Long id) {
-        if (pcRepository.findById(id).isPresent())
-            return pcRepository.findById(id).get();
-        return null;
+//        if (pcRepository.findById(id).isPresent())
+//            return pcRepository.findById(id).get();
+//        return null;
+        return pcRepository.findById(id)
+                .orElseThrow(() -> new PCNotFoundException(id));
     }
 
     @Transactional(readOnly = true)
@@ -53,7 +57,7 @@ public class PCService {
             pcRepository.save(pc);
         }
         else
-            throw new PCNotFoundException(pcId);
+            throw new PCDoesNotExistsException(pcId);
     }
 
     @Transactional
@@ -80,7 +84,7 @@ public class PCService {
             pcRepository.save(pcToZero);
         }
         else
-            throw new PCNotFoundException(pc.getId());
+            throw new PCDoesNotExistsException(pc.getId());
     }
 
 }

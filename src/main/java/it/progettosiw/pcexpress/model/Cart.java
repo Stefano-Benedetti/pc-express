@@ -49,6 +49,14 @@ public class Cart {
         return total_price;
     }
 
+    public boolean existsElementWithTooLowAvailability(){
+        for (CartItem c : this.cartItems){
+            if (c.getQuantity() > c.getPc().getDisponibilita())
+                return true;
+        }
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

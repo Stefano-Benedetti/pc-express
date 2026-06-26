@@ -10,6 +10,7 @@
     </p>
     <h1>Carrello</h1>
     <div th:if="${cart.getCartItems().isEmpty()}">Non ci sono computer nel carrello.</div>
+    <div th:if="${availabilityWarning}" th:text="${availabilityWarning}"></div>
     <ul>
         <li th:each="cartItem : ${cart.getCartItems()}">
             <a th:href="|/pc/${cartItem.getPc().getId()}|"
