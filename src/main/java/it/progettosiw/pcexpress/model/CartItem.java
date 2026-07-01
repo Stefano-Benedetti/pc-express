@@ -56,6 +56,10 @@ public class CartItem {
         this.quantity+=x;
     }
 
+    public void decrementQuantity(int x){
+        this.quantity-=x;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

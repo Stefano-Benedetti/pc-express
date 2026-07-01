@@ -2,6 +2,8 @@ package it.progettosiw.pcexpress.service;
 
 import it.progettosiw.pcexpress.exceptions.CartNotFoundException;
 import it.progettosiw.pcexpress.exceptions.NonPositiveQuantityException;
+import it.progettosiw.pcexpress.exceptions.PCDoesNotExistException;
+import it.progettosiw.pcexpress.exceptions.cartItemDoesNotExistException;
 import it.progettosiw.pcexpress.model.Cart;
 import it.progettosiw.pcexpress.model.CartItem;
 import it.progettosiw.pcexpress.model.PC;
@@ -11,14 +13,9 @@ import it.progettosiw.pcexpress.repository.CartRepository;
 import it.progettosiw.pcexpress.repository.PCRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -53,6 +50,21 @@ public class CartService {
         cartRepository.save(cart);
     }
 
+
+    private void updateCartItemQuantity(CartItem cartItem, Integer quantity){
+        cartItem.incrementQuantity(quantity);
+        cartItemRepository.save(cartItem);
+        logger.info("Aggiornata quantità nel carrello del seguente pc: {}", cartItem.getPc().getId());
+    }
+
+    private void createAndAddNewCartItemToCart(Cart cart, Long pc_id, Integer quantity){
+        PC pc = pcRepository.findById(pc_id).orElseThrow(()-> new PCDoesNotExistException(pc_id));
+        CartItem cartItem = new CartItem(quantity, pc);
+        cart.getCartItems().add(cartItem);  // per impostare cart_id in cart_item nel DB
+        cartRepository.save(cart);
+        logger.info("Aggiunto al carrello il seguente pc: {}", cartItem.getPc().getId());
+    }
+
     @Transactional
     public void addToCurrentUserCart(Long pc_id, Integer quantity){
         if (quantity<1)
@@ -60,64 +72,34 @@ public class CartService {
         Cart cart = getCurrentUserCart();
 
         Optional<CartItem> cartItemOptional = cartItemRepository.findCartItemByCartIdAndPcId(cart.getId(),pc_id);
-        CartItem cartItem;
 
-        if(cartItemOptional.isPresent()){
-            cartItem = cartItemOptional.get();
-            cartItem.incrementQuantity(quantity);
-            cartItemRepository.save(cartItem);
-            logger.info("Aggiornata quantità nel carrello del seguente pc: {}", cartItem.getPc().getId());
-            return;
-        }
-
-        Optional<PC> optionalPC = pcRepository.findById(pc_id);
-        if(optionalPC.isPresent()) {
-            cartItem = new CartItem();
-            cartItem.setPc(optionalPC.get());
-            cartItem.setQuantity(quantity);
-            cart.getCartItems().add(cartItem);  // per impostare cart_id in cart_item nel DB
-        }
-        else{
-            throw new RuntimeException();   //da sistemare
-        }
-        cartRepository.save(cart);
-        logger.info("Aggiunto al carrello il seguente pc: {}", cartItem.getPc().getId());
+        if(cartItemOptional.isPresent())
+            updateCartItemQuantity(cartItemOptional.get(), quantity);
+        else
+            createAndAddNewCartItemToCart(cart, pc_id, quantity);
     }
+
 
     @Transactional
     public void removeCartItemFromCurrentUserCart(Long pc_id){
         Cart cart = getCurrentUserCart();
-
-        Optional<CartItem> cartItemOptional = cartItemRepository.findCartItemByCartIdAndPcId(cart.getId(),pc_id);
-        CartItem cartItem;
-
-        if(cartItemOptional.isPresent()){
-            cartItem = cartItemOptional.get();
-            cart.getCartItems().remove(cartItem);
-        }
-        //else errore
-
+        CartItem cartItem = cartItemRepository.findCartItemByCartIdAndPcId(cart.getId(),pc_id)
+                        .orElseThrow(()-> new cartItemDoesNotExistException(cart.getId(),pc_id));
+        cart.getCartItems().remove(cartItem);
         cartRepository.save(cart);
     }
 
     @Transactional
     public void removeOneFromCurrentUserCart(Long pc_id){
         Cart cart = getCurrentUserCart();
-        Optional<CartItem> cartItemOptional = cartItemRepository.findCartItemByCartIdAndPcId(cart.getId(),pc_id);
-        CartItem cartItem;
-
-        if(cartItemOptional.isPresent()){
-            cartItem = cartItemOptional.get();
-            Integer temp = cartItem.getQuantity();
-            if(temp == 1){
-                removeCartItemFromCurrentUserCart(pc_id);
-                return;
-            }
-            temp -= 1;
-            cartItem.setQuantity(temp);
+        CartItem cartItem = cartItemRepository.findCartItemByCartIdAndPcId(cart.getId(),pc_id)
+                .orElseThrow(()-> new cartItemDoesNotExistException(cart.getId(),pc_id));
+        if(cartItem.getQuantity() == 1)
+            removeCartItemFromCurrentUserCart(pc_id);
+        else{
+            cartItem.decrementQuantity(1);
             cartItemRepository.save(cartItem);
         }
-        //else errore
     }
 
 }

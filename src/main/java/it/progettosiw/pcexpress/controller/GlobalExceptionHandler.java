@@ -18,9 +18,38 @@ public class GlobalExceptionHandler {
         return "/error/404";
     }
 
-    @ExceptionHandler(PCDoesNotExistsException.class)
+    @ExceptionHandler(UserNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleUserNotFound(UserNotFoundException e, Model model) {
+        model.addAttribute("errorMessage", e.getMessage());
+        return "/error/404";
+    }
+
+    @ExceptionHandler(CartNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleCartNotFound(CartNotFoundException e, Model model) {
+        model.addAttribute("errorMessage", e.getMessage());
+        return "/error/404";
+    }
+
+
+    @ExceptionHandler(PCDoesNotExistException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public String handlePCNotFound(PCDoesNotExistsException e, Model model) {
+    public String handlePCDoesNotExist(PCDoesNotExistException e, Model model) {
+        model.addAttribute("errorMessage", e.getMessage());
+        return "/error/500";
+    }
+
+    @ExceptionHandler(cartItemDoesNotExistException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String handleCartItemDoesNotExist(cartItemDoesNotExistException e, Model model) {
+        model.addAttribute("errorMessage", e.getMessage());
+        return "/error/500";
+    }
+
+    @ExceptionHandler(UserDoesNotExistException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String handleUserDoesNotExist(UserDoesNotExistException e, Model model) {
         model.addAttribute("errorMessage", e.getMessage());
         return "/error/500";
     }
@@ -41,10 +70,21 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(TooLowAvailabilityException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleNonPositiveQuantity(TooLowAvailabilityException e, Model model) {
+    public String handleTooLowAvailability(TooLowAvailabilityException e, Model model) {
         model.addAttribute("errorMessage", e.getMessage());
         return "/error/400";
     }
+
+    @ExceptionHandler(UserNotLoggedInException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public String handleUserNotLoggedIn(UserNotLoggedInException e, Model model) {
+        model.addAttribute("errorMessage", e.getMessage());
+        return "/login";
+    }
+
+
+
+
 
 
 }

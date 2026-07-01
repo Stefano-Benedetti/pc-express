@@ -3,17 +3,8 @@ Sale->Sold PC usa LAZY LOAD perché i PC venduti saranno mostrati come dettagli 
 
 prossime cose da fare:
 
-- quando guardo una vendita effettuata dall'account admin, se clicco "torna alle vendite effettutate" mi porta sulla pagina degli acquisti e non quella delle vendite
-
-- gestire eccezioni nel service
-
-
-- sostituire alcuni messaggi di errore
-
 - capire come gestire il prezzo (tipo, come viene mostrato)
 - usare tipo BigDecimal per i soldi
-
-
 
 - aggiungere limite di visualizzazione negli elenchi (vendite, pc) con pulsante "carica di più"
 
@@ -21,14 +12,9 @@ prossime cose da fare:
 - aggiungere ricerca per nome, cognome o email per utente
 - aggiungere ricerca per data e email utente per le vendite
 
-- rifattorizzare i metodi per creare una vedita dal pc e per creare una vendita dal cart
-
-
 
 - capire se un utente non loggato può fare il logout
 - capire se un utente loggato può fare il login o una registrazione (senza prima fare il logout)
-
-
 
 
 - inserire immagini del pc
@@ -36,9 +22,9 @@ prossime cose da fare:
 - form di conferma acquisto
 
 
-
 - provare a creare e implementare customUserDetails
 - aggiungere possibilità di modificare email o password (con una email di conferma?)
+
 
 
 front-end:
@@ -49,9 +35,3 @@ front-end:
 validazione:
 
 eccezioni:
-- tutte le eccezioni lanciate da un elemento cercato e non trovato
-
-
-
-- gestione eccezioni
-- front-end

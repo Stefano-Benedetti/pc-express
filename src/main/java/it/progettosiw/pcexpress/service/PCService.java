@@ -1,7 +1,6 @@
 package it.progettosiw.pcexpress.service;
 
-import it.progettosiw.pcexpress.exceptions.CartNotFoundException;
-import it.progettosiw.pcexpress.exceptions.PCDoesNotExistsException;
+import it.progettosiw.pcexpress.exceptions.PCDoesNotExistException;
 import it.progettosiw.pcexpress.exceptions.PCWithThisCodeAlreadyExistsException;
 import it.progettosiw.pcexpress.exceptions.PCNotFoundException;
 import it.progettosiw.pcexpress.model.PC;
@@ -26,9 +25,6 @@ public class PCService {
 
     @Transactional(readOnly = true)
     public PC getPCById(Long id) {
-//        if (pcRepository.findById(id).isPresent())
-//            return pcRepository.findById(id).get();
-//        return null;
         return pcRepository.findById(id)
                 .orElseThrow(() -> new PCNotFoundException(id));
     }
@@ -48,43 +44,28 @@ public class PCService {
 
     @Transactional
     public void update(Long pcId, String nome, Float prezzo, Integer disponibilita) throws PCNotFoundException {
-        Optional<PC> optPC = pcRepository.findById(pcId);
-        if(optPC.isPresent()){
-            PC pc = optPC.get();
-            pc.setNome(nome);
-            pc.setPrezzo(prezzo);
-            pc.setDisponibilita(disponibilita);
-            pcRepository.save(pc);
-        }
-        else
-            throw new PCDoesNotExistsException(pcId);
+        PC pc = pcRepository.findById(pcId).orElseThrow(() -> new PCDoesNotExistException(pcId));
+        pc.setNome(nome);
+        pc.setPrezzo(prezzo);
+        pc.setDisponibilita(disponibilita);
+        pcRepository.save(pc);
     }
 
     @Transactional
     public Long cloneWithChanges(PC pc, Boolean toZero) throws PCWithThisCodeAlreadyExistsException {
-        if(pcRepository.existsByCodice(pc.getCodice())){
-            throw new PCWithThisCodeAlreadyExistsException(pc.getCodice());
+        PC newpc = new PC(pc);
+        this.save(newpc);
+        if(toZero){
+            toZeroAvailability(pc);
         }
-        else {
-            PC newpc = new PC(pc);
-            pcRepository.save(newpc);
-            if(toZero){
-                toZeroAvailability(pc);
-            }
-            return newpc.getId();
-        }
+        return newpc.getId();
     }
 
     @Transactional
     public void toZeroAvailability(PC pc) throws PCNotFoundException {
-        Optional<PC> optPC = pcRepository.findById(pc.getId());
-        if(optPC.isPresent()){
-            PC pcToZero = optPC.get();
-            pcToZero.setDisponibilita(0);
-            pcRepository.save(pcToZero);
-        }
-        else
-            throw new PCDoesNotExistsException(pc.getId());
+        PC pcToZero = pcRepository.findById(pc.getId()).orElseThrow(() -> new PCDoesNotExistException(pc.getId()));
+        pcToZero.setDisponibilita(0);
+        pcRepository.save(pcToZero);
     }
 
 }

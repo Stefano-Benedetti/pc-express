@@ -2,6 +2,9 @@ package it.progettosiw.pcexpress.service;
 
 import it.progettosiw.pcexpress.dto.RegistrationForm;
 import it.progettosiw.pcexpress.exceptions.EmailAlreadyExistsException;
+import it.progettosiw.pcexpress.exceptions.UserDoesNotExistException;
+import it.progettosiw.pcexpress.exceptions.UserNotFoundException;
+import it.progettosiw.pcexpress.exceptions.UserNotLoggedInException;
 import it.progettosiw.pcexpress.model.Cart;
 import it.progettosiw.pcexpress.model.Credentials;
 import it.progettosiw.pcexpress.model.Sale;
@@ -37,18 +40,12 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public User getUserById(Long user_id){
-        Optional<User> optUser = userRepository.findById(user_id);
-        if(!optUser.isPresent()){
-            logger.error("utente non trovato");
-            return null;
-        }
-        return optUser.get();
+        return userRepository.findById(user_id).orElseThrow(()-> new UserNotFoundException(user_id));
     }
 
     @Transactional(readOnly = true)
     public List<User> getAllUsers(){
-        List<User> users = (List<User>) userRepository.findAll();
-        return users;
+        return (List<User>) userRepository.findAll();
     }
 
     @Transactional
@@ -68,11 +65,9 @@ public class UserService {
         User user = new User(form);
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
         String encrypted_ps = encoder.encode(form.getPassword());
 
         Credentials credentials = new Credentials(form.getEmail(), encrypted_ps, user);
-
         credentialsRepository.save(credentials);
     }
 
@@ -81,24 +76,18 @@ public class UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication==null || (authentication instanceof AnonymousAuthenticationToken)) {
             logger.error("utente non loggato");
-            return null;
+            throw new UserNotLoggedInException();
         }
         return (UserDetails) authentication.getPrincipal();
     }
 
     @Transactional(readOnly = true)
-    public User getCurrentUser(){
+    public User getCurrentUser() throws UserNotLoggedInException{
         UserDetails userDetails = getCurrentUserDetails();
-
-        Optional<User> optUser = userRepository.findByEmail(userDetails.getUsername());
-        if(!optUser.isPresent()){
-            logger.error("utente corrente non trovato");
-            return null;
-        }
-        return optUser.get();
+        return userRepository.findByEmail(userDetails.getUsername()).orElseThrow(()-> new UserDoesNotExistException());
     }
 
-    public String getCurrentUserRole(){
+    public String getCurrentUserRole() throws UserNotLoggedInException{
         UserDetails userDetails = getCurrentUserDetails();
         return userDetails.getAuthorities().iterator().next().toString();
     }
