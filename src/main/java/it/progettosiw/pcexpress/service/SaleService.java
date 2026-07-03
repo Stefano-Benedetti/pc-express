@@ -78,12 +78,14 @@ public class SaleService {
         return new SoldItem(quantity, cartItem.getPc().getPrezzo(), cartItem.getPc());
     }
 
-    private Sale createAndSaveSale(User user, List<SoldItem> soldItems){
+    @Transactional
+    public Sale createAndSaveSale(User user, List<SoldItem> soldItems){
         Float totalPrice = 0F;
         for (SoldItem item : soldItems){
             Integer quantity = item.getQuantity();
             totalPrice += item.getPaidMoney()*quantity;
             item.getPc().reduceAvailability(quantity);
+            pcRepository.save(item.getPc());
         }
         Sale sale = new Sale(LocalDateTime.now(), totalPrice, soldItems, user);
         user.getPurchases().add(sale);  //serve a mantenere aggiornato lo user in locale

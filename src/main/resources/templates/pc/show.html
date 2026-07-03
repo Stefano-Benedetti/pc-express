@@ -41,72 +41,157 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${pc.nome}">PC Express</title>
-
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet" th:href="@{/css/pc_show.css}">
 </head>
 
 <body>
 
-<a href="/pc/catalog" class="back-link">← Torna al catalogo</a>
+<header>
 
-<div class="product-container">
-
-    <!-- IMMAGINE -->
-    <div class="product-image">
-        <img th:src="@{/pc/image/{id}(id=${pc.id})}" alt="PC Image">
+    <div class="logo">
+        PC Express
     </div>
 
-    <!-- INFO -->
-    <div class="product-info">
+    <nav class="nav_header">
+        <a href="/" class="nav_links">Home</a>
+        <a href="/pc/catalog" class="nav_links">Catalogo</a>
+        <a href="/user/cart" class="nav_links">Carrello</a>
+        <a href="/sale/user_sales" class="nav_links">I miei acquisti</a>
+        <a href="/user/personal_area" class="nav_links">Area Personale</a>
 
-        <h1 th:text="${pc.nome}">Nome PC</h1>
+        <a href="/register"
+           class="nav_links"
+           sec:authorize="isAnonymous()">
+            Registrati
+        </a>
 
-        <p class="price-stock"
-           th:text="|${pc.prezzo} € - ${pc.disponibilita} disponibili|">
-        </p>
+        <a href="/login"
+           class="nav_links"
+           sec:authorize="isAnonymous()">
+            Accedi
+        </a>
 
-        <div class="specs">
-            <p><b>CPU:</b> <span th:text="${pc.cpu}"></span></p>
-            <p><b>GPU:</b> <span th:text="${pc.gpu}"></span></p>
-            <p><b>RAM:</b> <span th:text="${pc.ram}"></span></p>
-            <p><b>ROM:</b> <span th:text="${pc.rom}"></span></p>
-            <p><b>Case:</b> <span th:text="${pc.casePc}"></span></p>
-            <p><b>Codice:</b> <span th:text="${pc.codice}"></span></p>
+        <span class="logout nav_links"
+              sec:authorize="isAuthenticated()">
+
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+
+        </span>
+
+    </nav>
+
+</header>
+
+<main class="container">
+
+    <div class="breadcrumb">
+        <a href="/">Home</a> >
+        <a href="/pc/catalog">Catalogo</a> >
+        <span th:text="${pc.nome}"></span>
+    </div>
+
+    <section class="product">
+
+        <div class="product-image">
+            <img th:src="@{/pc/image/{id}(id=${pc.id})}" alt="PC">
         </div>
 
-        <!-- CARRELLO -->
-        <form th:action="@{/user/cart/add}" method="post" class="actions">
-            <input type="hidden" name="pcId" th:value="${pc.id}"/>
+        <div class="product-info">
 
-            <label>Quantità</label>
-            <input type="number" name="quantity" value="1" min="1">
+            <h1 th:text="${pc.nome}"></h1>
 
-            <button type="submit" class="btn-cart">
-                Aggiungi al carrello
-            </button>
-        </form>
+            <p class="price"
+               th:text="|€ ${pc.prezzo}|">
+            </p>
 
-        <!-- ACQUISTO -->
-        <form th:action="@{/sale/single_item/makeNewSale}" method="post" class="actions">
-            <input type="hidden" name="pcId" th:value="${pc.id}"/>
+            <p class="stock">
+                Disponibili:
+                <span th:text="${pc.disponibilita}"></span>
+            </p>
 
-            <label>Quantità</label>
-            <input type="number" name="quantity" value="1" min="1">
+            <form th:action="@{/user/cart/add}" method="post">
 
-            <button type="submit" class="btn-buy">
-                Acquista subito
-            </button>
-        </form>
+                <input type="hidden" name="pcId" th:value="${pc.id}">
 
-        <!-- ADMIN -->
-        <div class="admin-actions" sec:authorize="hasAuthority('ADMIN')">
-            <a th:href="|/admin/pc/${pc.id}/modify|">Modifica</a>
-            <a th:href="|/admin/pc/${pc.id}/clone|">Clona</a>
+                <label for="quantity">Quantità</label>
+
+                <input type="number" id="quantity" name="quantity" min="1" value="1" th:attr="max=${pc.disponibilita}">
+
+                <button type="submit" class="cartButton" th:formaction="@{/user/cart/add}">
+                    Aggiungi al carrello
+                </button>
+
+                <button type="submit" class="buyButton" th:formaction="@{/sale/single_item/makeNewSale}">
+                    Acquista subito
+                </button>
+
+            </form>
+
         </div>
+
+    </section>
+
+    <section class="specs">
+
+        <h2>Specifiche Tecniche</h2>
+
+        <table>
+
+            <tr>
+                <td>CPU</td>
+                <td th:text="${pc.cpu}"></td>
+            </tr>
+
+            <tr>
+                <td>GPU</td>
+                <td th:text="${pc.gpu}"></td>
+            </tr>
+
+            <tr>
+                <td>RAM</td>
+                <td th:text="${pc.ram}"></td>
+            </tr>
+
+            <tr>
+                <td>SSD</td>
+                <td th:text="${pc.rom}"></td>
+            </tr>
+
+            <tr>
+                <td>Case</td>
+                <td th:text="${pc.casePc}"></td>
+            </tr>
+
+            <tr>
+                <td>Codice</td>
+                <td th:text="${pc.codice}"></td>
+            </tr>
+
+        </table>
+
+    </section>
+
+</main>
+
+<footer>
+
+    <p>PC Express - Il tuo negozio di PC preassemblati.</p>
+
+    <div class="admin"
+         sec:authorize="hasAuthority('ADMIN')">
+
+        <a href="/admin/users/all_users">Utenti</a>
+
+        <a href="/admin/sale/all_sales">Vendite</a>
+
+        <a href="/admin/pc/newpc_form">Nuovo PC</a>
 
     </div>
-</div>
+
+</footer>
 
 </body>
 </html>
