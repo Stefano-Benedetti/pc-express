@@ -1,0 +1,108 @@
+/* CENTRATURA SCHERMO */
+.login-container{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+    url("/images/pc_background.png");
+    background-size:cover;
+    background-position:center;
+}
+
+/* CARD LOGIN */
+.login-card{
+    background:white;
+    padding:40px;
+    border-radius:12px;
+    width:350px;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+    text-align:center;
+}
+
+/* TITOLO */
+.login-card h2{
+    margin-bottom:10px;
+    color:#111827;
+}
+
+/* SOTTOTITOLO */
+.subtitle{
+    font-size:14px;
+    color:gray;
+    margin-bottom:25px;
+}
+
+/* ERRORI */
+.error{
+    background:#ffe5e5;
+    color:#d60000;
+    padding:10px;
+    border-radius:6px;
+    margin-bottom:15px;
+    font-size:14px;
+}
+
+/* FORM */
+.login-form{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+/* INPUT GROUP */
+.form-group{
+    text-align:left;
+}
+
+.form-group label{
+    font-size:14px;
+    color:#333;
+}
+
+/* INPUT */
+.form-group input{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    outline:none;
+    transition:0.3s;
+}
+
+.form-group input:focus{
+    border-color:#0078ff;
+    box-shadow:0 0 5px rgba(0,120,255,.3);
+}
+
+/* BUTTON */
+.btn-login{
+    background:#0078ff;
+    color:white;
+    padding:12px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    transition:0.3s;
+    font-size:16px;
+}
+
+.btn-login:hover{
+    background:#005fd1;
+}
+
+/* REGISTER LINK */
+.register-link{
+    margin-top:15px;
+    font-size:14px;
+}
+
+.register-link a{
+    color:#0078ff;
+    text-decoration:none;
+}
+
+.register-link a:hover{
+    text-decoration:underline;
+}

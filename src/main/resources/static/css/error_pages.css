@@ -1,0 +1,58 @@
+/* CENTRATURA SCHERMO */
+.error-container{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)),
+    url("/images/errors_background.jpg");
+    background-size:cover;
+    background-position:center;
+}
+
+/* CARD */
+.error-card{
+    background:white;
+    padding:40px;
+    border-radius:12px;
+    text-align:center;
+    width:350px;
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+
+/* CODICE ERRORE GRANDE */
+.error-code{
+    font-size:80px;
+    font-weight:bold;
+    color:#e53935;
+    margin-bottom:10px;
+}
+
+/* TITOLO */
+.error-card h1{
+    font-size:22px;
+    margin-bottom:10px;
+    color:#111827;
+}
+
+/* TESTO */
+.error-card p{
+    font-size:14px;
+    color:gray;
+    margin-bottom:20px;
+}
+
+/* BUTTON */
+.home-btn{
+    display:inline-block;
+    padding:12px 20px;
+    background:#0078ff;
+    color:white;
+    text-decoration:none;
+    border-radius:6px;
+    transition:0.3s;
+}
+
+.home-btn:hover{
+    background:#005fd1;
+}

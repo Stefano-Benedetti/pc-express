@@ -6,6 +6,8 @@ import it.progettosiw.pcexpress.model.PC;
 import it.progettosiw.pcexpress.service.PCService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -88,7 +90,15 @@ public class PCController {
             model.addAttribute("toZero", toZero);
             return "/admin/pc/clone_form";
         }
+    }
 
+
+    @GetMapping("/pc/image/{id}")
+    public ResponseEntity<byte[]> getImage(@PathVariable Long id) {
+        PC pc = pcService.getPCById(id);
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG) // o PNG
+                .body(pc.getImmagine());
     }
 
 }

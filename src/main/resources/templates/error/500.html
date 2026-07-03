@@ -1,10 +1,48 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>PC Express</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>errore interno (500) ;(</h1>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>PC Express</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Errore 500 - PC Express</title>
+    <link rel="stylesheet" th:href="@{/css/error_pages.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
-    <h1>errore interno (500) ;(</h1>
+
+<div class="error-container">
+
+    <div class="error-card">
+
+        <div class="error-code">
+            500
+        </div>
+
+        <h1>Errore interno del server</h1>
+
+        <p>
+            Si è verificato un problema imprevisto sul server di PC Express.
+            Riprova tra qualche minuto.
+        </p>
+
+        <a href="/" class="home-btn">
+            Torna alla Home
+        </a>
+
+    </div>
+
+</div>
+
 </body>
 </html>

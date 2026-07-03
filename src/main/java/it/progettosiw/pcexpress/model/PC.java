@@ -54,6 +54,10 @@ public class PC {
     @Column(nullable = false)
     private Integer disponibilita;
 
+    @Lob    //sta per large object
+    @Column(name="immagine", columnDefinition = "bytea")
+    private byte[] immagine;
+
     public PC(){
 
     }
@@ -166,6 +170,14 @@ public class PC {
 
     public void setDisponibilita(Integer disponibilita) {
         this.disponibilita = disponibilita;
+    }
+
+    public byte[] getImmagine() {
+        return immagine;
+    }
+
+    public void setImmagine(byte[] immagine) {
+        this.immagine = immagine;
     }
 
     @Override

@@ -30,7 +30,7 @@ public class UserController {
         return "/login.html";
     }
 
-    @GetMapping("/register")
+    @GetMapping("/register_form")
     public String getRegisterForm(Model model){
         model.addAttribute("form", new RegistrationForm());
         return "/register.html";

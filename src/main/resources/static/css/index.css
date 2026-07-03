@@ -1,0 +1,48 @@
+/* HERO */
+
+.hero{
+    height:80vh;
+    background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+    url("/images/pc_home.avif");
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+}
+
+.hero-content h1{
+    font-size:55px;
+    margin-bottom:20px;
+}
+
+.hero-content p{
+    font-size:22px;
+    margin-bottom:35px;
+}
+
+.hero-content a{
+    background:#0078ff;
+    color:white;
+    padding:15px 35px;
+    text-decoration:none;
+    border-radius:8px;
+    font-size:20px;
+    transition:.3s;
+}
+
+.hero-content a:hover{
+    background:#005fd1;
+}
+
+@media(max-width:800px) {
+    .hero-content h1 {
+        font-size: 40px;
+    }
+
+    .hero-content p {
+        font-size: 18px;
+    }
+}

@@ -1,37 +1,56 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PC Express</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 <body>
-    <h1>PC Express: i computer peggiori del mondo!</h1>
-    <p>
+
+<header>
+    <div class="logo">
+        PC Express
+    </div>
+
+    <nav class="nav_header">
+        <a href="/pc/catalog" class="nav_links">Catalogo</a>
+        <a href="/user/cart" class="nav_links">Carrello</a>
+        <a href="/sale/user_sales" class="nav_links">I miei acquisti</a>
+        <a href="/user/personal_area" class="nav_links">Area Personale</a>
+        <a href="/register_form" class="nav_links" sec:authorize="isAnonymous()">Registrati</a>
+        <a href="/login" class="nav_links" sec:authorize="isAnonymous()">Accedi</a>
+        <span class="logout nav_links" sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </span>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+
+        <h1>Il PC perfetto per ogni esigenza</h1>
+
+        <p>Gaming, Ufficio, Grafica e Workstation assemblati dai nostri esperti.</p>
+
+        <a href="/pc/catalog">
+            Scopri il Catalogo
+        </a>
+    </div>
+</section>
+
+<footer>
+    <p>PC Express - Il tuo negozio di PC preassemblati.</p>
+
+    <div class="admin" sec:authorize="hasAuthority('ADMIN')">
+        <a href="/admin/users/all_users">Utenti</a>
         <a href="/admin/sale/all_sales">Vendite</a>
-    </p>
-    <p>
-        <a href="/admin/users/all_users">Utenti registrati</a>
-    </p>
-    <p>
-        <a href="/pc/catalog">Catalogo PC</a>
-    </p>
-    <p>
-        <a href="/user/cart">Carrello</a>
-    </p>
-    <p>
-        <a href="/sale/user_sales">Acquisti</a>
-    </p>
-    <p>
-        <a href="/user/personal_area">Area Personale</a>
-    </p>
-    <p>
-        <a href="/register">Registrati</a>
-        <a href="/login">Accedi</a>
-    </p>
-    <p>
-        <form th:action="@{/logout}" method="post">
-            <button type="submit">Logout</button>
-        </form>
-    </p>
+        <a href="/admin/pc/newpc_form">Aggiungi nuovo pc</a>
+    </div>
+</footer>
+
 </body>
 </html>

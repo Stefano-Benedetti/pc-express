@@ -1,36 +1,112 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="it">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>PC Express</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <a href="/pc/catalog">Torna al catalogo</a>-->
+<!--    <h1 th:text="${pc.nome}">nome pc</h1>-->
+<!--    <h2 th:text="|${pc.prezzo} euro, ${pc.disponibilita} disponibili|">Prezzo e disponibilita</h2>-->
+<!--    <div th:text="|CPU: ${pc.cpu}|">CPU</div>-->
+<!--    <div th:text="|GPU: ${pc.gpu}|">GPU</div>-->
+<!--    <div th:text="|RAM: ${pc.ram}|">RAM</div>-->
+<!--    <div th:text="|ROM: ${pc.rom}|">ROM</div>-->
+<!--    <div th:text="|Case: ${pc.casePc}|">Case</div>-->
+<!--    <div th:text="|Codice Prodotto: ${pc.codice}|">0000</div>-->
+
+<!--    <form th:action="@{/user/cart/add}" method="post">-->
+<!--        <input type="hidden" name="pcId" th:value="${pc.id}"/>-->
+<!--        <label>Quantità:</label>-->
+<!--        <input type="number" name="quantity" value="1"/>-->
+<!--        <button type="submit">Aggiungi al carrello</button>-->
+<!--    </form>-->
+
+<!--    <form th:action="@{/sale/single_item/makeNewSale}" method="post">-->
+<!--        <input type="hidden" name="pcId" th:value="${pc.id}"/>-->
+<!--        <label>Quantità:</label>-->
+<!--        <input type="number" name="quantity" value="1"/>-->
+<!--        <button type="submit">ACQUISTA</button>-->
+<!--    </form>-->
+
+<!--    <a th:href="|/admin/pc/${pc.id}/modify|">Modifica PC</a>-->
+<!--    <a th:href="|/admin/pc/${pc.id}/clone|">Clona</a>-->
+
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>PC Express</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pc.nome}">PC Express</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pc_show.css}">
 </head>
+
 <body>
-    <a href="/pc/catalog">Torna al catalogo</a>
-    <h1 th:text="${pc.nome}">nome pc</h1>
-    <h2 th:text="|${pc.prezzo} euro, ${pc.disponibilita} disponibili|">Prezzo e disponibilita</h2>
-    <div th:text="|CPU: ${pc.cpu}|">CPU</div>
-    <div th:text="|GPU: ${pc.gpu}|">GPU</div>
-    <div th:text="|RAM: ${pc.ram}|">RAM</div>
-    <div th:text="|ROM: ${pc.rom}|">ROM</div>
-    <div th:text="|Case: ${pc.casePc}|">Case</div>
-    <div th:text="|Codice Prodotto: ${pc.codice}|">0000</div>
 
-    <form th:action="@{/user/cart/add}" method="post">
-        <input type="hidden" name="pcId" th:value="${pc.id}"/>
-        <label>Quantità:</label>
-        <input type="number" name="quantity" value="1"/>
-        <button type="submit">Aggiungi al carrello</button>
-    </form>
+<a href="/pc/catalog" class="back-link">← Torna al catalogo</a>
 
-    <form th:action="@{/sale/single_item/makeNewSale}" method="post">
-        <input type="hidden" name="pcId" th:value="${pc.id}"/>
-        <label>Quantità:</label>
-        <input type="number" name="quantity" value="1"/>
-        <button type="submit">ACQUISTA</button>
-    </form>
+<div class="product-container">
 
-    <a th:href="|/admin/pc/${pc.id}/modify|">Modifica PC</a>
-    <a th:href="|/admin/pc/${pc.id}/clone|">Clona</a>
+    <!-- IMMAGINE -->
+    <div class="product-image">
+        <img th:src="@{/pc/image/{id}(id=${pc.id})}" alt="PC Image">
+    </div>
+
+    <!-- INFO -->
+    <div class="product-info">
+
+        <h1 th:text="${pc.nome}">Nome PC</h1>
+
+        <p class="price-stock"
+           th:text="|${pc.prezzo} € - ${pc.disponibilita} disponibili|">
+        </p>
+
+        <div class="specs">
+            <p><b>CPU:</b> <span th:text="${pc.cpu}"></span></p>
+            <p><b>GPU:</b> <span th:text="${pc.gpu}"></span></p>
+            <p><b>RAM:</b> <span th:text="${pc.ram}"></span></p>
+            <p><b>ROM:</b> <span th:text="${pc.rom}"></span></p>
+            <p><b>Case:</b> <span th:text="${pc.casePc}"></span></p>
+            <p><b>Codice:</b> <span th:text="${pc.codice}"></span></p>
+        </div>
+
+        <!-- CARRELLO -->
+        <form th:action="@{/user/cart/add}" method="post" class="actions">
+            <input type="hidden" name="pcId" th:value="${pc.id}"/>
+
+            <label>Quantità</label>
+            <input type="number" name="quantity" value="1" min="1">
+
+            <button type="submit" class="btn-cart">
+                Aggiungi al carrello
+            </button>
+        </form>
+
+        <!-- ACQUISTO -->
+        <form th:action="@{/sale/single_item/makeNewSale}" method="post" class="actions">
+            <input type="hidden" name="pcId" th:value="${pc.id}"/>
+
+            <label>Quantità</label>
+            <input type="number" name="quantity" value="1" min="1">
+
+            <button type="submit" class="btn-buy">
+                Acquista subito
+            </button>
+        </form>
+
+        <!-- ADMIN -->
+        <div class="admin-actions" sec:authorize="hasAuthority('ADMIN')">
+            <a th:href="|/admin/pc/${pc.id}/modify|">Modifica</a>
+            <a th:href="|/admin/pc/${pc.id}/clone|">Clona</a>
+        </div>
+
+    </div>
+</div>
 
 </body>
 </html>

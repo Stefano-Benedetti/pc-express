@@ -1,37 +1,89 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="it">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>PC Express</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <div>-->
+<!--      <h2>Login</h2>-->
+
+<!--      <div th:if="${param.error}">Credenziali errate</div>-->
+
+<!--      <form th:action="@{/login}" method="post">-->
+<!--        <div>-->
+<!--          <label for="username">Email</label>-->
+<!--          <input-->
+<!--                  type="text"-->
+<!--                  id="username"-->
+<!--                  name="username"-->
+<!--                  >-->
+<!--        </div>-->
+
+<!--        <div>-->
+<!--          <label for="password">Password</label>-->
+<!--          <input-->
+<!--                  type="password"-->
+<!--                  id="password"-->
+<!--                  name="password"-->
+<!--                  >-->
+<!--        </div>-->
+
+<!--        <button type="submit">Conferma</button>-->
+
+<!--      </form>-->
+<!--    </div>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>PC Express</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - PC Express</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
+
 <body>
-    <div>
-      <h2>Login</h2>
+<div class="login-container">
+    <div class="login-card">
 
-      <div th:if="${param.error}">Credenziali errate</div>
+        <h2>Accedi a PC Express</h2>
+        <p class="subtitle">
+            Inserisci le tue credenziali per continuare
+        </p>
 
-      <form th:action="@{/login}" method="post">
-        <div>
-          <label for="username">Email</label>
-          <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  >
+        <div class="error" th:if="${param.error}">
+            ❌ Credenziali errate
         </div>
 
-        <div>
-          <label for="password">Password</label>
-          <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  >
+        <form th:action="@{/login}" method="post" class="login-form">
+
+            <div class="form-group">
+                <label for="username">Email</label>
+                <input type="text" id="username" name="username" placeholder="Inserisci la tua email">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Inserisci la password">
+            </div>
+
+            <button type="submit" class="btn-login">
+                Accedi
+            </button>
+
+        </form>
+
+        <div class="register-link">
+            Non hai un account?
+            <a href="/register_form">Registrati</a>
         </div>
 
-        <button type="submit">Conferma</button>
-
-      </form>
     </div>
+</div>
 </body>
 </html>

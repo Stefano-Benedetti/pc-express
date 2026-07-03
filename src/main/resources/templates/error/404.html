@@ -1,10 +1,48 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>PC Express</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>errore 400</h1>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>PC Express</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Errore 404 - PC Express</title>
+    <link rel="stylesheet" th:href="@{/css/error_pages.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
-    <h1>bro non trovo la pagina (404)</h1>
+
+<div class="error-container">
+
+    <div class="error-card">
+
+        <div class="error-code">
+            404
+        </div>
+
+        <h1>Pagina non trovata</h1>
+
+        <p>
+            La pagina che stai cercando non esiste o è stata spostata.
+            Verifica l’indirizzo oppure torna al catalogo.
+        </p>
+
+        <a href="/" class="home-btn">
+            Torna alla Home
+        </a>
+
+    </div>
+
+</div>
+
 </body>
 </html>

@@ -1,0 +1,83 @@
+/* BACK LINK */
+.back-link{
+    display:inline-block;
+    margin:20px;
+    color:#0078ff;
+    text-decoration:none;
+}
+
+/* CONTAINER */
+.product-container{
+    display:flex;
+    gap:40px;
+    padding:40px;
+    align-items:flex-start;
+}
+
+/* IMAGE */
+.product-image img{
+    width:450px;
+    height:350px;
+    object-fit:cover;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+/* INFO */
+.product-info h1{
+    margin-bottom:10px;
+}
+
+.price-stock{
+    font-size:18px;
+    color:#0078ff;
+    margin-bottom:20px;
+}
+
+/* SPECIFICHE */
+.specs p{
+    margin:5px 0;
+}
+
+/* FORM */
+.actions{
+    margin-top:20px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.actions input{
+    width:60px;
+    padding:5px;
+}
+
+/* BUTTONS */
+.btn-cart{
+    background:#0078ff;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.btn-buy{
+    background:#28a745;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+/* ADMIN */
+.admin-actions{
+    margin-top:20px;
+}
+
+.admin-actions a{
+    margin-right:10px;
+    color:#e53935;
+    text-decoration:none;
+}
