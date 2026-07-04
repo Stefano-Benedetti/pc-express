@@ -84,9 +84,9 @@ public class GlobalExceptionHandler {
         return "/login";
     }
 
-    @ExceptionHandler(SaleDoesNotExistException.class)
+    @ExceptionHandler(SaleNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleSaleDoesNotExist(SaleDoesNotExistException e, Model model) {
+    public String handleSaleDoesNotExist(SaleNotFoundException e, Model model) {
         model.addAttribute("errorMessage", e.getMessage());
         return "/error/404";
     }

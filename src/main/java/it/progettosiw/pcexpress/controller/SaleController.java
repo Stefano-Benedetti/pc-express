@@ -1,6 +1,5 @@
 package it.progettosiw.pcexpress.controller;
 
-import it.progettosiw.pcexpress.exceptions.SaleDoesNotExistException;
 import it.progettosiw.pcexpress.exceptions.SaleNotFoundException;
 import it.progettosiw.pcexpress.exceptions.TooLowAvailabilityException;
 import it.progettosiw.pcexpress.model.Sale;
@@ -43,7 +42,7 @@ public class SaleController {
     public String showForSingleSale(@PathVariable("sale_id") Long sale_id, Model model){
         Sale sale = saleService.getSaleById(sale_id);
         if(!saleService.isCurrentUserBuyerOfSale(sale))
-            throw new SaleDoesNotExistException(sale_id);
+            throw new SaleNotFoundException(sale_id);
         model.addAttribute("sale", sale);
         return "/sale/single_sale";
     }
