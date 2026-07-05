@@ -1,31 +1,90 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>PC Express</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifica PC - PC Express</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pc_form.css}">
 </head>
+
 <body>
-    <h1>Modifica il PC selezionato</h1>
 
-    <form th:action="@{/admin/pc/modify}" method="POST" th:object="${pc}">
-        <div>
-            <label>Nome:</label> <span><input type="text" th:field="${pc.nome}"/></span>
-            <span th:if="${#fields.hasErrors('nome')}" th:errors="${pc.nome}"></span>
-        </div>
-        <div>
-            <label>Prezzo:</label> <span><input type="text" th:field="${pc.prezzo}" /></span>
-            <span th:if="${#fields.hasErrors('prezzo')}" th:errors="${pc.prezzo}"></span>
-        </div>
-        <div>
-            <label>Disponibilità:</label> <span><input type="text" th:field="${pc.disponibilita}" /></span>
-            <span th:if="${#fields.hasErrors('disponibilita')}" th:errors="${pc.disponibilita}"></span>
-        </div>
-        <input type="hidden" name="pcId" th:field="${pc.id}"/>
+<header>
+    <div class="logo">PC Express</div>
 
-        <div>
-            <span><button type="submit">Conferma</button></span>
-        </div>
-    </form>
+    <nav class="nav_header">
+        <a href="/pc/catalog" class="nav_links">Catalogo</a>
+        <a href="/admin/pc/newpc_form" class="nav_links">Nuovo PC</a>
+        <a href="/admin/users/all_users" class="nav_links" sec:authorize="hasAuthority('ADMIN')">Admin</a>
+    </nav>
+</header>
+
+<main class="page-container">
+
+    <div class="form-card">
+        <h1>Modifica PC</h1>
+        <p class="subtitle">Aggiorna le informazioni del prodotto</p>
+
+        <form th:action="@{/admin/pc/modify}" method="POST" th:object="${pc}" enctype="multipart/form-data">
+
+            <!-- ID nascosto -->
+            <input type="hidden" th:field="*{id}"/>
+
+            <!-- PREVIEW IMMAGINE ATTUALE -->
+            <div class="form-group full">
+                <label>Immagine attuale</label>
+
+                <div class="img-preview">
+                    <img th:src="@{/pc/image/{id}(id=${pc.id})}"
+                         alt="Immagine PC">
+                </div>
+            </div>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" th:field="*{nome}">
+                    <span class="error" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Prezzo</label>
+                    <input type="text" th:field="*{prezzo}">
+                    <span class="error" th:if="${#fields.hasErrors('prezzo')}" th:errors="*{prezzo}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Disponibilità</label>
+                    <input type="text" th:field="*{disponibilita}">
+                    <span class="error" th:if="${#fields.hasErrors('disponibilita')}" th:errors="*{disponibilita}"></span>
+                </div>
+
+
+                <!-- NUOVA IMMAGINE -->
+                <div class="form-group full">
+                    <label>Modifica immagine (opzionale)</label>
+                    <input type="file" name="image" accept="image/*">
+                    <small>Lascia vuoto per mantenere l’immagine attuale</small>
+                </div>
+
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Salva modifiche
+            </button>
+
+        </form>
+
+    </div>
+
+</main>
+
+<footer>
+    <p>PC Express - Area amministrativa</p>
+</footer>
 
 </body>
 </html>

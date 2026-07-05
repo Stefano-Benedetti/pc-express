@@ -180,15 +180,12 @@
 
     <p>PC Express - Il tuo negozio di PC preassemblati.</p>
 
-    <div class="admin"
-         sec:authorize="hasAuthority('ADMIN')">
-
+    <div class="admin" sec:authorize="hasAuthority('ADMIN')">
         <a href="/admin/users/all_users">Utenti</a>
-
         <a href="/admin/sale/all_sales">Vendite</a>
-
         <a href="/admin/pc/newpc_form">Nuovo PC</a>
-
+        <a th:href="|/admin/pc/${pc.id}/modify|">Modifica PC</a>
+        <a th:href="|/admin/pc/${pc.id}/clone|">Clona PC</a>
     </div>
 
 </footer>

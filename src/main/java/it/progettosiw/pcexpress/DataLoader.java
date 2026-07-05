@@ -31,7 +31,6 @@ public class DataLoader implements CommandLineRunner {
         p1.setPrezzo(999.99F);
         p1.setDisponibilita(12);
         p1.setImmagine(Files.readAllBytes(Paths.get("src/main/resources/static/images/drago_pc.jpg")));
-        System.out.println(p1.getImmagine().getClass());
         pcRepository.save(p1);
 
 

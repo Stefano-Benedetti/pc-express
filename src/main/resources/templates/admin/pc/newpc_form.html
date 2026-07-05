@@ -1,54 +1,117 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
-  <title>PC Express</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aggiungi PC - PC Express</title>
+
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/pc_form.css}">
 </head>
+
 <body>
-  <h1>Aggiungi un PC</h1>
-  <form th:action="@{/admin/pc/newpc_form}" method="POST" th:object="${pc}">
-      <div th:if="${#fields.hasGlobalErrors()}">
-          <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
+
+<header>
+  <div class="logo">PC Express</div>
+
+  <nav class="nav_header">
+    <a href="/pc/catalog" class="nav_links">Catalogo</a>
+    <a href="/admin/pc/newpc_form" class="nav_links">Nuovo PC</a>
+    <a href="/admin/users/all_users" class="nav_links" sec:authorize="hasAuthority('ADMIN')">Admin</a>
+  </nav>
+</header>
+
+<main class="page-container">
+
+  <div class="form-card">
+
+    <h1>Aggiungi un nuovo PC</h1>
+    <p class="subtitle">Compila i dati del nuovo computer da inserire nel catalogo</p>
+
+    <form th:action="@{/admin/pc/newpc_form}" method="POST" th:object="${pc}" enctype="multipart/form-data">  <!--enctype è per le immagini-->
+
+      <!-- ERRORI GLOBALI -->
+      <div class="error-box" th:if="${#fields.hasGlobalErrors()}">
+        <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
       </div>
-    <div>
-      <label>Nome:</label> <span><input type="text" th:field="${pc.nome}" /></span>
-      <span th:if="${#fields.hasErrors('nome')}" th:errors="${pc.nome}"></span>
-    </div>
-    <div>
-      <label>Prezzo:</label> <span><input type="text" th:field="${pc.prezzo}" /></span>
-        <span th:if="${#fields.hasErrors('prezzo')}" th:errors="${pc.prezzo}"></span>
-    </div>
-    <div>
-      <label>Disponibilità:</label> <span><input type="text" th:field="${pc.disponibilita}" /></span>
-        <span th:if="${#fields.hasErrors('disponibilita')}" th:errors="${pc.disponibilita}"></span>
-    </div>
-    <div>
-      <label>Codice prodotto:</label> <span><input type="text" th:field="${pc.codice}" /></span>
-        <span th:if="${#fields.hasErrors('codice')}" th:errors="${pc.codice}"></span>
-    </div>
-    <div>
-      <label>CPU:</label> <span><input type="text" th:field="${pc.cpu}" /></span>
-        <span th:if="${#fields.hasErrors('cpu')}" th:errors="${pc.cpu}"></span>
-    </div>
-    <div>
-      <label>GPU:</label> <span><input type="text" th:field="${pc.gpu}" /></span>
-        <span th:if="${#fields.hasErrors('gpu')}" th:errors="${pc.gpu}"></span>
-    </div>
-    <div>
-      <label>RAM:</label> <span><input type="text" th:field="${pc.ram}" /></span>
-        <span th:if="${#fields.hasErrors('ram')}" th:errors="${pc.ram}"></span>
-    </div>
-    <div>
-      <label>ROM:</label> <span><input type="text" th:field="${pc.rom}" /></span>
-        <span th:if="${#fields.hasErrors('rom')}" th:errors="${pc.rom}"></span>
-    </div>
-    <div>
-      <label>Case:</label> <span><input type="text" th:field="${pc.casePc}" /></span>
-        <span th:if="${#fields.hasErrors('casePc')}" th:errors="${pc.casePc}"></span>
-    </div>
-    <div>
-      <span><button type="submit">Conferma</button></span>
-    </div>
-  </form>
+
+      <div class="form-grid">
+
+        <div class="form-group full">
+          <label>Nome</label>
+          <input type="text" th:field="*{nome}">
+          <span class="error" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+        </div>
+
+        <div class="form-group">
+          <label>Prezzo</label>
+          <input type="text" th:field="*{prezzo}">
+          <span class="error" th:if="${#fields.hasErrors('prezzo')}" th:errors="*{prezzo}"></span>
+        </div>
+
+        <div class="form-group">
+          <label>Disponibilità</label>
+          <input type="text" th:field="*{disponibilita}">
+          <span class="error" th:if="${#fields.hasErrors('disponibilita')}" th:errors="*{disponibilita}"></span>
+        </div>
+
+        <div class="form-group">
+          <label>Codice prodotto</label>
+          <input type="text" th:field="*{codice}">
+          <span class="error" th:if="${#fields.hasErrors('codice')}" th:errors="*{codice}"></span>
+        </div>
+
+        <div class="form-group">
+          <label>CPU</label>
+          <input type="text" th:field="*{cpu}">
+          <span class="error" th:if="${#fields.hasErrors('cpu')}" th:errors="*{cpu}"></span>
+        </div>
+
+        <div class="form-group">
+          <label>GPU</label>
+          <input type="text" th:field="*{gpu}">
+          <span class="error" th:if="${#fields.hasErrors('gpu')}" th:errors="*{gpu}"></span>
+        </div>
+
+        <div class="form-group">
+          <label>RAM</label>
+          <input type="text" th:field="*{ram}">
+          <span class="error" th:if="${#fields.hasErrors('ram')}" th:errors="*{ram}"></span>
+        </div>
+
+        <div class="form-group">
+          <label>ROM</label>
+          <input type="text" th:field="*{rom}">
+          <span class="error" th:if="${#fields.hasErrors('rom')}" th:errors="*{rom}"></span>
+        </div>
+
+        <div class="form-group">
+          <label>Case</label>
+          <input type="text" th:field="*{casePc}">
+          <span class="error" th:if="${#fields.hasErrors('casePc')}" th:errors="*{casePc}"></span>
+        </div>
+
+        <!-- IMMAGINE -->
+        <div class="form-group full">
+          <label>Immagine del PC</label>
+          <input type="file" name="image" accept="image/*">
+        </div>
+
+      </div>
+
+      <button type="submit" class="submit-btn">
+        Salva PC
+      </button>
+    </form>
+
+  </div>
+
+</main>
+
+<footer>
+  <p>PC Express - Admin panel</p>
+</footer>
+
 </body>
 </html>
+

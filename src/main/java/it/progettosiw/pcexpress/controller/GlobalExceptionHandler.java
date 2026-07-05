@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.io.IOException;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -80,6 +82,14 @@ public class GlobalExceptionHandler {
     public String handleUserNotLoggedIn(UserNotLoggedInException e, Model model) {
         model.addAttribute("errorMessage", e.getMessage());
         return "/login";
+    }
+
+
+    @ExceptionHandler(IOException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String handleIOException(IOException e, Model model) {
+        model.addAttribute("errorMessage", e.getMessage());
+        return "/error/500";
     }
 
 

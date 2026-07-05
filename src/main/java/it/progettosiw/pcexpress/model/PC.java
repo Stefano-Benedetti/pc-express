@@ -87,6 +87,7 @@ public class PC {
         this.casePc = pc.getCasePc();
         this.prezzo = pc.getPrezzo();
         this.disponibilita = pc.getDisponibilita();
+        this.immagine = pc.getImmagine();
     }
 
     public void reduceAvailability(Integer quantity){

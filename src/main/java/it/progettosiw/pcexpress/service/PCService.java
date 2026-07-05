@@ -8,7 +8,9 @@ import it.progettosiw.pcexpress.repository.CartItemRepository;
 import it.progettosiw.pcexpress.repository.PCRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,21 +45,28 @@ public class PCService {
     }
 
     @Transactional
-    public void update(Long pcId, String nome, Float prezzo, Integer disponibilita) throws PCNotFoundException {
+    public void update(Long pcId, String nome, Float prezzo, Integer disponibilita, MultipartFile image) throws PCNotFoundException, IOException {
         PC pc = pcRepository.findById(pcId).orElseThrow(() -> new PCDoesNotExistException(pcId));
         pc.setNome(nome);
         pc.setPrezzo(prezzo);
         pc.setDisponibilita(disponibilita);
+        if (!image.isEmpty())
+            pc.setImmagine(image.getBytes());
         pcRepository.save(pc);
     }
 
     @Transactional
-    public Long cloneWithChanges(PC pc, Boolean toZero) throws PCWithThisCodeAlreadyExistsException {
+    public Long cloneWithChanges(PC pc, Boolean toZero, MultipartFile image) throws PCWithThisCodeAlreadyExistsException, IOException {
         PC newpc = new PC(pc);
-        this.save(newpc);
-        if(toZero){
-            toZeroAvailability(pc);
+        if (!image.isEmpty())
+            newpc.setImmagine(image.getBytes());
+        else{
+            PC oldPc = pcRepository.findById(pc.getId()).orElseThrow(() -> new PCDoesNotExistException(pc.getId()));
+            newpc.setImmagine(oldPc.getImmagine());
         }
+        this.save(newpc);
+        if(toZero)
+            toZeroAvailability(pc);
         return newpc.getId();
     }
 
