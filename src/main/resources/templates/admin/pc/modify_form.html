@@ -12,78 +12,114 @@
 <body>
 
 <header>
-    <div class="logo">PC Express</div>
+    <div class="logo">
+        PC Express
+    </div>
 
     <nav class="nav_header">
         <a href="/pc/catalog" class="nav_links">Catalogo</a>
-        <a href="/admin/pc/newpc_form" class="nav_links">Nuovo PC</a>
-        <a href="/admin/users/all_users" class="nav_links" sec:authorize="hasAuthority('ADMIN')">Admin</a>
+        <a href="/user/cart" class="nav_links">Carrello</a>
+        <a href="/sale/user_sales" class="nav_links">I miei acquisti</a>
+        <a href="/user/personal_area" class="nav_links">Area Personale</a>
+        <a href="/register_form" class="nav_links" sec:authorize="isAnonymous()">Registrati</a>
+        <a href="/login" class="nav_links" sec:authorize="isAnonymous()">Accedi</a>
+        <span class="logout nav_links" sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </span>
     </nav>
 </header>
 
-<main class="page-container">
+<main class="pc-form-page">
 
-    <div class="form-card">
-        <h1>Modifica PC</h1>
-        <p class="subtitle">Aggiorna le informazioni del prodotto</p>
+    <section class="pc-form-hero">
+        <div>
+            <h1>Modifica PC</h1>
+            <p>Aggiorna le informazioni del prodotto già presente nel catalogo.</p>
+        </div>
+    </section>
 
-        <form th:action="@{/admin/pc/modify}" method="POST" th:object="${pc}" enctype="multipart/form-data">
+    <section class="pc-form-container">
 
-            <!-- ID nascosto -->
+        <div class="back-links">
+            <a href="/">← Torna alla home</a>
+            <a href="/pc/catalog">← Torna al catalogo</a>
+        </div>
+
+        <form class="pc-form-card"
+              th:action="@{/admin/pc/modify}"
+              method="POST"
+              th:object="${pc}"
+              enctype="multipart/form-data">
+
             <input type="hidden" th:field="*{id}"/>
 
-            <!-- PREVIEW IMMAGINE ATTUALE -->
-            <div class="form-group full">
-                <label>Immagine attuale</label>
+            <div class="form-intro">
+                <h2>Dati del PC</h2>
+                <p>Modifica le informazioni principali del prodotto e, se necessario, aggiorna l’immagine.</p>
+            </div>
 
-                <div class="img-preview">
-                    <img th:src="@{/pc/image/{id}(id=${pc.id})}"
-                         alt="Immagine PC">
-                </div>
+            <div class="error-box" th:if="${#fields.hasGlobalErrors()}">
+                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
             </div>
 
             <div class="form-grid">
 
-                <div class="form-group">
-                    <label>Nome</label>
-                    <input type="text" th:field="*{nome}">
-                    <span class="error" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
-                </div>
-
-                <div class="form-group">
-                    <label>Prezzo</label>
-                    <input type="text" th:field="*{prezzo}">
-                    <span class="error" th:if="${#fields.hasErrors('prezzo')}" th:errors="*{prezzo}"></span>
-                </div>
-
-                <div class="form-group">
-                    <label>Disponibilità</label>
-                    <input type="text" th:field="*{disponibilita}">
-                    <span class="error" th:if="${#fields.hasErrors('disponibilita')}" th:errors="*{disponibilita}"></span>
-                </div>
-
-
-                <!-- NUOVA IMMAGINE -->
                 <div class="form-group full">
-                    <label>Modifica immagine (opzionale)</label>
-                    <input type="file" name="image" accept="image/*">
-                    <small>Lascia vuoto per mantenere l’immagine attuale</small>
+                    <label>Immagine attuale</label>
+
+                    <div class="img-preview">
+                        <img th:src="@{/pc/image/{id}(id=${pc.id})}"
+                             alt="Immagine PC">
+                    </div>
+                </div>
+
+                <div class="form-group full">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" th:field="*{nome}">
+                    <span class="error-message" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="prezzo">Prezzo</label>
+                    <input type="text" id="prezzo" th:field="*{prezzo}">
+                    <span class="error-message" th:if="${#fields.hasErrors('prezzo')}" th:errors="*{prezzo}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="disponibilita">Disponibilità</label>
+                    <input type="text" id="disponibilita" th:field="*{disponibilita}">
+                    <span class="error-message" th:if="${#fields.hasErrors('disponibilita')}" th:errors="*{disponibilita}"></span>
+                </div>
+
+                <div class="form-group full">
+                    <label for="image">Modifica immagine</label>
+                    <input type="file" id="image" name="image" accept="image/*">
+                    <small>Lascia vuoto questo campo per mantenere l’immagine attuale.</small>
                 </div>
 
             </div>
 
-            <button type="submit" class="submit-btn">
-                Salva modifiche
-            </button>
+            <div class="form-actions">
+                <a href="/pc/catalog" class="cancel-button">Annulla</a>
+                <button type="submit" class="submit-button">Salva modifiche</button>
+            </div>
 
         </form>
 
-    </div>
+    </section>
 
 </main>
 
 <footer>
-    <p>PC Express - Area amministrativa</p>
+    <p>PC Express - Il tuo negozio di PC preassemblati.</p>
+
+    <div class="admin" sec:authorize="hasAuthority('ADMIN')">
+        <a href="/admin/users/all_users">Utenti</a>
+        <a href="/admin/sale/all_sales">Vendite</a>
+        <a href="/admin/pc/newpc_form">Aggiungi nuovo pc</a>
+    </div>
 </footer>
 
 </body>

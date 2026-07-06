@@ -1,22 +1,131 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="it">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>PC Express</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <p><a href="/">Torna alla home</a></p>-->
+<!--    <p><a href="/sale/user_sales">Torna agli acquisti effettuati</a></p>-->
+<!--    <h1>Acquisto</h1>-->
+<!--    <h2 th:text="|Data: ${sale.getDateOfSale()}|">Data</h2>-->
+<!--    <h2 th:text="|Totale: ${sale.getPaidMoney()} euro|">Prezzo Totale</h2>-->
+<!--    <ul>-->
+<!--        <li th:each="soldItem : ${sale.getSoldItems()}">-->
+<!--            Articolo acquistato: <a th:href="|/pc/${soldItem.getPc().getId()}|"-->
+<!--            th:text="|${soldItem.getPc().getNome()}|">nome</a>-->
+<!--            <div th:text="|Prezzo di acquisto: ${soldItem.getPaidMoney()} euro|">prezzo</div>-->
+<!--            <div th:text="|Quantità: ${soldItem.getQuantity()}|">quantità</div>-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>PC Express</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dettaglio acquisto - PC Express</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/single_sale.css}">
 </head>
 <body>
-    <p><a href="/">Torna alla home</a></p>
-    <p><a href="/sale/user_sales">Torna agli acquisti effettuati</a></p>
-    <h1>Acquisto</h1>
-    <h2 th:text="|Data: ${sale.getDateOfSale()}|">Data</h2>
-    <h2 th:text="|Totale: ${sale.getPaidMoney()} euro|">Prezzo Totale</h2>
-    <ul>
-        <li th:each="soldItem : ${sale.getSoldItems()}">
-            Articolo acquistato: <a th:href="|/pc/${soldItem.getPc().getId()}|"
-            th:text="|${soldItem.getPc().getNome()}|">nome</a>
-            <div th:text="|Prezzo di acquisto: ${soldItem.getPaidMoney()} euro|">prezzo</div>
-            <div th:text="|Quantità: ${soldItem.getQuantity()}|">quantità</div>
-        </li>
-    </ul>
+
+<header>
+    <div class="logo">
+        PC Express
+    </div>
+
+    <nav class="nav_header">
+        <a href="/pc/catalog" class="nav_links">Catalogo</a>
+        <a href="/user/cart" class="nav_links">Carrello</a>
+        <a href="/sale/user_sales" class="nav_links">I miei acquisti</a>
+        <a href="/user/personal_area" class="nav_links">Area Personale</a>
+        <a href="/register_form" class="nav_links" sec:authorize="isAnonymous()">Registrati</a>
+        <a href="/login" class="nav_links" sec:authorize="isAnonymous()">Accedi</a>
+        <span class="logout nav_links" sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </span>
+    </nav>
+</header>
+
+<main class="sale-page">
+
+    <section class="sale-hero">
+        <div>
+            <h1>Dettaglio acquisto</h1>
+            <p>Rivedi i prodotti acquistati e il riepilogo del tuo ordine.</p>
+        </div>
+    </section>
+
+    <section class="sale-container">
+
+        <div class="back-links">
+            <a href="/">← Torna alla home</a>
+            <a href="/sale/user_sales">← Torna agli acquisti effettuati</a>
+        </div>
+
+        <div class="sale-summary">
+            <div class="summary-box">
+                <span>Data acquisto</span>
+                <strong th:text="${#temporals.format(sale.getDateOfSale(), 'dd/MM/yyyy HH:mm')}">Data</strong>
+            </div>
+
+            <div class="summary-box">
+                <span>Totale pagato</span>
+                <strong th:text="${#numbers.formatDecimal(sale.getPaidMoney(), 1, 2) + ' €'}">Totale</strong>
+            </div>
+        </div>
+
+        <h2 class="section-title">Articoli acquistati</h2>
+
+        <ul class="sold-items-list">
+            <li class="sold-item-card" th:each="soldItem : ${sale.getSoldItems()}">
+
+                <div class="sold-item-info">
+                    <span class="item-label">Articolo acquistato</span>
+
+                    <a class="item-name"
+                       th:href="|/pc/${soldItem.getPc().getId()}|"
+                       th:text="|${soldItem.getPc().getNome()}|">nome</a>
+                </div>
+
+                <div class="sold-item-details">
+                    <div>
+                        <span>Prezzo di acquisto</span>
+                        <strong th:text="${#numbers.formatDecimal(soldItem.getPaidMoney(), 1, 2) + ' €'}">prezzo</strong>
+                    </div>
+
+                    <div>
+                        <span>Quantità</span>
+                        <strong th:text="|${soldItem.getQuantity()}|">quantità</strong>
+                    </div>
+                </div>
+
+                <a class="pc-button"
+                   th:href="|/pc/${soldItem.getPc().getId()}|">
+                    Vedi PC
+                </a>
+
+            </li>
+        </ul>
+
+    </section>
+
+</main>
+
+<footer>
+    <p>PC Express - Il tuo negozio di PC preassemblati.</p>
+
+    <div class="admin" sec:authorize="hasAuthority('ADMIN')">
+        <a href="/admin/users/all_users">Utenti</a>
+        <a href="/admin/sale/all_sales">Vendite</a>
+        <a href="/admin/pc/newpc_form">Aggiungi nuovo pc</a>
+    </div>
+</footer>
+
 </body>
 </html>

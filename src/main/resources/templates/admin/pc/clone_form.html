@@ -73,125 +73,157 @@
 <body>
 
 <header>
-    <div class="logo">PC Express</div>
+    <div class="logo">
+        PC Express
+    </div>
 
     <nav class="nav_header">
         <a href="/pc/catalog" class="nav_links">Catalogo</a>
-        <a href="/admin/pc/newpc_form" class="nav_links">Nuovo PC</a>
-        <a href="/admin/users/all_users" class="nav_links" sec:authorize="hasAuthority('ADMIN')">Admin</a>
+        <a href="/user/cart" class="nav_links">Carrello</a>
+        <a href="/sale/user_sales" class="nav_links">I miei acquisti</a>
+        <a href="/user/personal_area" class="nav_links">Area Personale</a>
+        <a href="/register_form" class="nav_links" sec:authorize="isAnonymous()">Registrati</a>
+        <a href="/login" class="nav_links" sec:authorize="isAnonymous()">Accedi</a>
+        <span class="logout nav_links" sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </span>
     </nav>
 </header>
 
-<main class="page-container">
+<main class="pc-form-page">
 
-    <div class="form-card">
+    <section class="pc-form-hero">
+        <div>
+            <h1>Clona PC</h1>
+            <p>Crea una nuova copia del prodotto partendo dai dati già presenti nel catalogo.</p>
+        </div>
+    </section>
 
-        <h1>Clona PC</h1>
-        <p class="subtitle">Modifica i dati del PC prima di creare la copia</p>
+    <section class="pc-form-container">
 
-        <form th:action="@{/admin/pc/clone}" method="POST" th:object="${pc}" enctype="multipart/form-data">
+        <div class="back-links">
+            <a href="/">← Torna alla home</a>
+            <a href="/pc/catalog">← Torna al catalogo</a>
+        </div>
 
-            <!-- ID nascosto -->
+        <form class="pc-form-card"
+              th:action="@{/admin/pc/clone}"
+              method="POST"
+              th:object="${pc}"
+              enctype="multipart/form-data">
+
             <input type="hidden" th:field="*{id}"/>
 
-            <!-- IMMAGINE ATTUALE -->
-            <div class="form-group full">
-                <label>Immagine del PC</label>
-
-                <div class="img-preview">
-                    <img th:src="@{/pc/image/{id}(id=${pc.id})}"
-                         alt="PC image">
-                </div>
+            <div class="form-intro">
+                <h2>Dati del PC</h2>
+                <p>Modifica i dati del PC clonato prima di aggiungerlo al catalogo.</p>
             </div>
 
             <div class="error-box" th:if="${#fields.hasGlobalErrors()}">
-                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
+                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
             </div>
+
             <div class="form-grid">
 
-                <div class="form-group">
-                    <label>Nome</label>
-                    <input type="text" th:field="*{nome}">
-                    <span class="error" th:if="${#fields.hasErrors('nome')}" th:errors="${pc.nome}"></span>
-                </div>
-
-                <div class="form-group">
-                    <label>Prezzo</label>
-                    <input type="text" th:field="*{prezzo}">
-                    <span class="error" th:if="${#fields.hasErrors('prezzo')}" th:errors="${pc.prezzo}"></span>
-                </div>
-
-                <div class="form-group">
-                    <label>Disponibilità</label>
-                    <input type="text" th:field="*{disponibilita}">
-                    <span class="error" th:if="${#fields.hasErrors('disponibilita')}" th:errors="${pc.disponibilita}"></span>
-                </div>
-
-                <div class="form-group">
-                    <label>Codice prodotto</label>
-                    <input type="text" th:field="*{codice}">
-                    <span class="error" th:if="${#fields.hasErrors('codice')}" th:errors="${pc.codice}"></span>
-                </div>
-
-                <div class="form-group">
-                    <label>CPU</label>
-                    <input type="text" th:field="*{cpu}">
-                    <span class="error" th:if="${#fields.hasErrors('cpu')}" th:errors="${pc.cpu}"></span>
-                </div>
-
-                <div class="form-group">
-                    <label>GPU</label>
-                    <input type="text" th:field="*{gpu}">
-                    <span class="error" th:if="${#fields.hasErrors('gpu')}" th:errors="${pc.gpu}"></span>
-                </div>
-
-                <div class="form-group">
-                    <label>RAM</label>
-                    <input type="text" th:field="*{ram}">
-                    <span class="error" th:if="${#fields.hasErrors('ram')}" th:errors="${pc.ram}"></span>
-                </div>
-
-                <div class="form-group">
-                    <label>ROM</label>
-                    <input type="text" th:field="*{rom}">
-                    <span class="error" th:if="${#fields.hasErrors('rom')}" th:errors="${pc.rom}"></span>
-                </div>
-
-                <div class="form-group">
-                    <label>Case</label>
-                    <input type="text" th:field="*{casePc}">
-                    <span class="error" th:if="${#fields.hasErrors('casePc')}" th:errors="${pc.casePc}"></span>
-                </div>
-
-                <!-- NUOVA IMMAGINE -->
                 <div class="form-group full">
-                    <label>Modifica immagine (opzionale)</label>
-                    <input type="file" name="image" accept="image/*">
-                    <small>Lascia vuoto per mantenere l’immagine attuale</small>
+                    <label>Immagine attuale</label>
+
+                    <div class="img-preview">
+                        <img th:src="@{/pc/image/{id}(id=${pc.id})}"
+                             alt="Immagine PC">
+                    </div>
+                </div>
+
+                <div class="form-group full">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" th:field="*{nome}">
+                    <span class="error-message" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="prezzo">Prezzo</label>
+                    <input type="text" id="prezzo" th:field="*{prezzo}">
+                    <span class="error-message" th:if="${#fields.hasErrors('prezzo')}" th:errors="*{prezzo}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="disponibilita">Disponibilità</label>
+                    <input type="text" id="disponibilita" th:field="*{disponibilita}">
+                    <span class="error-message" th:if="${#fields.hasErrors('disponibilita')}" th:errors="*{disponibilita}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="codice">Codice prodotto</label>
+                    <input type="text" id="codice" th:field="*{codice}">
+                    <span class="error-message" th:if="${#fields.hasErrors('codice')}" th:errors="*{codice}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="cpu">CPU</label>
+                    <input type="text" id="cpu" th:field="*{cpu}">
+                    <span class="error-message" th:if="${#fields.hasErrors('cpu')}" th:errors="*{cpu}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="gpu">GPU</label>
+                    <input type="text" id="gpu" th:field="*{gpu}">
+                    <span class="error-message" th:if="${#fields.hasErrors('gpu')}" th:errors="*{gpu}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="ram">RAM</label>
+                    <input type="text" id="ram" th:field="*{ram}">
+                    <span class="error-message" th:if="${#fields.hasErrors('ram')}" th:errors="*{ram}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="rom">Archiviazione</label>
+                    <input type="text" id="rom" th:field="*{rom}">
+                    <span class="error-message" th:if="${#fields.hasErrors('rom')}" th:errors="*{rom}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="casePc">Case</label>
+                    <input type="text" id="casePc" th:field="*{casePc}">
+                    <span class="error-message" th:if="${#fields.hasErrors('casePc')}" th:errors="*{casePc}"></span>
+                </div>
+
+                <div class="form-group full">
+                    <label for="image">Modifica immagine</label>
+                    <input type="file" id="image" name="image" accept="image/*">
+                    <small>Lascia vuoto questo campo per mantenere l’immagine attuale.</small>
+                </div>
+
+                <div class="form-group full checkbox-group">
+                    <label>
+                        <input type="checkbox" name="toZero">
+                        Porta a zero la disponibilità del PC originale
+                    </label>
                 </div>
 
             </div>
 
-            <!-- CHECKBOX -->
-            <div class="form-group full checkbox-group">
-                <label>
-                    <input type="checkbox" name="toZero">
-                    Porta a zero la disponibilità di questo PC
-                </label>
+            <div class="form-actions">
+                <a href="/pc/catalog" class="cancel-button">Annulla</a>
+                <button type="submit" class="submit-button">Clona PC</button>
             </div>
-
-            <button type="submit" class="submit-btn">
-                Clona PC
-            </button>
 
         </form>
 
-    </div>
+    </section>
 
 </main>
 
 <footer>
-    <p>PC Express - Admin panel</p>
+    <p>PC Express - Il tuo negozio di PC preassemblati.</p>
+
+    <div class="admin" sec:authorize="hasAuthority('ADMIN')">
+        <a href="/admin/users/all_users">Utenti</a>
+        <a href="/admin/sale/all_sales">Vendite</a>
+        <a href="/admin/pc/newpc_form">Aggiungi nuovo pc</a>
+    </div>
 </footer>
 
 </body>

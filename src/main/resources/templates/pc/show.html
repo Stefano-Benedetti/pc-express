@@ -104,7 +104,7 @@
             <h1 th:text="${pc.nome}"></h1>
 
             <p class="price"
-               th:text="|€ ${pc.prezzo}|">
+               th:text="${#numbers.formatDecimal(pc.prezzo, 1, 2) + ' €'}">
             </p>
 
             <p class="stock">

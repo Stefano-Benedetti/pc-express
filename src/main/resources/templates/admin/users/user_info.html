@@ -1,21 +1,123 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="it">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>PC Express</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--  <p>-->
+<!--    <a href="/">Torna alla home</a>-->
+<!--  </p>-->
+<!--  <h1>Info Utente</h1>-->
+<!--  <p>-->
+<!--    <div th:text="|Nome: ${user.firstName}|">Nome</div>-->
+<!--    <div th:text="|Cognome: ${user.lastName}|">Cognome</div>-->
+<!--    <div th:text="|Email: ${user.email}|">Email</div>-->
+<!--    <div th:text="|Data di nascita: ${user.dateOfBirth}|">Data di nascita</div>-->
+<!--    <div th:text="|Numero di telefono: ${user.phoneNumber}|">Numero di telefono</div>-->
+<!--  </p>-->
+
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
-  <title>PC Express</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Info utente - PC Express</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/user_info.css}">
 </head>
 <body>
-  <p>
-    <a href="/">Torna alla home</a>
-  </p>
-  <h1>Info Utente</h1>
-  <p>
-    <div th:text="|Nome: ${user.firstName}|">Nome</div>
-    <div th:text="|Cognome: ${user.lastName}|">Cognome</div>
-    <div th:text="|Email: ${user.email}|">Email</div>
-    <div th:text="|Data di nascita: ${user.dateOfBirth}|">Data di nascita</div>
-    <div th:text="|Numero di telefono: ${user.phoneNumber}|">Numero di telefono</div>
-  </p>
+
+<header>
+  <div class="logo">
+    PC Express
+  </div>
+
+  <nav class="nav_header">
+    <a href="/pc/catalog" class="nav_links">Catalogo</a>
+    <a href="/user/cart" class="nav_links">Carrello</a>
+    <a href="/sale/user_sales" class="nav_links">I miei acquisti</a>
+    <a href="/user/personal_area" class="nav_links">Area Personale</a>
+    <a href="/register_form" class="nav_links" sec:authorize="isAnonymous()">Registrati</a>
+    <a href="/login" class="nav_links" sec:authorize="isAnonymous()">Accedi</a>
+    <span class="logout nav_links" sec:authorize="isAuthenticated()">
+      <form th:action="@{/logout}" method="post">
+        <button type="submit">Logout</button>
+      </form>
+    </span>
+  </nav>
+</header>
+
+<main class="user-info-page">
+
+  <section class="user-info-hero">
+    <div>
+      <h1>Info utente</h1>
+      <p>Consulta i dati personali associati all’account selezionato.</p>
+    </div>
+  </section>
+
+  <section class="user-info-container">
+
+    <div class="back-links">
+      <a href="/">← Torna alla home</a>
+      <a href="/admin/users/all_users">← Torna alla gestione utenti</a>
+    </div>
+
+    <div class="user-card">
+
+      <div class="user-card-header">
+        <h2 th:text="|${user.firstName} ${user.lastName}|">Nome Cognome</h2>
+        <span>Account cliente</span>
+      </div>
+
+      <div class="user-details">
+
+        <div class="user-row">
+          <span>Nome</span>
+          <strong th:text="${user.firstName}">Nome</strong>
+        </div>
+
+        <div class="user-row">
+          <span>Cognome</span>
+          <strong th:text="${user.lastName}">Cognome</strong>
+        </div>
+
+        <div class="user-row">
+          <span>Email</span>
+          <strong th:text="${user.email}">Email</strong>
+        </div>
+
+        <div class="user-row">
+          <span>Data di nascita</span>
+          <strong th:text="${#temporals.format(user.dateOfBirth, 'dd/MM/yyyy')}">Data di nascita</strong>
+        </div>
+
+        <div class="user-row">
+          <span>Numero di telefono</span>
+          <strong th:text="${user.phoneNumber}">Numero di telefono</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  <p>PC Express - Il tuo negozio di PC preassemblati.</p>
+
+  <div class="admin" sec:authorize="hasAuthority('ADMIN')">
+    <a href="/admin/users/all_users">Utenti</a>
+    <a href="/admin/sale/all_sales">Vendite</a>
+    <a href="/admin/pc/newpc_form">Aggiungi nuovo pc</a>
+  </div>
+</footer>
 
 </body>
 </html>

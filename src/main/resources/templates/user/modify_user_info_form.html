@@ -1,33 +1,135 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="it">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>PC Express</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--  <h1>Modifica Account</h1>-->
+<!--  <form th:action="@{/user/modify_user_info}" method="POST" th:object="${user}">-->
+<!--    <div>-->
+<!--      <label>Nome:</label> <span><input type="text" th:field="${user.firstName}" /></span>-->
+<!--      <span th:if="${#fields.hasErrors('firstName')}" th:errors="${user.firstName}"></span>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <label>Cognome:</label> <span><input type="text" th:field="${user.lastName}" /></span>-->
+<!--      <span th:if="${#fields.hasErrors('lastName')}" th:errors="${user.lastName}"></span>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <label>Data di nascita:</label> <span><input type="date" id="dateOfBirth" name="dateOfBirth" th:value="${user.dateOfBirth}" /></span>-->
+<!--      <span th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="${user.dateOfBirth}"></span>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <label>Numero di telefono:</label> <span><input type="text" th:field="${user.phoneNumber}" /></span>-->
+<!--      <span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="${user.phoneNumber}"></span>-->
+<!--    </div>-->
+
+<!--    <div>-->
+<!--      <span><button type="submit">Conferma</button></span>-->
+<!--    </div>-->
+<!--  </form>-->
+
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <title>PC Express</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modifica account - PC Express</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/modify_user_info.css}">
 </head>
 <body>
-  <h1>Modifica Account</h1>
-  <form th:action="@{/user/modify_user_info}" method="POST" th:object="${user}">
+
+<header>
+  <div class="logo">
+    PC Express
+  </div>
+
+  <nav class="nav_header">
+    <a href="/pc/catalog" class="nav_links">Catalogo</a>
+    <a href="/user/cart" class="nav_links">Carrello</a>
+    <a href="/sale/user_sales" class="nav_links">I miei acquisti</a>
+    <a href="/user/personal_area" class="nav_links">Area Personale</a>
+    <a href="/register_form" class="nav_links" sec:authorize="isAnonymous()">Registrati</a>
+    <a href="/login" class="nav_links" sec:authorize="isAnonymous()">Accedi</a>
+    <span class="logout nav_links" sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </span>
+  </nav>
+</header>
+
+<main class="modify-page">
+
+  <section class="modify-hero">
     <div>
-      <label>Nome:</label> <span><input type="text" th:field="${user.firstName}" /></span>
-      <span th:if="${#fields.hasErrors('firstName')}" th:errors="${user.firstName}"></span>
+      <h1>Modifica account</h1>
+      <p>Aggiorna le informazioni personali associate al tuo profilo PC Express.</p>
     </div>
-    <div>
-      <label>Cognome:</label> <span><input type="text" th:field="${user.lastName}" /></span>
-      <span th:if="${#fields.hasErrors('lastName')}" th:errors="${user.lastName}"></span>
-    </div>
-    <div>
-      <label>Data di nascita:</label> <span><input type="date" id="dateOfBirth" name="dateOfBirth" th:value="${user.dateOfBirth}" /></span>
-      <span th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="${user.dateOfBirth}"></span>
-    </div>
-    <div>
-      <label>Numero di telefono:</label> <span><input type="text" th:field="${user.phoneNumber}" /></span>
-      <span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="${user.phoneNumber}"></span>
+  </section>
+
+  <section class="modify-container">
+
+    <div class="back-links">
+      <a href="/user/personal_area">← Torna all'area personale</a>
+      <a href="/">← Torna alla home</a>
     </div>
 
-    <div>
-      <span><button type="submit">Conferma</button></span>
-    </div>
-  </form>
+    <form class="modify-card" th:action="@{/user/modify_user_info}" method="POST" th:object="${user}">
+
+      <div class="form-intro">
+        <h2>Dati personali</h2>
+        <p>Puoi modificare nome, cognome, data di nascita e numero di telefono.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="firstName">Nome</label>
+        <input type="text" id="firstName" th:field="*{firstName}" placeholder="Inserisci il tuo nome">
+        <span class="error-message" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">Cognome</label>
+        <input type="text" id="lastName" th:field="*{lastName}" placeholder="Inserisci il tuo cognome">
+        <span class="error-message" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="dateOfBirth">Data di nascita</label>
+        <input type="date" id="dateOfBirth" th:field="*{dateOfBirth}">
+        <span class="error-message" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="phoneNumber">Numero di telefono</label>
+        <input type="text" id="phoneNumber" th:field="*{phoneNumber}" placeholder="Inserisci il tuo numero di telefono">
+        <span class="error-message" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span>
+      </div>
+
+      <div class="form-actions">
+        <a href="/user/personal_area" class="cancel-button">Annulla</a>
+        <button type="submit" class="confirm-button">Conferma modifiche</button>
+      </div>
+
+    </form>
+
+  </section>
+
+</main>
+
+<footer>
+  <p>PC Express - Il tuo negozio di PC preassemblati.</p>
+
+  <div class="admin" sec:authorize="hasAuthority('ADMIN')">
+    <a href="/admin/users/all_users">Utenti</a>
+    <a href="/admin/sale/all_sales">Vendite</a>
+    <a href="/admin/pc/newpc_form">Aggiungi nuovo pc</a>
+  </div>
+</footer>
 
 </body>
 </html>

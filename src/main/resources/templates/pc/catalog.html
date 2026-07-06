@@ -1,23 +1,118 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="it">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>PC Express</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <p>-->
+<!--        <a href="/">Torna alla home</a>-->
+<!--    </p>-->
+
+
+
+<!--    <h1>Catalogo PC</h1>-->
+<!--    <div th:if="${pcs.isEmpty()}">Non ci sono computer nel sistema.</div>-->
+<!--    <ul>-->
+<!--        <li th:each="pc : ${pcs}">-->
+<!--            <a th:href="|/pc/${pc.id}|"-->
+<!--               th:text="|${pc.nome}|">nome</a>-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>PC Express</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalogo PC - PC Express</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/catalog.css}">
 </head>
 <body>
-    <p>
-        <a href="/">Torna alla home</a>
-    </p>
 
+<header>
+    <div class="logo">
+        PC Express
+    </div>
 
+    <nav class="nav_header">
+        <a href="/pc/catalog" class="nav_links">Catalogo</a>
+        <a href="/user/cart" class="nav_links">Carrello</a>
+        <a href="/sale/user_sales" class="nav_links">I miei acquisti</a>
+        <a href="/user/personal_area" class="nav_links">Area Personale</a>
+        <a href="/register_form" class="nav_links" sec:authorize="isAnonymous()">Registrati</a>
+        <a href="/login" class="nav_links" sec:authorize="isAnonymous()">Accedi</a>
+        <span class="logout nav_links" sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </span>
+    </nav>
+</header>
 
-    <h1>Catalogo PC</h1>
-    <div th:if="${pcs.isEmpty()}">Non ci sono computer nel sistema.</div>
-    <ul>
-        <li th:each="pc : ${pcs}">
-            <a th:href="|/pc/${pc.id}|"
-               th:text="|${pc.nome}|">nome</a>
-        </li>
-    </ul>
+<main class="catalog-page">
+
+    <section class="catalog-hero">
+        <div>
+            <h1>Catalogo PC</h1>
+            <p>Scopri i nostri PC preassemblati per gaming, studio, lavoro e produttività.</p>
+        </div>
+    </section>
+
+    <section class="catalog-container">
+
+        <div class="back-link">
+            <a href="/">← Torna alla home</a>
+        </div>
+
+        <div class="empty-catalog" th:if="${pcs.isEmpty()}">
+            <h2>Nessun PC disponibile</h2>
+            <p>Al momento non ci sono computer nel catalogo.</p>
+        </div>
+
+        <div class="pc-grid" th:if="${!pcs.isEmpty()}">
+
+            <article class="pc-card" th:each="pc : ${pcs}">
+
+                <a class="pc-image-box" th:href="|/pc/${pc.id}|">
+                    <img th:src="@{/pc/image/{id}(id=${pc.id})}" alt="PC">
+                </a>
+
+                <div class="pc-card-content">
+                    <a class="pc-name"
+                       th:href="|/pc/${pc.id}|"
+                       th:text="|${pc.nome}|">nome</a>
+
+                    <div class="pc-price" th:text="${#numbers.formatDecimal(pc.prezzo, 1, 2) + ' €'}">Prezzo</div>
+
+                    <p>Configurazione selezionata da PC Express, pronta per l’utilizzo.</p>
+
+                    <a class="details-button"
+                       th:href="|/pc/${pc.id}|">
+                        Vedi dettagli
+                    </a>
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    <p>PC Express - Il tuo negozio di PC preassemblati.</p>
+
+    <div class="admin" sec:authorize="hasAuthority('ADMIN')">
+        <a href="/admin/users/all_users">Utenti</a>
+        <a href="/admin/sale/all_sales">Vendite</a>
+        <a href="/admin/pc/newpc_form">Aggiungi nuovo pc</a>
+    </div>
+</footer>
+
 </body>
 </html>

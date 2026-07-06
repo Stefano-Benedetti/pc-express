@@ -1,22 +1,127 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="it">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>PC Express</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <p>-->
+<!--        <a href="/">Torna alla home</a>-->
+<!--    </p>-->
+<!--    <h1>Vendite effettuate</h1>-->
+<!--    <div th:if="${sales.isEmpty()}">Non sono state effettuate vendite.</div>-->
+<!--    <ul>-->
+<!--        <li th:each="sale : ${sales}">-->
+<!--            <a th:href="|/admin/sale/${sale.id}|"-->
+<!--               th:text="|Acquisto del ${sale.dateOfSale}|">Acquisto</a>-->
+<!--            <div th:text="|Prezzo pagato: ${sale.paidMoney}|"></div>-->
+<!--        </li>-->
+<!--    </ul>-->
+
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>PC Express</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendite effettuate - PC Express</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/all_sales.css}">
 </head>
 <body>
-    <p>
-        <a href="/">Torna alla home</a>
-    </p>
-    <h1>Vendite effettuate</h1>
-    <div th:if="${sales.isEmpty()}">Non sono state effettuate vendite.</div>
-    <ul>
-        <li th:each="sale : ${sales}">
-            <a th:href="|/admin/sale/${sale.id}|"
-               th:text="|Acquisto del ${sale.dateOfSale}|">Acquisto</a>
-            <div th:text="|Prezzo pagato: ${sale.paidMoney}|"></div>
-        </li>
-    </ul>
+
+<header>
+    <div class="logo">
+        PC Express
+    </div>
+
+    <nav class="nav_header">
+        <a href="/pc/catalog" class="nav_links">Catalogo</a>
+        <a href="/user/cart" class="nav_links">Carrello</a>
+        <a href="/sale/user_sales" class="nav_links">I miei acquisti</a>
+        <a href="/user/personal_area" class="nav_links">Area Personale</a>
+        <a href="/register_form" class="nav_links" sec:authorize="isAnonymous()">Registrati</a>
+        <a href="/login" class="nav_links" sec:authorize="isAnonymous()">Accedi</a>
+        <span class="logout nav_links" sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </span>
+    </nav>
+</header>
+
+<main class="sales-page">
+
+    <section class="sales-hero">
+        <div>
+            <h1>Vendite effettuate</h1>
+            <p>Consulta lo storico degli acquisti completati dai clienti di PC Express.</p>
+        </div>
+    </section>
+
+    <section class="sales-container">
+
+        <div class="back-link">
+            <a href="/">← Torna alla home</a>
+        </div>
+
+        <div class="empty-sales" th:if="${sales.isEmpty()}">
+            <h2>Nessuna vendita registrata</h2>
+            <p>Al momento non sono state effettuate vendite.</p>
+        </div>
+
+        <div class="sales-card" th:if="${!sales.isEmpty()}">
+
+            <div class="sales-card-header">
+                <h2>Storico vendite</h2>
+                <p>Seleziona una vendita per visualizzare il dettaglio completo dell’ordine.</p>
+            </div>
+
+            <ul class="sales-list">
+                <li class="sale-item" th:each="sale : ${sales}">
+
+                    <div class="sale-main-info">
+                        <a class="sale-title"
+                           th:href="|/admin/sale/${sale.id}|"
+                           th:text="${'Vendita del ' + #temporals.format(sale.dateOfSale, 'dd/MM/yyyy HH:mm')}">
+                            Vendita
+                        </a>
+
+                        <span class="sale-subtitle">Ordine completato</span>
+                    </div>
+
+                    <div class="sale-total">
+                        <span>Totale pagato</span>
+                        <strong th:text="${#numbers.formatDecimal(sale.paidMoney, 1, 'POINT', 2, 'COMMA') + ' €'}">
+                            Prezzo pagato
+                        </strong>
+                    </div>
+
+                    <a class="details-button"
+                       th:href="|/admin/sale/${sale.id}|">
+                        Vedi dettagli
+                    </a>
+
+                </li>
+            </ul>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    <p>PC Express - Il tuo negozio di PC preassemblati.</p>
+
+    <div class="admin" sec:authorize="hasAuthority('ADMIN')">
+        <a href="/admin/users/all_users">Utenti</a>
+        <a href="/admin/sale/all_sales">Vendite</a>
+        <a href="/admin/pc/newpc_form">Aggiungi nuovo pc</a>
+    </div>
+</footer>
 
 </body>
 </html>
