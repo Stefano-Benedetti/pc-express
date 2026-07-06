@@ -1,15 +1,11 @@
 package it.progettosiw.pcexpress.controller;
 
 import it.progettosiw.pcexpress.exceptions.*;
-import it.progettosiw.pcexpress.model.PC;
-import org.apache.tomcat.util.http.InvalidParameterException;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
-import org.springframework.web.multipart.MultipartException;
 
 import java.io.IOException;
 
@@ -101,15 +97,6 @@ public class GlobalExceptionHandler {
     public String handleIOException(IOException e, Model model) {
         model.addAttribute("errorMessage", e.getMessage());
         return "/error/500";
-    }
-
-    @ExceptionHandler({MaxUploadSizeExceededException.class, MultipartException.class, InvalidParameterException.class})
-    public String handleUploadTooLarge(Exception exception, Model model) {
-
-        model.addAttribute("pc", new PC());
-        model.addAttribute("imageError", "L'immagine caricata è troppo grande. Seleziona un file più leggero.");
-
-        return "admin/pc/newpc_form";
     }
 
 }
