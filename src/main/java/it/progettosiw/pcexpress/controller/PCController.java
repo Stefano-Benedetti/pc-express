@@ -97,7 +97,7 @@ public class PCController {
     public ResponseEntity<byte[]> getImage(@PathVariable Long id) {
         PC pc = pcService.getPCById(id);
         return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_JPEG) // o PNG
+                .contentType(MediaType.IMAGE_PNG) // o PNG
                 .body(pc.getImmagine());
     }
 

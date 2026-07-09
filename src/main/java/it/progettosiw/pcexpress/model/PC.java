@@ -55,7 +55,7 @@ public class PC {
     private Integer disponibilita;
 
     @Lob    //sta per large object
-    @Column(name="immagine", columnDefinition = "bytea")
+    @Column(name="immagine")
     private byte[] immagine;
 
     public PC(){
