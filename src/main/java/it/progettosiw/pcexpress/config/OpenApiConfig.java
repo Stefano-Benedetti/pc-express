@@ -12,8 +12,8 @@ public class OpenApiConfig {
     public OpenAPI openAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("SIW Movie API")
+                        .title("PC Express API")
                         .version("v1")
-                        .description("API REST per la gestione di film e artisti"));
+                        .description("API REST per la gestione di un negozio di PC"));
     }
 }
