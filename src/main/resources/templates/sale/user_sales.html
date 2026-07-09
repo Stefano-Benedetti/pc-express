@@ -1,22 +1,109 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="it">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>PC Express</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--  <p>-->
+<!--    <a href="/">Torna alla home</a>-->
+<!--  </p>-->
+<!--  <h1>Acquisti effettuati</h1>-->
+<!--  <div th:if="${purchases.isEmpty()}">Non hai ancora effettuato acquisti.</div>-->
+<!--  <ul>-->
+<!--    <li th:each="purchase : ${purchases}">-->
+<!--      <a th:href="|/sale/single_sale/${purchase.id}|"-->
+<!--         th:text="|Acquisto del ${purchase.dateOfSale}|">Acquisto</a>-->
+<!--      <div th:text="|Prezzo pagato: ${purchase.paidMoney}|"></div>-->
+<!--    </li>-->
+<!--  </ul>-->
+
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <title>PC Express</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I miei acquisti - PC Express</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/user_sales.css}">
 </head>
 <body>
-  <p>
-    <a href="/">Torna alla home</a>
-  </p>
-  <h1>Acquisti effettuati</h1>
-  <div th:if="${purchases.isEmpty()}">Non hai ancora effettuato acquisti.</div>
-  <ul>
-    <li th:each="purchase : ${purchases}">
-      <a th:href="|/sale/single_sale/${purchase.id}|"
-         th:text="|Acquisto del ${purchase.dateOfSale}|">Acquisto</a>
-      <div th:text="|Prezzo pagato: ${purchase.paidMoney}|"></div>
-    </li>
-  </ul>
+
+<header>
+  <div class="logo">
+    PC Express
+  </div>
+
+  <nav class="nav_header">
+    <a href="/pc/catalog" class="nav_links">Catalogo</a>
+    <a href="/user/cart" class="nav_links">Carrello</a>
+    <a href="/sale/user_sales" class="nav_links">I miei acquisti</a>
+    <a href="/user/personal_area" class="nav_links">Area Personale</a>
+    <a href="/register_form" class="nav_links" sec:authorize="isAnonymous()">Registrati</a>
+    <a href="/login" class="nav_links" sec:authorize="isAnonymous()">Accedi</a>
+    <span class="logout nav_links" sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </span>
+  </nav>
+</header>
+
+<main class="purchases-page">
+
+  <section class="purchases-hero">
+    <div>
+      <h1>Acquisti effettuati</h1>
+      <p>Consulta lo storico dei tuoi ordini e rivedi i dettagli dei PC acquistati.</p>
+    </div>
+  </section>
+
+  <section class="purchases-container">
+
+    <div class="back-link">
+      <a href="/">← Torna alla home</a>
+    </div>
+
+    <div class="empty-message" th:if="${purchases.isEmpty()}">
+      <h2>Nessun acquisto trovato</h2>
+      <p>Non hai ancora effettuato acquisti su PC Express.</p>
+      <a href="/pc/catalog">Scopri il catalogo</a>
+    </div>
+
+    <ul class="purchases-list" th:if="${!purchases.isEmpty()}">
+      <li class="purchase-card" th:each="purchase : ${purchases}">
+        <div class="purchase-info">
+          <a class="purchase-title"
+             th:href="|/sale/single_sale/${purchase.id}|"
+             th:text="${'Acquisto del ' + #temporals.format(purchase.dateOfSale, 'dd/MM/yyyy HH:mm')}">Acquisto</a>
+
+          <div class="purchase-price"
+               th:text="|Prezzo pagato: ${#numbers.formatDecimal(purchase.paidMoney, 1, 2)} euro|">Prezzo pagato</div>
+        </div>
+
+        <a class="details-button"
+           th:href="|/sale/single_sale/${purchase.id}|">
+          Vedi dettagli
+        </a>
+      </li>
+    </ul>
+
+  </section>
+
+</main>
+
+<footer>
+  <p>PC Express - Il tuo negozio di PC preassemblati.</p>
+
+  <div class="admin" sec:authorize="hasAuthority('ADMIN')">
+    <a href="/admin/users/all_users">Utenti</a>
+    <a href="/admin/sale/all_sales">Vendite</a>
+    <a href="/admin/pc/newpc_form">Aggiungi nuovo pc</a>
+  </div>
+</footer>
 
 </body>
 </html>

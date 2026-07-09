@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.io.IOException;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -82,5 +84,19 @@ public class GlobalExceptionHandler {
         return "/login";
     }
 
+    @ExceptionHandler(SaleNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleSaleDoesNotExist(SaleNotFoundException e, Model model) {
+        model.addAttribute("errorMessage", e.getMessage());
+        return "/error/404";
+    }
+
+
+    @ExceptionHandler(IOException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String handleIOException(IOException e, Model model) {
+        model.addAttribute("errorMessage", e.getMessage());
+        return "/error/500";
+    }
 
 }

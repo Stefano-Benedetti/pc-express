@@ -1,5 +1,6 @@
 Da testare strategia di fetch User->Cart.
 Sale->Sold PC usa LAZY LOAD perché i PC venduti saranno mostrati come dettagli della vendita solo su richiesta.
+Le immagini di un pc possono essere modificate ma non possono essere tolte
 
 prossime cose da fare:
 

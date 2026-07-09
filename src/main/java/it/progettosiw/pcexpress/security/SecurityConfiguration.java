@@ -44,8 +44,7 @@ public class SecurityConfiguration {
 
         httpSecurity.authorizeHttpRequests(authorize -> {
             authorize.requestMatchers(HttpMethod.GET, "/", "/index", "/register_form", "/login", "/css/**", "/images/**",
-                    "/favicon.ico","/pc/catalog","/pc/{id}").permitAll();
-            authorize.requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**","/api/**","/react/**").permitAll();
+                    "/favicon.ico","/pc/**").permitAll();
             authorize.requestMatchers(HttpMethod.POST, "/register", "/login").permitAll();
             authorize.requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(Role.ADMIN.name());
             authorize.requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(Role.ADMIN.name());

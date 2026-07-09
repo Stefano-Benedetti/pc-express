@@ -12,6 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 @Controller
 public class PCController {
@@ -41,10 +45,12 @@ public class PCController {
         return "admin/pc/newpc_form";
     }
     @PostMapping("/admin/pc/newpc_form")
-    public String newPc(@Valid @ModelAttribute("pc") PC pc, BindingResult b, Model model){
+    public String newPc(@Valid @ModelAttribute("pc") PC pc, BindingResult b, @RequestParam("image") MultipartFile image, Model model) throws IOException {
         if(b.hasErrors())
             return "admin/pc/newpc_form";
         try{
+            if (!image.isEmpty())
+                pc.setImmagine(image.getBytes());
             this.pcService.save(pc);
             return "redirect:/pc/"+pc.getId().toString();
         }catch (PCWithThisCodeAlreadyExistsException e){
@@ -62,12 +68,12 @@ public class PCController {
         return "/admin/pc/modify_form";
     }
     @PostMapping("/admin/pc/modify")
-    public String modifyPc(@Valid @ModelAttribute("pc") ModifyPCForm form, BindingResult b, Model model){
+    public String modifyPc(@Valid @ModelAttribute("pc") ModifyPCForm form, BindingResult b, @RequestParam("image") MultipartFile image, Model model) throws IOException{
         if(b.hasErrors()) {
             model.addAttribute("pc", form);
             return "/admin/pc/modify_form";
         }
-        this.pcService.update(form.getId(), form.getNome(), form.getPrezzo(), form.getDisponibilita());
+        this.pcService.update(form.getId(), form.getNome(), form.getPrezzo(), form.getDisponibilita(), image);
         return "redirect:/pc/"+form.getId().toString();
     }
 
@@ -77,13 +83,14 @@ public class PCController {
         return "/admin/pc/clone_form";
     }
     @PostMapping("/admin/pc/clone")
-    public String clonePc(@Valid @ModelAttribute("pc") PC pc, BindingResult b, @RequestParam(defaultValue="false") boolean toZero, Model model){
+    public String clonePc(@Valid @ModelAttribute("pc") PC pc, BindingResult b, @RequestParam("image") MultipartFile image,
+                          @RequestParam(defaultValue="false") boolean toZero, Model model) throws IOException{
         if(b.hasErrors()) {
             model.addAttribute("toZero", toZero);
             return "/admin/pc/clone_form";
         }
         try{
-            Long newPcId = this.pcService.cloneWithChanges(pc, toZero);
+            Long newPcId = this.pcService.cloneWithChanges(pc, toZero, image);
             return "redirect:/pc/"+newPcId.toString();
         } catch (PCWithThisCodeAlreadyExistsException e) {
             b.reject("PC.duplicate");
@@ -94,11 +101,17 @@ public class PCController {
 
 
     @GetMapping("/pc/image/{id}")
-    public ResponseEntity<byte[]> getImage(@PathVariable Long id) {
+    public ResponseEntity<byte[]> getImage(@PathVariable Long id) throws IOException {
         PC pc = pcService.getPCById(id);
+        byte[] image = pc.getImmagine();
+        if (image == null || image.length == 0) {
+            InputStream is = getClass().getResourceAsStream("/static/images/no_image.jpg");
+            image = is.readAllBytes();
+        }
+
         return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_PNG) // o PNG
-                .body(pc.getImmagine());
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(image);
     }
 
 }

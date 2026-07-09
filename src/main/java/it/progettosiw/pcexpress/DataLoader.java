@@ -30,7 +30,7 @@ public class DataLoader implements CommandLineRunner {
         p1.setCasePc("NZXT H5 Flow");
         p1.setPrezzo(999.99F);
         p1.setDisponibilita(12);
-        p1.setImmagine(Files.readAllBytes(Paths.get("src/main/resources/static/images/pc_background.png")));
+        p1.setImmagine(Files.readAllBytes(Paths.get("src/main/resources/static/images/drago_pc.jpg")));
         pcRepository.save(p1);
 
 
@@ -44,7 +44,7 @@ public class DataLoader implements CommandLineRunner {
         p2.setCasePc("Fractal Design Meshify 2 Compact");
         p2.setPrezzo(1599.90F);
         p2.setDisponibilita(7);
-        p2.setImmagine(Files.readAllBytes(Paths.get("src/main/resources/static/images/pc_background.png")));
+        p2.setImmagine(Files.readAllBytes(Paths.get("src/main/resources/static/images/tigre_pc.avif")));
         pcRepository.save(p2);
 
     }

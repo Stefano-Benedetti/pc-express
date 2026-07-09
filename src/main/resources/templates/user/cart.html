@@ -1,49 +1,187 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="it">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>PC Express</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <p>-->
+<!--        <a href="/">Torna alla home</a>-->
+<!--    </p>-->
+<!--    <h1>Carrello</h1>-->
+<!--    <div th:if="${cart.getCartItems().isEmpty()}">Non ci sono computer nel carrello.</div>-->
+<!--    <div th:if="${availabilityWarning}" th:text="${availabilityWarning}"></div>-->
+<!--    <ul>-->
+<!--        <li th:each="cartItem : ${cart.getCartItems()}">-->
+<!--            <a th:href="|/pc/${cartItem.getPc().getId()}|"-->
+<!--               th:text="|${cartItem.getPc().getNome()}|">nome</a>-->
+<!--            <div th:text="|${cartItem.getPc().getPrezzo()} euro x ${cartItem.getQuantity()}|">prezzo x quantità</div>-->
+
+<!--            <div>-->
+<!--                &lt;!&ndash; +1 &ndash;&gt;-->
+<!--                <form th:action="@{/user/cart/add}" method="post" style="display:inline;">-->
+<!--                    <input type="hidden" name="pcId" th:value="${cartItem.getPc().getId()}"/>-->
+<!--                    <input type="hidden" name="quantity" value="1"/>-->
+<!--                    <button type="submit">+</button>-->
+<!--                </form>-->
+
+<!--                &lt;!&ndash; -1 (decrementa o rimuove se arriva a 0) &ndash;&gt;-->
+<!--                <form th:action="@{/user/cart/remove_one}" method="post" style="display:inline;">-->
+<!--                    <input type="hidden" name="pcId" th:value="${cartItem.getPc().getId()}"/>-->
+<!--                    <button type="submit">-</button>-->
+<!--                </form>-->
+
+<!--                &lt;!&ndash; rimuove tutti i pc uguali &ndash;&gt;-->
+<!--                <form th:action="@{/user/cart/remove_cart_item}" method="post" style="display:inline;">-->
+<!--                    <input type="hidden" name="pcId" th:value="${cartItem.getPc().getId()}"/>-->
+<!--                    <button type="submit">Rimuovi</button>-->
+<!--                </form>-->
+<!--            </div>-->
+
+<!--        </li>-->
+<!--    </ul>-->
+
+<!--    <h2 th:text="|Totale: ${cart.calcTotPrice()} euro|">Prezzo Totale</h2>-->
+<!--    <form th:action="@{/sale/cart/makeNewSale}" method="post">-->
+<!--        <button type="submit">ACQUISTA</button>-->
+<!--    </form>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>PC Express</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrello - PC Express</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/cart.css}">
 </head>
 <body>
-    <p>
-        <a href="/">Torna alla home</a>
-    </p>
-    <h1>Carrello</h1>
-    <div th:if="${cart.getCartItems().isEmpty()}">Non ci sono computer nel carrello.</div>
-    <div th:if="${availabilityWarning}" th:text="${availabilityWarning}"></div>
-    <ul>
-        <li th:each="cartItem : ${cart.getCartItems()}">
-            <a th:href="|/pc/${cartItem.getPc().getId()}|"
-               th:text="|${cartItem.getPc().getNome()}|">nome</a>
-            <div th:text="|${cartItem.getPc().getPrezzo()} euro x ${cartItem.getQuantity()}|">prezzo x quantità</div>
 
-            <div>
-                <!-- +1 -->
-                <form th:action="@{/user/cart/add}" method="post" style="display:inline;">
-                    <input type="hidden" name="pcId" th:value="${cartItem.getPc().getId()}"/>
-                    <input type="hidden" name="quantity" value="1"/>
-                    <button type="submit">+</button>
+<header>
+    <div class="logo">
+        PC Express
+    </div>
+
+    <nav class="nav_header">
+        <a href="/pc/catalog" class="nav_links">Catalogo</a>
+        <a href="/user/cart" class="nav_links">Carrello</a>
+        <a href="/sale/user_sales" class="nav_links">I miei acquisti</a>
+        <a href="/user/personal_area" class="nav_links">Area Personale</a>
+        <a href="/register_form" class="nav_links" sec:authorize="isAnonymous()">Registrati</a>
+        <a href="/login" class="nav_links" sec:authorize="isAnonymous()">Accedi</a>
+        <span class="logout nav_links" sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </span>
+    </nav>
+</header>
+
+<main class="cart-page">
+
+    <section class="cart-hero">
+        <div>
+            <h1>Il tuo carrello</h1>
+            <p>Controlla i PC selezionati e completa il tuo acquisto.</p>
+        </div>
+    </section>
+
+    <section class="cart-container">
+
+        <div class="back-link">
+            <a href="/">← Torna alla home</a>
+        </div>
+
+        <div class="availability-warning" th:if="${availabilityWarning}" th:text="${availabilityWarning}">
+            Avviso disponibilità
+        </div>
+
+        <div class="empty-cart" th:if="${cart.getCartItems().isEmpty()}">
+            <h2>Il carrello è vuoto</h2>
+            <p>Non ci sono computer nel carrello.</p>
+            <a href="/pc/catalog">Vai al catalogo</a>
+        </div>
+
+        <div class="cart-content" th:if="${!cart.getCartItems().isEmpty()}">
+
+            <ul class="cart-list">
+                <li class="cart-card" th:each="cartItem : ${cart.getCartItems()}">
+
+                    <div class="cart-image-box">
+                        <img th:src="@{/pc/image/{id}(id=${cartItem.getPc().getId()})}" alt="PC">
+                    </div>
+
+                    <div class="cart-info">
+                        <a class="cart-pc-name"
+                           th:href="|/pc/${cartItem.getPc().getId()}|"
+                           th:text="|${cartItem.getPc().getNome()}|">nome</a>
+
+                        <div class="cart-price"
+                             th:text="|${#numbers.formatDecimal(cartItem.getPc().getPrezzo(), 1, 2)} euro x ${cartItem.getQuantity()}|">
+                            prezzo x quantità
+                        </div>
+                    </div>
+
+                    <div class="cart-actions">
+
+                        <div class="quantity-actions">
+                            <form th:action="@{/user/cart/remove_one}" method="post">
+                                <input type="hidden" name="pcId" th:value="${cartItem.getPc().getId()}"/>
+                                <button type="submit" class="quantity-button">-</button>
+                            </form>
+
+                            <span class="quantity-number" th:text="${cartItem.getQuantity()}">1</span>
+
+                            <form th:action="@{/user/cart/add}" method="post">
+                                <input type="hidden" name="pcId" th:value="${cartItem.getPc().getId()}"/>
+                                <input type="hidden" name="quantity" value="1"/>
+                                <button type="submit" class="quantity-button">+</button>
+                            </form>
+                        </div>
+
+                        <form th:action="@{/user/cart/remove_cart_item}" method="post">
+                            <input type="hidden" name="pcId" th:value="${cartItem.getPc().getId()}"/>
+                            <button type="submit" class="remove-button">Rimuovi</button>
+                        </form>
+
+                    </div>
+
+                </li>
+            </ul>
+
+            <aside class="cart-summary">
+                <h2>Riepilogo ordine</h2>
+
+                <div class="summary-total">
+                    <span>Totale</span>
+                    <strong th:text="|${#numbers.formatDecimal(cart.calcTotPrice(), 1, 'POINT', 2, 'COMMA')} euro|">Prezzo Totale</strong>
+                </div>
+                <a href="/pc/catalog" class="continue-shopping-button">Continua ad acquistare</a>
+
+                <form th:action="@{/sale/cart/makeNewSale}" method="post">
+                    <button type="submit" class="buy-button" th:disabled="${availabilityWarning != null}">Acquista</button>
                 </form>
+            </aside>
 
-                <!-- -1 (decrementa o rimuove se arriva a 0) -->
-                <form th:action="@{/user/cart/remove_one}" method="post" style="display:inline;">
-                    <input type="hidden" name="pcId" th:value="${cartItem.getPc().getId()}"/>
-                    <button type="submit">-</button>
-                </form>
+        </div>
 
-                <!-- rimuove tutti i pc uguali -->
-                <form th:action="@{/user/cart/remove_cart_item}" method="post" style="display:inline;">
-                    <input type="hidden" name="pcId" th:value="${cartItem.getPc().getId()}"/>
-                    <button type="submit">Rimuovi</button>
-                </form>
-            </div>
+    </section>
 
-        </li>
-    </ul>
+</main>
 
-    <h2 th:text="|Totale: ${cart.calcTotPrice()} euro|">Prezzo Totale</h2>
-    <form th:action="@{/sale/cart/makeNewSale}" method="post">
-        <button type="submit">ACQUISTA</button>
-    </form>
+<footer>
+    <p>PC Express - Il tuo negozio di PC preassemblati.</p>
+
+    <div class="admin" sec:authorize="hasAuthority('ADMIN')">
+        <a href="/admin/users/all_users">Utenti</a>
+        <a href="/admin/sale/all_sales">Vendite</a>
+        <a href="/admin/pc/newpc_form">Aggiungi nuovo pc</a>
+    </div>
+</footer>
+
+<script src="/js/cart_scroll_fix.js"></script>
+
 </body>
 </html>

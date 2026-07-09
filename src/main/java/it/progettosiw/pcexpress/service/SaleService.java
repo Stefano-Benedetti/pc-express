@@ -56,7 +56,7 @@ public class SaleService {
 
     @Transactional(readOnly = true) //perchè fa una query per prendere gli acquisti (sono lazy per l'utente)
     public List<Sale> getCurrentUserPurchases(){
-        return userService.getCurrentUser().getPurchases();
+        return this.saleRepository.findAllByUserIdOrderByDateOfSaleDesc(userService.getCurrentUser().getId());
     }
 
 
