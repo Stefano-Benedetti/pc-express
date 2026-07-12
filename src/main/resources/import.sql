@@ -13,7 +13,7 @@ INSERT INTO pc (id, codice, nome, cpu, gpu, ram, rom, case_pc, prezzo, disponibi
 INSERT INTO pc (id, codice, nome, cpu, gpu, ram, rom, case_pc, prezzo, disponibilita) VALUES (nextval('pc_seq'),100021, 'Bisonte PC', 'AMD Ryzen 9 7950X3D', 'RX 7900 XTX', '64GB DDR5', '4TB NVMe SSD', 'Corsair 5000D Airflow', 3199.00, 4);
 INSERT INTO pc (id, codice, nome, cpu, gpu, ram, rom, case_pc, prezzo, disponibilita) VALUES (nextval('pc_seq'),100022, 'Piovra PC', 'Intel Core i5-12600K', 'RX 6700 XT', '32GB DDR4', '1TB NVMe SSD', 'Sharkoon TG5', 999.00, 11);
 INSERT INTO pc (id, codice, nome, cpu, gpu, ram, rom, case_pc, prezzo, disponibilita) VALUES (nextval('pc_seq'),100023, 'Leone PC', 'AMD Ryzen 7 5700G', 'RTX 3050', '16GB DDR4', '1TB NVMe SSD', 'Cougar MX330', 699.00, 16);
-INSERT INTO pc (id, codice, nome, cpu, gpu, ram, rom, case_pc, prezzo, disponibilita) VALUES (nextval('pc_seq'),100009, 'Pollo PC', 'AMD Ryzen 5 8600G', 'Radeon 760M (iGPU)', '16GB DDR5',  '1TB NVMe SSD', 'SilverStone GD09',69.69,69);
+INSERT INTO pc (id, codice, nome, cpu, gpu, ram, rom, case_pc, prezzo, disponibilita) VALUES (nextval('pc_seq'),100009, 'Pollo PC', 'AMD Ryzen 5 8600G', 'Radeon 760M (iGPU)', '16GB DDR5',  '1TB NVMe SSD', 'SilverStone GD09',69.99,67);
 
 INSERT INTO cart (id) VALUES (100000);
 INSERT INTO cart_item(id, quantity, cart_id, pc_id) VALUES (nextval('cart_item_seq'), 1, 100000, 1);
