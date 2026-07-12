@@ -50,7 +50,7 @@ public class PCService {
         pc.setNome(nome);
         pc.setPrezzo(prezzo);
         pc.setDisponibilita(disponibilita);
-        if (!image.isEmpty())
+        if (image != null && !image.isEmpty() && image.getContentType().startsWith("image/"))
             pc.setImmagine(image.getBytes());
         pcRepository.save(pc);
     }
@@ -58,7 +58,7 @@ public class PCService {
     @Transactional
     public Long cloneWithChanges(PC pc, Boolean toZero, MultipartFile image) throws PCWithThisCodeAlreadyExistsException, IOException {
         PC newpc = new PC(pc);
-        if (!image.isEmpty())
+        if (image != null && !image.isEmpty() && image.getContentType().startsWith("image/"))
             newpc.setImmagine(image.getBytes());
         else{
             PC oldPc = pcRepository.findById(pc.getId()).orElseThrow(() -> new PCDoesNotExistException(pc.getId()));

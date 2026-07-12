@@ -51,7 +51,7 @@ public class PCController {
         if(b.hasErrors())
             return "admin/pc/newpc_form";
         try{
-            if (!image.isEmpty())
+            if (image != null && !image.isEmpty() && image.getContentType().startsWith("image/"))
                 pc.setImmagine(image.getBytes());
             this.pcService.save(pc);
             return "redirect:/pc/"+pc.getId().toString();
