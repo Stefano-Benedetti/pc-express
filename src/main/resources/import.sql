@@ -1,5 +1,6 @@
 -- INSERT INTO pc (id, codice, nome, cpu, gpu, ram, rom, case_pc, prezzo, disponibilita) VALUES (nextval('pc_seq'),100010, 'Drago PC', 'Intel Core i5-14600K', 'RTX 4060', '32GB DDR5', '1TB NVMe SSD', 'NZXT H5 Flow', 999.99, 12);
 -- INSERT INTO pc (id, codice, nome, cpu, gpu, ram, rom, case_pc, prezzo, disponibilita) VALUES (nextval('pc_seq'),100011, 'Tigre PC', 'AMD Ryzen 7 7800X3D', 'RX 7800 XT', '32GB DDR5', '2TB NVMe SSD', 'Fractal Design Meshify 2 Compact', 1599.90, 7);
+-- omessi perché inseriti con immagine dal main
 INSERT INTO pc (id, codice, nome, cpu, gpu, ram, rom, case_pc, prezzo, disponibilita) VALUES (nextval('pc_seq'),100012, 'Falco PC', 'Intel Core i7-14700F', 'RTX 4070 SUPER', '32GB DDR5', '1TB NVMe SSD', 'Corsair 4000D Airflow', 1799.00, 5);
 INSERT INTO pc (id, codice, nome, cpu, gpu, ram, rom, case_pc, prezzo, disponibilita) VALUES (nextval('pc_seq'),100013, 'Lupo PC', 'AMD Ryzen 5 7600', 'RX 7600', '16GB DDR5', '1TB NVMe SSD', 'Cooler Master MasterBox NR600', 899.00, 20);
 INSERT INTO pc (id, codice, nome, cpu, gpu, ram, rom, case_pc, prezzo, disponibilita) VALUES (nextval('pc_seq'),100014, 'Squalo PC', 'Intel Core i9-14900K', 'RTX 4090', '64GB DDR5', '4TB NVMe SSD', 'Lian Li O11 Dynamic EVO', 4299.99, 2);
@@ -19,7 +20,7 @@ INSERT INTO cart_item(id, quantity, cart_id, pc_id) VALUES (nextval('cart_item_s
 INSERT INTO cart_item(id, quantity, cart_id, pc_id) VALUES (nextval('cart_item_seq'), 2, 100000, 51);
 INSERT INTO cart (id) VALUES (200000);
 
-INSERT INTO users (id, first_name, last_name, email, date_of_birth, phone_number, cart_id) VALUES (100000, 'Zio', 'Pera', 'ziopera@lol.com','1984-12-21', '3332221111',100000);
-INSERT INTO credentials (id, user_id, email, password, role) VALUES (nextval('credentials_seq'), 100000,'ziopera@lol.com', '$2a$10$MjIkVqydKqyXAeHvk8sPre/qxZqceexRN7NP/ngQrJ5Qguz3xHluS', 'ADMIN');  --la password è 12345
-INSERT INTO users (id, first_name, last_name, email, date_of_birth, phone_number, cart_id) VALUES (200000, 'ciccio', 'gamer', 'a@a.com','2000-12-12', '3332221111',200000);
-INSERT INTO credentials (id, user_id, email, password, role) VALUES (nextval('credentials_seq'), 200000,'a@a.com', '$2a$10$MjIkVqydKqyXAeHvk8sPre/qxZqceexRN7NP/ngQrJ5Qguz3xHluS', 'DEFAULT');  --la password è 12345
+INSERT INTO users (id, first_name, last_name, email, date_of_birth, phone_number, cart_id) VALUES (100000, 'Luigi', 'Verdi', 'admin@pcexpress.com','1984-12-21', '1112223333',100000);
+INSERT INTO credentials (id, user_id, email, password, role) VALUES (nextval('credentials_seq'), 100000,'admin@pcexpress.com', '$2a$12$oukZc.1ieiF.G6hvVe3Hd.CFfxc3P6Bar5DjbiWMlyZrHIgrcnTTe', 'ADMIN');  --la password è 123456
+INSERT INTO users (id, first_name, last_name, email, date_of_birth, phone_number, cart_id) VALUES (200000, 'Mario', 'Rossi', 'a@a.com','2000-12-12', '3332221111',200000);
+INSERT INTO credentials (id, user_id, email, password, role) VALUES (nextval('credentials_seq'), 200000,'a@a.com', '$2a$12$oukZc.1ieiF.G6hvVe3Hd.CFfxc3P6Bar5DjbiWMlyZrHIgrcnTTe', 'DEFAULT');  --la password è 123456
