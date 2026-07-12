@@ -24,14 +24,10 @@ prossime cose da fare:
 
 
 - provare a creare e implementare customUserDetails
-- aggiungere possibilità di modificare email o password (con una email di conferma?)
 
 
 
 front-end:
-- nascondere in tutte le pagine le opzioni a cui può accedere solo l'admin
-- nascondere il pulsante acquista nel pc singolo se è selezionata una quantità maggiore della disponibilità
-- nascondere il pulsante acquista nel carrello se c'è uno (o più) elementi che hanno la quantità maggiore della disponibilità
 
 validazione:
 

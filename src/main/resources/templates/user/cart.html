@@ -135,10 +135,9 @@
 
                             <span class="quantity-number" th:text="${cartItem.getQuantity()}">1</span>
 
-                            <form th:action="@{/user/cart/add}" method="post">
+                            <form th:action="@{/user/cart/add_one}" method="post">
                                 <input type="hidden" name="pcId" th:value="${cartItem.getPc().getId()}"/>
-                                <input type="hidden" name="quantity" value="1"/>
-                                <button type="submit" class="quantity-button">+</button>
+                                <button type="submit" class="quantity-button" th:disabled="${availabilityWarning != null}">+</button>
                             </form>
                         </div>
 

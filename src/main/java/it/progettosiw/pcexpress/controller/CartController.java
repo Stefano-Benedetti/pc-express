@@ -41,6 +41,12 @@ public class CartController {
         return "redirect:/user/cart";
     }
 
+    @PostMapping("/user/cart/add_one")
+    public String addOneToCart(@RequestParam Long pcId) {
+        cartService.addToCurrentUserCart(pcId, 1);
+        return "redirect:/user/cart";
+    }
+
     @PostMapping("/user/cart/remove_cart_item")
     public String removeCartItemFromCart(@RequestParam Long pcId) {
         cartService.removeCartItemFromCurrentUserCart(pcId);

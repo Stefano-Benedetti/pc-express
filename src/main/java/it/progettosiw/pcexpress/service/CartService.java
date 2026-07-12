@@ -67,7 +67,7 @@ public class CartService {
 
     @Transactional
     public void addToCurrentUserCart(Long pc_id, Integer quantity){
-        if (quantity<1 || quantity>20)
+        if (quantity<1)
             throw new InvalidQuantityException();
         Cart cart = getCurrentUserCart();
 
