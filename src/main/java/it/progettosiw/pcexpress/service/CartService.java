@@ -1,7 +1,7 @@
 package it.progettosiw.pcexpress.service;
 
 import it.progettosiw.pcexpress.exceptions.CartNotFoundException;
-import it.progettosiw.pcexpress.exceptions.NonPositiveQuantityException;
+import it.progettosiw.pcexpress.exceptions.InvalidQuantityException;
 import it.progettosiw.pcexpress.exceptions.PCDoesNotExistException;
 import it.progettosiw.pcexpress.exceptions.cartItemDoesNotExistException;
 import it.progettosiw.pcexpress.model.Cart;
@@ -67,8 +67,8 @@ public class CartService {
 
     @Transactional
     public void addToCurrentUserCart(Long pc_id, Integer quantity){
-        if (quantity<1)
-            throw new NonPositiveQuantityException();
+        if (quantity<1 || quantity>20)
+            throw new InvalidQuantityException();
         Cart cart = getCurrentUserCart();
 
         Optional<CartItem> cartItemOptional = cartItemRepository.findCartItemByCartIdAndPcId(cart.getId(),pc_id);

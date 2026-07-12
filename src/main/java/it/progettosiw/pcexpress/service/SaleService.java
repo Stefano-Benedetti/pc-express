@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SaleService {
@@ -62,7 +61,7 @@ public class SaleService {
 
     private SoldItem createSoldItem(Long pc_id, Integer quantity){
         if (quantity<1)
-            throw new NonPositiveQuantityException();
+            throw new InvalidQuantityException();
         PC pc = pcRepository.findById(pc_id).orElseThrow(() -> new PCDoesNotExistException(pc_id));
         if (pc.getDisponibilita()<quantity)
             throw new TooLowAvailabilityException();
@@ -72,7 +71,7 @@ public class SaleService {
     private SoldItem createSoldItem(CartItem cartItem){
         Integer quantity = cartItem.getQuantity();
         if (quantity < 1)
-            throw new NonPositiveQuantityException();
+            throw new InvalidQuantityException();
         if (cartItem.getPc().getDisponibilita()<quantity)
             throw new TooLowAvailabilityException();
         return new SoldItem(quantity, cartItem.getPc().getPrezzo(), cartItem.getPc());
@@ -93,7 +92,7 @@ public class SaleService {
 
     //è chaiamato quando si acquista dalla pagina di un pc
     @Transactional (isolation = Isolation.SERIALIZABLE)
-    public Sale createSaleFromPC(Long pc_id, Integer quantity) throws NonPositiveQuantityException, TooLowAvailabilityException, PCDoesNotExistException{
+    public Sale createSaleFromPC(Long pc_id, Integer quantity) throws InvalidQuantityException, TooLowAvailabilityException, PCDoesNotExistException{
         User currentUser = userService.getCurrentUser();
         SoldItem soldItem = createSoldItem(pc_id, quantity);
         return createAndSaveSale(currentUser, List.of(soldItem));
@@ -101,7 +100,7 @@ public class SaleService {
 
     //è chiamato quando si acquista dal carrello
     @Transactional (isolation = Isolation.SERIALIZABLE)
-    public Sale createSaleFromCart() throws NonPositiveQuantityException, TooLowAvailabilityException{
+    public Sale createSaleFromCart() throws InvalidQuantityException, TooLowAvailabilityException{
         User currentUser = userService.getCurrentUser();
         Cart currentCart = currentUser.getCart();
         if (currentCart.getCartItems().isEmpty()){

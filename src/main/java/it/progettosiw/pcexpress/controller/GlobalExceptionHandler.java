@@ -36,17 +36,17 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(PCDoesNotExistException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handlePCDoesNotExist(PCDoesNotExistException e, Model model) {
         model.addAttribute("errorMessage", e.getMessage());
-        return "/error/500";
+        return "/error/400";
     }
 
     @ExceptionHandler(cartItemDoesNotExistException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleCartItemDoesNotExist(cartItemDoesNotExistException e, Model model) {
         model.addAttribute("errorMessage", e.getMessage());
-        return "/error/500";
+        return "/error/400";
     }
 
     @ExceptionHandler(UserDoesNotExistException.class)
@@ -63,9 +63,9 @@ public class GlobalExceptionHandler {
         return "/error/400";
     }
 
-    @ExceptionHandler(NonPositiveQuantityException.class)
+    @ExceptionHandler(InvalidQuantityException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleNonPositiveQuantity(NonPositiveQuantityException e, Model model) {
+    public String handleNonPositiveQuantity(InvalidQuantityException e, Model model) {
         model.addAttribute("errorMessage", e.getMessage());
         return "/error/400";
     }
