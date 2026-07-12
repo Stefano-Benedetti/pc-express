@@ -97,12 +97,10 @@ function CatalogPage() {
                 </div>
 
                 <nav className="nav_header">
-                    <a href="/pc/catalog" className="nav_links">Catalogo</a>
+                    <a href="/" className="nav_links">Home</a>
                     <a href="/user/cart" className="nav_links">Carrello</a>
                     <a href="/sale/user_sales" className="nav_links">I miei acquisti</a>
                     <a href="/user/personal_area" className="nav_links">Area Personale</a>
-                    <a href="/register_form" className="nav_links">Registrati</a>
-                    <a href="/login" className="nav_links">Accedi</a>
                 </nav>
             </header>
 
