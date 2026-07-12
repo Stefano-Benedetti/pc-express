@@ -1,24 +1,24 @@
 package it.progettosiw.pcexpress.dto;
 
 import jakarta.persistence.Column;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 public class ModifyPCForm {
 
     private Long id;
 
+    @Size(max=50, message = "Deve essere massimo 50 caratteri")
     @NotBlank
     private String nome;
 
     @NotNull
     @DecimalMin(value="0.00", message="Il prezzo deve essere almeno 0.00")
+    @DecimalMax(value="100001", message="Il prezzo inserito è troppo alto")
     private Float prezzo;
 
     @NotNull
     @Min(value=0, message="La disponibilità deve essere almeno 0")
+    @Max(value=1000000, message="La disponibilità è troppo alta")
     private Integer disponibilita;
 
     public ModifyPCForm() {

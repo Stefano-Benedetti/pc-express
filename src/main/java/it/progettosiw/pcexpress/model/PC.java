@@ -2,10 +2,7 @@ package it.progettosiw.pcexpress.model;
 
 import it.progettosiw.pcexpress.service.CartService;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -29,31 +26,39 @@ public class PC {
     private Long codice;
 
     @NotBlank
+    @Size(min=1, max=50, message = "Deve essere massimo 50 caratteri")
     @Column(nullable = false)
     private String nome;
 
     @NotBlank
+    @Size(min=1, max=100, message = "Deve essere massimo 100 caratteri")
     private String cpu;
 
     @NotBlank
+    @Size(min=1, max=100, message = "Deve essere massimo 100 caratteri")
     private String gpu;
 
     @NotBlank
+    @Size(min=1, max=100, message = "Deve essere massimo 100 caratteri")
     private String ram;
 
     @NotBlank
+    @Size(min=1, max=100, message = "Deve essere massimo 100 caratteri")
     private String rom;
 
     @NotBlank
+    @Size(min=1, max=100, message = "Deve essere massimo 100 caratteri")
     private String casePc;
 
     @NotNull
     @DecimalMin(value="0.00", message="Il prezzo deve essere almeno 0.00")
+    @DecimalMax(value="100001", message="Il prezzo inserito è troppo alto")
     @Column(nullable = false)
     private Float prezzo;
 
     @NotNull
     @Min(value=0, message="La disponibilità deve essere almeno 0")
+    @Max(value=1000000, message="La disponibilità è troppo alta")
     @Column(nullable = false)
     private Integer disponibilita;
 
