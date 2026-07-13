@@ -68,11 +68,7 @@ function CatalogPage() {
     function getPcImageUrl(pcId: number) {
         const baseUrl = api.defaults.baseURL ?? ''
 
-        const backendBaseUrl = baseUrl.endsWith('/api')
-            ? baseUrl.slice(0, -4)
-            : baseUrl
-
-        return `${backendBaseUrl}/pc/image/${pcId}`
+        return `${baseUrl}/pc/image/${pcId}`
     }
 
     function resetFilters() {
