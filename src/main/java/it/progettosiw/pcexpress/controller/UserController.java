@@ -15,10 +15,9 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    private AgeValidator ageValidator;
+    private final AgeValidator ageValidator;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -48,7 +47,7 @@ public class UserController {
             b.reject("Email.duplicate");
             return "/register.html";
         }
-        return "/index.html";
+        return "/login.html";
     }
 
     @GetMapping("/user/personal_area")

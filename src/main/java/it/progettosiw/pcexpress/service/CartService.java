@@ -23,10 +23,10 @@ public class CartService {
 
     private static final Logger logger = LoggerFactory.getLogger(CartService.class);
 
-    private CartRepository cartRepository;
-    private CartItemRepository cartItemRepository;
-    private PCRepository pcRepository;
-    private UserService userService;
+    private final CartRepository cartRepository;
+    private final CartItemRepository cartItemRepository;
+    private final PCRepository pcRepository;
+    private final UserService userService;
 
     public CartService(CartRepository cartRepository, CartItemRepository cartItemRepository, PCRepository pcRepository, UserService userService) {
         this.cartRepository = cartRepository;

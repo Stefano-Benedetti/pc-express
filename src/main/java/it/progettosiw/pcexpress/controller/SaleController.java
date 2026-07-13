@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class SaleController {
 
-    @Autowired
-    private SaleService saleService;
-    @Autowired
-    private UserService userService;
+    private final SaleService saleService;
 
     public SaleController(SaleService saleService) {
         this.saleService = saleService;

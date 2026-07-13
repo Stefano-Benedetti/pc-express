@@ -17,12 +17,10 @@ import java.util.Optional;
 @Service
 public class PCService {
 
-    private final CartItemRepository cartItemRepository;
-    private PCRepository pcRepository;
+    private final PCRepository pcRepository;
 
-    public PCService(PCRepository pcRepository, CartItemRepository cartItemRepository){
+    public PCService(PCRepository pcRepository){
         this.pcRepository = pcRepository;
-        this.cartItemRepository = cartItemRepository;
     }
 
     @Transactional(readOnly = true)
@@ -50,16 +48,18 @@ public class PCService {
         pc.setNome(nome);
         pc.setPrezzo(prezzo);
         pc.setDisponibilita(disponibilita);
-        if (image != null && !image.isEmpty() && image.getContentType().startsWith("image/"))
-            pc.setImmagine(image.getBytes());
+        if (image != null && !image.isEmpty())
+            if(image.getContentType()!=null && image.getContentType().startsWith("image/"))
+                pc.setImmagine(image.getBytes());
         pcRepository.save(pc);
     }
 
     @Transactional
     public Long cloneWithChanges(PC pc, Boolean toZero, MultipartFile image) throws PCWithThisCodeAlreadyExistsException, IOException {
         PC newpc = new PC(pc);
-        if (image != null && !image.isEmpty() && image.getContentType().startsWith("image/"))
-            newpc.setImmagine(image.getBytes());
+        if (image != null && !image.isEmpty())
+            if(image.getContentType()!=null && image.getContentType().startsWith("image/"))
+                newpc.setImmagine(image.getBytes());
         else{
             PC oldPc = pcRepository.findById(pc.getId()).orElseThrow(() -> new PCDoesNotExistException(pc.getId()));
             newpc.setImmagine(oldPc.getImmagine());

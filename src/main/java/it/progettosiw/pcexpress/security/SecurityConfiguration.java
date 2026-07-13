@@ -14,8 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import javax.sql.DataSource;
 
-//import static it.progettosiw.pcexpress.model.Credentials.ADMIN_ROLE;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
@@ -49,8 +47,6 @@ public class SecurityConfiguration {
             authorize.requestMatchers(HttpMethod.POST, "/register", "/login").permitAll();
             authorize.requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(Role.ADMIN.name());
             authorize.requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(Role.ADMIN.name());
-            /*authorize.requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(ADMIN_ROLE);
-            authorize.requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(ADMIN_ROLE);*/
             authorize.anyRequest().authenticated();
         });
 

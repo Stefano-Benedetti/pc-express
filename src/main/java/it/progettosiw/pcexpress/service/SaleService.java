@@ -19,21 +19,17 @@ import java.util.List;
 public class SaleService {
 
     private static final Logger logger = LoggerFactory.getLogger(CartService.class);
-    private final PCService pCService;
 
-    private CartService cartService;
-    private UserService userService;
-    private SaleRepository saleRepository;
-    private SoldItemRepository soldItemRepository;
-    private PCRepository pcRepository;
+    private final CartService cartService;
+    private final UserService userService;
+    private final SaleRepository saleRepository;
+    private final PCRepository pcRepository;
 
-    public SaleService(SaleRepository saleRepository, SoldItemRepository soldItemRepository, PCRepository pcRepository, UserService userService, CartService cartService, PCService pCService) {
+    public SaleService(SaleRepository saleRepository, PCRepository pcRepository, UserService userService, CartService cartService) {
         this.saleRepository = saleRepository;
-        this.soldItemRepository = soldItemRepository;
         this.pcRepository = pcRepository;
         this.userService = userService;
         this.cartService = cartService;
-        this.pCService = pCService;
     }
 
     @Transactional(readOnly = true)

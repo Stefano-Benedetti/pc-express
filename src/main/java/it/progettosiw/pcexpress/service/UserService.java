@@ -31,7 +31,7 @@ public class UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     private final CredentialsRepository credentialsRepository;
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository, CredentialsRepository credentialsRepository){
         this.userRepository = userRepository;

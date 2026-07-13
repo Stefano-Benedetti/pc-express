@@ -20,8 +20,7 @@ import java.io.InputStream;
 @Controller
 public class PCController {
 
-    @Autowired
-    private PCService pcService;
+    private final PCService pcService;
 
     public PCController(PCService pcService) {
         this.pcService = pcService;
@@ -111,9 +110,7 @@ public class PCController {
             image = is.readAllBytes();
         }
 
-        return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(image);
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
 
 }
