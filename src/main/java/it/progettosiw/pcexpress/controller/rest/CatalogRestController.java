@@ -22,13 +22,9 @@ public class CatalogRestController {
 
     @GetMapping
     public List<ReactPCDto> getCatalog() {
-
         List<ReactPCDto> risposta = new ArrayList<ReactPCDto>();
-
-        for(PC pc : this.pcService.getAllPCs()){
+        for(PC pc : this.pcService.getAllPCs())
             risposta.add(new ReactPCDto(pc.getId(), pc.getNome(), pc.getPrezzo()));
-        }
-
         return risposta;
     }
 }

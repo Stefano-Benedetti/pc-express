@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import api from '../services/api'
+import api from '../services/api.ts'
 
 type SortOrder = 'none' | 'priceAsc' | 'priceDesc'
 
@@ -10,12 +10,16 @@ type Pc = {
 }
 
 function CatalogPage() {
+
     const [pcs, setPcs] = useState<Pc[]>([])
+
     const [searchName, setSearchName] = useState('')
     const [minPrice, setMinPrice] = useState('')
     const [maxPrice, setMaxPrice] = useState('')
+
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
+
     const [sortOrder, setSortOrder] = useState<SortOrder>('none')
 
     useEffect(() => {
@@ -32,42 +36,33 @@ function CatalogPage() {
             })
     }, [])
 
+
     const filteredPcs = useMemo(() => {
         const normalizedSearch = searchName.trim().toLowerCase()
-
         const min = minPrice.trim() === '' ? null : Number(minPrice)
         const max = maxPrice.trim() === '' ? null : Number(maxPrice)
 
         const filtered = pcs.filter(pc => {
             const matchesName = pc.nome.toLowerCase().includes(normalizedSearch)
-
-            const matchesMinPrice =
-                min === null || pc.prezzo >= min
-
-            const matchesMaxPrice =
-                max === null || pc.prezzo <= max
-
+            const matchesMinPrice = min === null || pc.prezzo >= min
+            const matchesMaxPrice = max === null || pc.prezzo <= max
             return matchesName && matchesMinPrice && matchesMaxPrice
         })
 
         const sorted = [...filtered].sort((a, b) => {
-            if (sortOrder === 'priceAsc') {
+            if (sortOrder === 'priceAsc')
                 return a.prezzo - b.prezzo
-            }
-
-            if (sortOrder === 'priceDesc') {
+            if (sortOrder === 'priceDesc')
                 return b.prezzo - a.prezzo
-            }
-
             return 0
         })
 
         return sorted
     }, [pcs, searchName, minPrice, maxPrice, sortOrder])
 
+
     function getPcImageUrl(pcId: number) {
         const baseUrl = api.defaults.baseURL ?? ''
-
         return `${baseUrl}/pc/image/${pcId}`
     }
 

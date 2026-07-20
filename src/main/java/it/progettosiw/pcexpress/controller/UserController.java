@@ -31,12 +31,12 @@ public class UserController {
 
     @GetMapping("/register_form")
     public String getRegisterForm(Model model){
-        model.addAttribute("form", new RegistrationForm());
+        model.addAttribute("registrationForm", new RegistrationForm());
         return "/register.html";
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute("form") RegistrationForm form, BindingResult b, Model model){
+    public String registerUser(@Valid @ModelAttribute("registrationForm") RegistrationForm form, BindingResult b, Model model){
         this.ageValidator.validate(form, b);
         if (b.hasErrors()) {
             return "/register.html";

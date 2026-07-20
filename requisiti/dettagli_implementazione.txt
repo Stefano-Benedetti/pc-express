@@ -1,34 +1,7 @@
-Da testare strategia di fetch User->Cart.
-Sale->Sold PC usa LAZY LOAD perché i PC venduti saranno mostrati come dettagli della vendita solo su richiesta.
 Le immagini di un pc possono essere modificate ma non possono essere tolte
 
 prossime cose da fare:
 
-- capire come gestire il prezzo (tipo, come viene mostrato)
-- usare tipo BigDecimal per i soldi
+    - aggiungere limite di visualizzazione negli elenchi (vendite, pc) con pulsante "carica di più"
 
-- aggiungere limite di visualizzazione negli elenchi (vendite, pc) con pulsante "carica di più"
-
-- aggiungere filtri e ricerca per pc
-- aggiungere ricerca per nome, cognome o email per utente
-- aggiungere ricerca per data e email utente per le vendite
-
-
-- capire se un utente non loggato può fare il logout
-- capire se un utente loggato può fare il login o una registrazione (senza prima fare il logout)
-
-
-- inserire immagini del pc
-
-- form di conferma acquisto
-
-
-- provare a creare e implementare customUserDetails
-
-
-
-front-end:
-
-validazione:
-
-eccezioni:
+    - form di conferma acquisto

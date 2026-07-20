@@ -23,7 +23,7 @@ public class Sale {
     @Column(nullable = false)
     private Float paidMoney;
 
-    @OneToMany(cascade = {CascadeType.ALL})
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="sale_id")
     private List<SoldItem> soldItems;
 

@@ -1,26 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="it">-->
-<!--<head>-->
-<!--  <meta charset="UTF-8">-->
-<!--  <title>PC Express</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--  <p>-->
-<!--    <a href="/">Torna alla home</a>-->
-<!--  </p>-->
-<!--  <h1>UTENTI</h1>-->
-<!--  <div th:if="${users.isEmpty()}">Non ci sono utenti registrati.</div>-->
-<!--  <ul>-->
-<!--    <li th:each="user : ${users}">-->
-<!--      <div>Email: <a th:href="|/admin/users/${user.id}|" th:text="|Email: ${user.email}|"></a></div>-->
-<!--      <div th:text="|Nome: ${user.firstName}|"></div>-->
-<!--      <div th:text="|Cognome: ${user.lastName}|"></div>-->
-<!--    </li>-->
-<!--  </ul>-->
-
-<!--</body>-->
-<!--</html>-->
-
 <!DOCTYPE html>
 <html lang="it" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
@@ -28,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/images/favicon.png" />
   <title>PC Express</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}">
-  <link rel="stylesheet" th:href="@{/css/all_users.css}">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/all_users.css">
 </head>
 <body>
 

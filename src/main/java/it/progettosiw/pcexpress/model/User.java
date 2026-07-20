@@ -41,8 +41,7 @@ public class User {
     @Pattern(regexp = "^$|^\\+?[0-9]{6,15}$", message = "Numero di telefono non valido")   //contiene dalle 6 alle 15 cifre
     private String phoneNumber;
 
-    //da testare la strategia di fetch
-    @OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(nullable = false)
     private Cart cart;
 

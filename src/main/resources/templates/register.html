@@ -6,8 +6,8 @@
   <link rel="icon" href="/images/favicon.png" />
   <title>PC Express</title>
 
-  <link rel="stylesheet" th:href="@{/css/style.css}">
-  <link rel="stylesheet" th:href="@{/css/register.css}">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/register.css">
 </head>
 
 <body>
@@ -21,7 +21,7 @@
       Registrati su PC Express per iniziare
     </p>
 
-    <form th:action="@{/register}" method="post" th:object="${form}" class="register-form">
+    <form th:action="@{/register}" method="post" th:object="${registrationForm}" class="register-form">
 
       <div class="error-box" th:if="${#fields.hasGlobalErrors()}">
         <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
