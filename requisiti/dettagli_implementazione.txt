@@ -1,7 +1,5 @@
-Le immagini di un pc possono essere modificate ma non possono essere tolte
 
-prossime cose da fare:
+Le immagini le abbiamo salvate nel DB come byte
 
-    - aggiungere limite di visualizzazione negli elenchi (vendite, pc) con pulsante "carica di più"
 
-    - form di conferma acquisto
+NOTA: Le immagini di un pc possono essere modificate ma non possono essere tolte

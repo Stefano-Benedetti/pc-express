@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface SaleRepository extends CrudRepository<Sale, Long> {
 
-    //restituisce tutte le sale in ordine decrescente di data
     List<Sale> findAllByOrderByDateOfSaleDesc();
 
     List<Sale> findAllByUserIdOrderByDateOfSaleDesc(Long userId);

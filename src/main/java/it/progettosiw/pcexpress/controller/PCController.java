@@ -29,9 +29,6 @@ public class PCController {
     @GetMapping("/pc/catalog")
     public String list(Model model){
         return "forward:/react/index.html";
-        //serviva per la pagina vecchia (thymeleaf) del catalogo
-        /*model.addAttribute("pcs",this.pcService.getAllPCs());
-        return "pc/catalog";*/
     }
 
     @GetMapping("/pc/{id}")

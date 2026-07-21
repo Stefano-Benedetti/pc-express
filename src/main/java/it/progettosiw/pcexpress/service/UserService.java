@@ -58,7 +58,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    @Transactional  //non serve serializable perchè l'unicità della email è protetta già dal db
+    @Transactional
     public void register(RegistrationForm form){
         if (userRepository.existsByEmail(form.getEmail()))
             throw new EmailAlreadyExistsException();

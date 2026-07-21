@@ -49,7 +49,7 @@ public class SaleService {
         return saleRepository.findAllByOrderByDateOfSaleDesc();
     }
 
-    @Transactional(readOnly = true) //perchè fa una query per prendere gli acquisti (sono lazy per l'utente)
+    @Transactional(readOnly = true)
     public List<Sale> getCurrentUserPurchases(){
         return this.saleRepository.findAllByUserIdOrderByDateOfSaleDesc(userService.getCurrentUser().getId());
     }
@@ -81,7 +81,7 @@ public class SaleService {
             item.getPc().reduceAvailability(quantity);
         }
         Sale sale = new Sale(LocalDateTime.now(), totalPrice, soldItems, user);
-        user.getPurchases().add(sale);  //serve a mantenere aggiornato lo user in locale
+        user.getPurchases().add(sale);
         saleRepository.save(sale);
         return sale;
     }

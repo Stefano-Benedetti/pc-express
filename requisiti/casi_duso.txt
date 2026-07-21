@@ -26,6 +26,6 @@ Implementare almeno 6 casi d’uso:
 • almeno uno che richieda aggiornamento (update) dei dati di una entità 		(ADMIN MODIFICA UN PC DEL CATALOGO)
 • almeno uno che richieda cancellazione di una (o più) entità entità 			(UTENTE RIMUOVE PC DAL CARRELLO)
 • almeno due che richiedano operazioni di lettura dei dati di una o più entità  (UTENTE GUARDA ELENCO ACQUISTI EFFETTUATI IN PASSATO, ADMIN GUARDA I DETTAGLI DI UN UTENTE)
-NB: autenticazione e registrazione dell'utente non sono considerati casi d'uso.
+
 
 

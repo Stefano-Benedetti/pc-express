@@ -20,7 +20,7 @@ public class SoldItem {
     @Column(nullable = false)
     private Float paidMoney;
     
-    @ManyToOne(cascade = CascadeType.MERGE) //quando un pc è venduto va aggiornata la disponibilità
+    @ManyToOne(cascade = CascadeType.MERGE)
     private PC pc;
 
     public SoldItem() {

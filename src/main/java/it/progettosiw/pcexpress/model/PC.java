@@ -14,7 +14,7 @@ import java.util.Objects;
 @Entity
 public class PC {
 
-    @Transient //per escluderlo dal mapping JPA
+    @Transient
     private static final Logger logger = LoggerFactory.getLogger(CartService.class);
 
     @Id
@@ -62,7 +62,6 @@ public class PC {
     @Column(nullable = false)
     private Integer disponibilita;
 
-    //@Lob    //sta per large object
     @Column(columnDefinition="bytea")
     private byte[] immagine;
 

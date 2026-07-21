@@ -12,7 +12,6 @@ import java.io.IOException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-
     @ExceptionHandler(PCNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handlePCNotFound(PCNotFoundException e, Model model) {
